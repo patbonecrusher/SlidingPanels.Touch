@@ -1,0 +1,46 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SlidingPanels.Touch.Sample", "SlidingPanels\SlidingPanels.Touch.Sample.csproj", "{EB99DC4A-6C39-4A37-8F85-452C2AC8F9BF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SlidingPanels.Touch", "SlidingPanels.Lib\SlidingPanels.Touch.csproj", "{2FD1999D-45B1-4485-BF96-EAB061481945}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|iPhoneSimulator = Debug|iPhoneSimulator
+		Release|iPhoneSimulator = Release|iPhoneSimulator
+		Debug|iPhone = Debug|iPhone
+		Release|iPhone = Release|iPhone
+		Ad-Hoc|iPhone = Ad-Hoc|iPhone
+		AppStore|iPhone = AppStore|iPhone
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2FD1999D-45B1-4485-BF96-EAB061481945}.Ad-Hoc|iPhone.ActiveCfg = Release|Any CPU
+		{2FD1999D-45B1-4485-BF96-EAB061481945}.Ad-Hoc|iPhone.Build.0 = Release|Any CPU
+		{2FD1999D-45B1-4485-BF96-EAB061481945}.AppStore|iPhone.ActiveCfg = Release|Any CPU
+		{2FD1999D-45B1-4485-BF96-EAB061481945}.AppStore|iPhone.Build.0 = Release|Any CPU
+		{2FD1999D-45B1-4485-BF96-EAB061481945}.Debug|iPhone.ActiveCfg = Debug|Any CPU
+		{2FD1999D-45B1-4485-BF96-EAB061481945}.Debug|iPhone.Build.0 = Debug|Any CPU
+		{2FD1999D-45B1-4485-BF96-EAB061481945}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{2FD1999D-45B1-4485-BF96-EAB061481945}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
+		{2FD1999D-45B1-4485-BF96-EAB061481945}.Release|iPhone.ActiveCfg = Release|Any CPU
+		{2FD1999D-45B1-4485-BF96-EAB061481945}.Release|iPhone.Build.0 = Release|Any CPU
+		{2FD1999D-45B1-4485-BF96-EAB061481945}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
+		{2FD1999D-45B1-4485-BF96-EAB061481945}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
+		{EB99DC4A-6C39-4A37-8F85-452C2AC8F9BF}.Ad-Hoc|iPhone.ActiveCfg = Ad-Hoc|iPhone
+		{EB99DC4A-6C39-4A37-8F85-452C2AC8F9BF}.Ad-Hoc|iPhone.Build.0 = Ad-Hoc|iPhone
+		{EB99DC4A-6C39-4A37-8F85-452C2AC8F9BF}.AppStore|iPhone.ActiveCfg = AppStore|iPhone
+		{EB99DC4A-6C39-4A37-8F85-452C2AC8F9BF}.AppStore|iPhone.Build.0 = AppStore|iPhone
+		{EB99DC4A-6C39-4A37-8F85-452C2AC8F9BF}.Debug|iPhone.ActiveCfg = Debug|iPhone
+		{EB99DC4A-6C39-4A37-8F85-452C2AC8F9BF}.Debug|iPhone.Build.0 = Debug|iPhone
+		{EB99DC4A-6C39-4A37-8F85-452C2AC8F9BF}.Debug|iPhoneSimulator.ActiveCfg = Debug|iPhoneSimulator
+		{EB99DC4A-6C39-4A37-8F85-452C2AC8F9BF}.Debug|iPhoneSimulator.Build.0 = Debug|iPhoneSimulator
+		{EB99DC4A-6C39-4A37-8F85-452C2AC8F9BF}.Release|iPhone.ActiveCfg = Release|iPhone
+		{EB99DC4A-6C39-4A37-8F85-452C2AC8F9BF}.Release|iPhone.Build.0 = Release|iPhone
+		{EB99DC4A-6C39-4A37-8F85-452C2AC8F9BF}.Release|iPhoneSimulator.ActiveCfg = Release|iPhoneSimulator
+		{EB99DC4A-6C39-4A37-8F85-452C2AC8F9BF}.Release|iPhoneSimulator.Build.0 = Release|iPhoneSimulator
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = SlidingPanels\SlidingPanels.Touch.Sample.csproj
+	EndGlobalSection
+EndGlobal
