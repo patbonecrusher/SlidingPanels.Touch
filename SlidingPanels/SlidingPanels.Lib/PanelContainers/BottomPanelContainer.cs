@@ -63,7 +63,7 @@ namespace SlidingPanels.Lib.PanelContainers
 		{
 			float screenHeight = View.Bounds.Size.Height;
 			float panelHeight = Panel.Size.Height;
-			float topEdge = screenHeight - panelHeight;
+			float topEdge = screenHeight - panelHeight + 40;
 
 			float translation = touchPosition.Y - touchPositionStartYPosition;
 
