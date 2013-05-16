@@ -10,6 +10,17 @@ namespace SlidingPanels.Lib.PanelContainers
 		{
 		}
 
+		public override void ViewDidLoad ()
+		{
+			base.ViewDidLoad ();
+
+			RectangleF frame = PanelVC.View.Frame;
+			frame.Y = 0;
+			frame.Height = View.Frame.Height;
+			frame.Width = Panel.Size.Width;
+			PanelVC.View.Frame = frame;
+		}
+
 		public override RectangleF GetTopViewPositionWhenSliderIsVisible(RectangleF topViewCurrentFrame)
 		{
 			topViewCurrentFrame.X = Panel.Size.Width;
@@ -30,7 +41,7 @@ namespace SlidingPanels.Lib.PanelContainers
 			}
 			else
 			{
-				return (touchPosition.X >= topViewCurrentFrame.X && touchPosition.X <= UIScreen.MainScreen.Bounds.Width);
+				return topViewCurrentFrame.Contains (touchPosition);
 			}
 		}
 
@@ -45,20 +56,24 @@ namespace SlidingPanels.Lib.PanelContainers
 
 		public override RectangleF Panning (PointF touchPosition, RectangleF topViewCurrentFrame)
 		{
+			float panelWidth = Panel.Size.Width;
+
 			float translation = touchPosition.X - touchPositionStartXPosition;
 			RectangleF frame = topViewCurrentFrame;
 
 			frame.X = topViewStartXPosition + translation;
-			if (topViewCurrentFrame.X < 0) { topViewCurrentFrame.X = 0; }
-			if (topViewCurrentFrame.X > PanelVC.View.Frame.Width) { frame.X = PanelVC.View.Frame.Width; }
+			if (frame.X <= 0) { frame.X = 0; }
+			if (frame.X >= panelWidth) { frame.X = panelWidth; }
 
 			return frame;
 		}
 
 		public override bool PanningEnded (PointF touchPosition, RectangleF topViewCurrentFrame)
 		{
+			float panelWidth = Panel.Size.Width;
+
 			RectangleF frame = topViewCurrentFrame;
-			if (frame.X > (PanelVC.View.Frame.Width/2)) {
+			if (frame.X > (panelWidth/2)) {
 				return true;
 			} else {
 				return false;

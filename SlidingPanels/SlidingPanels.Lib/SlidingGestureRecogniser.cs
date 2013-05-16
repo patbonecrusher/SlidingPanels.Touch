@@ -93,7 +93,8 @@ namespace SlidingPanels.Lib
 				return;
 			}
 
-			ViewControllerToSwipe.View.Frame = CurrentActivePanelContainer.Panning (touchPt, ViewControllerToSwipe.View.Frame);
+			RectangleF newFrame = CurrentActivePanelContainer.Panning (touchPt, ViewControllerToSwipe.View.Frame);
+			ViewControllerToSwipe.View.Frame = newFrame;
 		}
 
 		public override void TouchesEnded (MonoTouch.Foundation.NSSet touches, UIEvent evt)

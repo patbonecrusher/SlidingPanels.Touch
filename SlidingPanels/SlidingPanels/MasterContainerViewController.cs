@@ -1,6 +1,7 @@
 using System;
 using MonoTouch.UIKit;
 using SlidingPanels.Lib;
+using SlidingPanels.Lib.PanelContainers;
 
 namespace SlidingPanels
 {
@@ -21,15 +22,14 @@ namespace SlidingPanels
 			AddChildViewController (_slidingPanelVC);
 			View.AddSubview (_slidingPanelVC.View);
 
-			_slidingPanelVC.InsertPanel (PanelType.LeftPanel, new LeftPanelViewController ());
-			_slidingPanelVC.InsertPanel (PanelType.RightPanel, new RightPanelViewController ());
+			//_slidingPanelVC.InsertPanel (PanelType.LeftPanel, new LeftPanelViewController ());
+			//_slidingPanelVC.InsertPanel (PanelType.RightPanel, new RightPanelViewController ());
+
+			_slidingPanelVC.InsertPanel (new LeftPanelContainer(new LeftPanelViewController ()));
+			_slidingPanelVC.InsertPanel (new RightPanelContainer(new RightPanelViewController ()));
+			_slidingPanelVC.InsertPanel (new BottomPanelContainer(new BottomPanelViewController ()));
 
 			_slidingPanelVC.SetVisibleContentViewController (new UINavigationController(new ExampleContentA()));
-		}
-
-		public override void ViewWillAppear (bool animated)
-		{
-			base.ViewWillAppear (animated);
 		}
 	}
 }

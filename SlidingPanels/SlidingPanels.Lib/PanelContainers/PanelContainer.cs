@@ -24,22 +24,28 @@ namespace SlidingPanels.Lib.PanelContainers
 
 			RectangleF frame = View.Frame;
 			frame.Y = 0;
+			frame.Height = UIScreen.MainScreen.Bounds.Height;
 			View.Frame = frame;
 
 			View.BackgroundColor = UIColor.Blue;
-			AddChildViewController (PanelVC);
-			View.AddSubview (PanelVC.View);
-
-			frame = PanelVC.View.Frame;
-			frame.Y = 0;
-			PanelVC.View.Frame = frame;
 
 			Hide ();
 		}
 
+		public override void ViewWillAppear (bool animated)
+		{
+			base.ViewWillAppear (animated);
+		}
+
+		public override void ViewDidAppear (bool animated)
+		{
+			base.ViewDidAppear (animated);
+			AddChildViewController (PanelVC);
+			View.AddSubview (PanelVC.View);
+		}
+
 		public void Toggle ()
 		{
-			Console.WriteLine ("Toggling");
 			if (View.Hidden) {
 				Show ();
 			} else {
@@ -49,14 +55,12 @@ namespace SlidingPanels.Lib.PanelContainers
 
 		public void Show ()
 		{
-			Console.WriteLine ("Showing");
 			Panel.RefreshContent ();
 			View.Hidden = false;
 		}
 
 		public void Hide ()
 		{
-			Console.WriteLine ("Hiding");
 			View.Hidden = true;
 		}
 

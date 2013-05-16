@@ -42,10 +42,13 @@
   <ItemGroup>
     <Compile Include="SlidingPanelsViewController.cs" />
     <Compile Include="PanelContainers\PanelContainer.cs" />
-    <Compile Include="PanelContainers\LeftPanelContainer.cs" />
+    <Compile Include="PanelContainers\LeftPanelContainer.cs">
+      <DependentUpon>BottomPanelContainer.cs</DependentUpon>
+    </Compile>
     <Compile Include="PanelContainers\RightPanelContainer.cs" />
     <Compile Include="IContentView.cs" />
     <Compile Include="IPanelView.cs" />
     <Compile Include="SlidingGestureRecogniser.cs" />
+    <Compile Include="PanelContainers\BottomPanelContainer.cs" />
   </ItemGroup>
 </Project>

@@ -96,6 +96,7 @@
     </Compile>
     <Compile Include="Panels\LeftPanelViewController.cs" />
     <Compile Include="Panels\RightPanelViewController.cs" />
+    <Compile Include="Panels\BottomPanelViewController.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

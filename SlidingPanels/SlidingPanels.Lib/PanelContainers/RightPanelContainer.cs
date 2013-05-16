@@ -13,8 +13,13 @@ namespace SlidingPanels.Lib.PanelContainers
 		public override void ViewDidLoad ()
 		{
 			base.ViewDidLoad ();
-			RectangleF frame = View.Frame;
+
+			RectangleF frame = PanelVC.View.Frame;
+			frame.Y = 0;
 			frame.X = (UIScreen.MainScreen.Bounds.Width - Panel.Size.Width);
+			frame.Height = View.Frame.Height;
+			frame.Width = Panel.Size.Width;
+			PanelVC.View.Frame = frame;
 		}
 
 		public override RectangleF GetTopViewPositionWhenSliderIsVisible(RectangleF topViewCurrentFrame)
@@ -33,7 +38,7 @@ namespace SlidingPanels.Lib.PanelContainers
 		{
 			if (!IsVisible)
 			{
-				return (touchPosition.X >= UIScreen.MainScreen.Bounds.Width-40f && touchPosition.X <= UIScreen.MainScreen.Bounds.Width);
+				return (touchPosition.X >= View.Bounds.Size.Width-40f && touchPosition.X <= View.Bounds.Size.Width);
 			}
 			else
 			{
@@ -52,24 +57,30 @@ namespace SlidingPanels.Lib.PanelContainers
 
 		public override RectangleF Panning (PointF touchPosition, RectangleF topViewCurrentFrame)
 		{
-			float translation = touchPosition.X - touchPositionStartXPosition;
-			RectangleF frame = topViewCurrentFrame;
+			float screenWidth = View.Bounds.Size.Width;
+			float panelWidth = Panel.Size.Width;
+			float leftEdge = screenWidth - panelWidth;
 
+			float translation = touchPosition.X - touchPositionStartXPosition;
+
+			RectangleF frame = topViewCurrentFrame;
 			frame.X = topViewStartXPosition + translation;
 			var y = frame.X + frame.Width;
-			var minY = UIScreen.MainScreen.Bounds.Width - PanelVC.View.Frame.Width;
 
-			if (y >= UIScreen.MainScreen.Bounds.Width) { frame.X = 0; }
-			if (y < minY) { frame.X = 0 - PanelVC.View.Frame.Width; }
+			if (y >= screenWidth) { frame.X = 0; }
+			if (y <= leftEdge) { frame.X = leftEdge - frame.Width; }
 
 			return frame;
 		}
 
 		public override bool PanningEnded (PointF touchPosition, RectangleF topViewCurrentFrame)
 		{
+			float screenWidth = View.Bounds.Size.Width;
+			float panelWidth = Panel.Size.Width;
+
 			RectangleF frame = topViewCurrentFrame;
 			float y = frame.X + frame.Width;
-			if (y < (UIScreen.MainScreen.Bounds.Width - (PanelVC.View.Frame.Width/2))) {
+			if (y < (screenWidth - (panelWidth/2))) {
 				return true;
 			} else {
 				return false;

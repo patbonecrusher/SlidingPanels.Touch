@@ -7,7 +7,7 @@ using System.Linq;
 namespace SlidingPanels.Lib
 {
 	public enum PanelType {
-		LeftPanel, RightPanel
+		LeftPanel, RightPanel, BottomPanel
 	}
 
 	public class SlidingPanelsViewController : UIViewController
@@ -129,54 +129,6 @@ namespace SlidingPanels.Lib
 
 		#region PanelInteraction
 
-		/// <summary>
-		/// Inserts the panel.
-		/// </summary>
-		/// <param name="type">Type.</param>
-		/// <param name="panel">Panel.</param>
-		public void InsertPanel(PanelType type, UIViewController panel)
-		{
-			// Panel must be realizing interface IPanel.
-			if (!(panel is IPanelView))
-			{
-				throw new ArgumentException("panel doesn't realize IPanel", "panel");
-			}
-
-			// Eventually switch this to a Factory!
-			PanelContainer container = null;
-			switch(type)
-			{
-			case PanelType.LeftPanel:
-				container = new LeftPanelContainer (panel);
-				break;
-			case PanelType.RightPanel:
-				container = new RightPanelContainer (panel);
-				break;
-			default:
-				throw new ArgumentException("Unknown panel type", "type");
-			}
-
-			// Check to see if we already have a panel of that type and if so
-			// remove it before adding the other one.
-			PanelContainer existing = _panelContainers.Where (p => p.PanelType == type).FirstOrDefault();
-			if (existing != null) 
-			{
-				this.RemovePanel (existing);
-			}
-
-			_panelContainers.Add (container);
-			AddChildViewController (container);
-
-			if (_visibleContentViewController != null)
-			{
-				View.InsertSubviewBelow (container.View, _visibleContentViewController.View);
-			}
-			else
-			{
-				View.AddSubview (container.View);
-			}
-		}
-
 		private PanelContainer ExistingContainerForType(PanelType type)
 		{
 			PanelContainer container = null;
@@ -191,17 +143,8 @@ namespace SlidingPanels.Lib
 		/// <summary>
 		/// Removes the panel.
 		/// </summary>
-		/// <param name="type">Type.</param>
-		public void RemovePanel(PanelType type)
-		{
-			RemovePanel (ExistingContainerForType(type));
-		}
-
-		/// <summary>
-		/// Removes the panel.
-		/// </summary>
 		/// <param name="container">Container.</param>
-		protected void RemovePanel(PanelContainer container)
+		public void RemovePanel(PanelContainer container)
 		{
 			container.View.RemoveFromSuperview ();
 			container.RemoveFromParentViewController ();
@@ -231,46 +174,21 @@ namespace SlidingPanels.Lib
 			}
 		}
 
-		/// <summary>
-		/// Shows the panel.
-		/// </summary>
-		/// <param name="type">Type.</param>
-		public void ShowPanel(PanelType type)
+		public void InsertPanel(PanelContainer container)
 		{
-			PanelContainer container = ExistingContainerForType(type);
-			if (!container.IsVisible) 
-			{
-				// Any other panel already up? If so close them.
-				if (CurrentActivePanelContainer != null && CurrentActivePanelContainer != container)
-				{
-					HidePanel (CurrentActivePanelContainer);
-				}
+			_panelContainers.Add (container);
+			AddChildViewController (container);
 
-				ShowPanel (container);
+			if (_visibleContentViewController != null)
+			{
+				View.InsertSubviewBelow (container.View, _visibleContentViewController.View);
 			}
 			else
 			{
-				// noop
+				View.AddSubview (container.View);
 			}
 		}
 
-		/// <summary>
-		/// Hides the panel.
-		/// </summary>
-		/// <param name="type">Type.</param>
-		public void HidePanel(PanelType type)
-		{
-			PanelContainer container = ExistingContainerForType(type);
-			if (container.IsVisible) 
-			{
-				HidePanel (container);
-			}
-			else
-			{
-				// noop
-			}
-		}
-		
 		public void ShowPanel(PanelContainer container)
 		{
 			container.Show ();
