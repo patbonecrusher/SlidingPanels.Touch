@@ -44,8 +44,13 @@ namespace SlidingPanels.Lib.PanelContainers
 			base.ViewDidLoad ();
 
 			RectangleF frame = View.Frame;
-			frame.Y = 0;
-			frame.Height = UIScreen.MainScreen.Bounds.Height;
+			if (!UIApplication.SharedApplication.StatusBarHidden) {
+				frame.Y = UIApplication.SharedApplication.StatusBarFrame.Height;
+				frame.Height = UIScreen.MainScreen.Bounds.Height - UIApplication.SharedApplication.StatusBarFrame.Height;
+			} else {
+				frame.Y = 0;
+				frame.Height = UIScreen.MainScreen.Bounds.Height;
+			}
 			View.Frame = frame;
 
 			View.BackgroundColor = UIColor.Blue;

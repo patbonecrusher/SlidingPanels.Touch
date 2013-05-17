@@ -35,32 +35,37 @@ namespace SlidingPanels.Lib.PanelContainers
 		{
 			base.ViewDidLoad ();
 
-			// First adjust for the stupid bar at the top.
-			RectangleF frame = PanelVC.View.Frame;
-			frame.X = 0;
-			frame.Height = UIScreen.MainScreen.Bounds.Height;
-			frame.Width = View.Frame.Width;
-			PanelVC.View.Frame = frame;
 
-			frame.Y = (View.Bounds.Size.Height - Panel.Size.Height);
+			RectangleF frame = PanelVC.View.Frame;
+			frame.Y = (PanelVC.View.Frame.Height - Panel.Size.Height);
 			frame.Height = Panel.Size.Height;
 			PanelVC.View.Frame = frame;
 		}
 
 		public override RectangleF GetTopViewPositionWhenSliderIsVisible(RectangleF topViewCurrentFrame)
 		{
-			topViewCurrentFrame.Y = - (Panel.Size.Height - 40);
+			topViewCurrentFrame.Y = - Panel.Size.Height;
+			if (!UIApplication.SharedApplication.StatusBarHidden) {
+				topViewCurrentFrame.Y += UIApplication.SharedApplication.StatusBarFrame.Height;
+			}
 			return topViewCurrentFrame;
 		}
 
 		public override RectangleF GetTopViewPositionWhenSliderIsHidden(RectangleF topViewCurrentFrame)
 		{
 			topViewCurrentFrame.Y = 0;
+			if (!UIApplication.SharedApplication.StatusBarHidden) {
+				topViewCurrentFrame.Y += UIApplication.SharedApplication.StatusBarFrame.Height;
+			}
 			return topViewCurrentFrame;
 		}
 
 		public override bool CanStartPanning(PointF touchPosition, RectangleF topViewCurrentFrame)
 		{
+			if (!UIApplication.SharedApplication.StatusBarHidden) {
+				touchPosition.Y -= UIApplication.SharedApplication.StatusBarFrame.Height;
+			}
+
 			if (!IsVisible)
 			{
 				return (touchPosition.Y >= View.Bounds.Size.Height-40f && touchPosition.Y <= View.Bounds.Size.Height);
@@ -84,7 +89,11 @@ namespace SlidingPanels.Lib.PanelContainers
 		{
 			float screenHeight = View.Bounds.Size.Height;
 			float panelHeight = Panel.Size.Height;
-			float topEdge = screenHeight - panelHeight + 40;
+			float topEdge = screenHeight - panelHeight;
+
+			if (!UIApplication.SharedApplication.StatusBarHidden) {
+				topEdge += UIApplication.SharedApplication.StatusBarFrame.Height;
+			}
 
 			float translation = touchPosition.Y - touchPositionStartYPosition;
 

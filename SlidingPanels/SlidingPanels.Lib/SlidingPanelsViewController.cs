@@ -24,6 +24,7 @@ using MonoTouch.UIKit;
 using SlidingPanels.Lib.PanelContainers;
 using System.Collections.Generic;
 using System.Linq;
+using System.Drawing;
 
 namespace SlidingPanels.Lib
 {
@@ -113,9 +114,17 @@ namespace SlidingPanels.Lib
 			_visibleContentViewController.View.Layer.ShadowColor = UIColor.Black.CGColor;
 			_visibleContentViewController.View.Layer.ShadowOpacity = .75f;
 
+			_visibleContentViewController.View.Frame = View.Frame;
+			if (!UIApplication.SharedApplication.StatusBarHidden) {
+				RectangleF rect = _visibleContentViewController.View.Frame;
+				rect.Y = UIApplication.SharedApplication.StatusBarFrame.Height;
+				rect.Height -= UIApplication.SharedApplication.StatusBarFrame.Height;
+				_visibleContentViewController.View.Frame = rect;
+				_visibleContentViewController.View.BackgroundColor = UIColor.Green;
+			}
+
 			if (prevVC != null)
 			{
-				_visibleContentViewController.View.Frame = prevVC.View.Frame;
 				prevVC.View.RemoveFromSuperview ();
 				prevVC.RemoveFromParentViewController ();
 			}

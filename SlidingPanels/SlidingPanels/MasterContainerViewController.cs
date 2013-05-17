@@ -27,7 +27,7 @@ using SlidingPanels.Panels;
 
 namespace SlidingPanels
 {
-	public class MasterContainerViewController : UIViewController
+	public class MasterContainerViewController : UINavigationController
 	{
 		private SlidingPanelsViewController _slidingPanelVC;
 
@@ -51,7 +51,14 @@ namespace SlidingPanels
 			_slidingPanelVC.InsertPanel (new RightPanelContainer(new RightPanelViewController ()));
 			_slidingPanelVC.InsertPanel (new BottomPanelContainer(new BottomPanelViewController ()));
 
-			_slidingPanelVC.SetVisibleContentViewController (new UINavigationController(new ExampleContentA()));
+			_slidingPanelVC.SetVisibleContentViewController (new ExampleContentA());
+			//_slidingPanelVC.SetVisibleContentViewController (new UINavigationController(new ExampleContentA()));
+		}
+
+		public override void ViewWillAppear (bool animated)
+		{
+			base.ViewWillAppear (animated);
+			//NavigationController.NavigationBarHidden = true;
 		}
 	}
 }
