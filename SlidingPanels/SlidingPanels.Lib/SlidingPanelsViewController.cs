@@ -24,7 +24,7 @@ namespace SlidingPanels.Lib
 		{
 			get
 			{
-				return _panelContainers.Where (p => p.IsVisible).FirstOrDefault ();
+				return _panelContainers.FirstOrDefault (p => p.IsVisible);
 			}
 		}
 
@@ -83,6 +83,7 @@ namespace SlidingPanels.Lib
 				throw new ArgumentException("view doesn't realize IContentView", "visibleContentViewController");
 			}
 
+			UIViewController prevVC = _visibleContentViewController;
 			StopListeningForContentEvents ();
 			_visibleContentViewController = visibleContentViewController;
 			StartListeningForContentEvents ();
@@ -90,6 +91,11 @@ namespace SlidingPanels.Lib
 			_visibleContentViewController.View.Layer.ShadowRadius = 5;
 			_visibleContentViewController.View.Layer.ShadowColor = UIColor.Black.CGColor;
 			_visibleContentViewController.View.Layer.ShadowOpacity = .75f;
+
+			if (prevVC != null)
+			{
+				_visibleContentViewController.View.Frame = prevVC.View.Frame;
+			}
 
 			// If we are up and running, we need to swap to this view.
 			AddChildViewController (_visibleContentViewController);
@@ -178,6 +184,14 @@ namespace SlidingPanels.Lib
 		{
 			_panelContainers.Add (container);
 			AddChildViewController (container);
+
+			container.Panel.TopViewSwapped += (object sender, EventArgs e) => {
+				TopViewSwappedEventArgs eventArgs = (TopViewSwappedEventArgs)e;
+				SetVisibleContentViewController(eventArgs.ViewController);
+				if (eventArgs.HidePanel && CurrentActivePanelContainer != null) {
+					HidePanel (CurrentActivePanelContainer);
+				}
+			};
 
 			if (_visibleContentViewController != null)
 			{

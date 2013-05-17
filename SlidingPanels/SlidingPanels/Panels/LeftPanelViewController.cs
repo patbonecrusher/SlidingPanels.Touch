@@ -1,20 +1,40 @@
 using System;
+using System.Drawing;
+using MonoTouch.Foundation;
 using MonoTouch.UIKit;
 using SlidingPanels.Lib;
-using System.Drawing;
 
-namespace SlidingPanels
+namespace SlidingPanels.Panels
 {
-	public class LeftPanelViewController : UIViewController, IPanelView
+	public partial class LeftPanelViewController : UIViewController, IPanelView
 	{
-		public LeftPanelViewController ()
+		public LeftPanelViewController () : base ("LeftPanelViewController", null)
 		{
+		}
+
+		public override void DidReceiveMemoryWarning ()
+		{
+			// Releases the view if it doesn't have a superview.
+			base.DidReceiveMemoryWarning ();
+			
+			// Release any cached data, images, etc that aren't in use.
 		}
 
 		public override void ViewDidLoad ()
 		{
 			base.ViewDidLoad ();
-			View.BackgroundColor = UIColor.Red;
+			
+			// Perform any additional setup after loading the view, typically from a nib.
+		}
+
+		partial void ShowScreenA (MonoTouch.Foundation.NSObject sender)
+		{
+			TopViewSwapped(this, new TopViewSwappedEventArgs(new UINavigationController(new ExampleContentA())));
+		}
+
+		partial void ShowScreenB (MonoTouch.Foundation.NSObject sender)
+		{
+			TopViewSwapped(this, new TopViewSwappedEventArgs(new UINavigationController(new ExampleContentB())));
 		}
 
 		#region IPanel implementation
@@ -36,6 +56,7 @@ namespace SlidingPanels
 		}		
 
 		#endregion
+
 	}
 }
 

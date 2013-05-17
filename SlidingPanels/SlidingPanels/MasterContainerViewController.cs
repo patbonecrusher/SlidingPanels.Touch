@@ -2,6 +2,7 @@ using System;
 using MonoTouch.UIKit;
 using SlidingPanels.Lib;
 using SlidingPanels.Lib.PanelContainers;
+using SlidingPanels.Panels;
 
 namespace SlidingPanels
 {
