@@ -28,7 +28,7 @@ namespace SlidingPanels
 {
 	public class BottomPanelViewController : UIViewController, IPanelView
 	{
-		public BottomPanelViewController ()
+		public BottomPanelViewController () : base ("BottomPanelViewController", null)
 		{
 		}
 

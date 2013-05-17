@@ -43,6 +43,14 @@ namespace SlidingPanels.Lib.PanelContainers
 		{
 			base.ViewDidLoad ();
 
+			Position ();
+			View.BackgroundColor = UIColor.Blue;
+
+			Hide ();
+		}
+
+		public virtual void Position() 
+		{
 			RectangleF frame = View.Frame;
 			if (!UIApplication.SharedApplication.StatusBarHidden) {
 				frame.Y = UIApplication.SharedApplication.StatusBarFrame.Height;
@@ -53,9 +61,6 @@ namespace SlidingPanels.Lib.PanelContainers
 			}
 			View.Frame = frame;
 
-			View.BackgroundColor = UIColor.Blue;
-
-			Hide ();
 		}
 
 		public override void ViewWillAppear (bool animated)

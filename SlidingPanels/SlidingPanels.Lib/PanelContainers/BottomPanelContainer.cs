@@ -36,6 +36,10 @@ namespace SlidingPanels.Lib.PanelContainers
 			base.ViewDidLoad ();
 
 
+		}
+
+		public virtual void Position()
+		{
 			RectangleF frame = PanelVC.View.Frame;
 			frame.Y = (PanelVC.View.Frame.Height - Panel.Size.Height);
 			frame.Height = Panel.Size.Height;
