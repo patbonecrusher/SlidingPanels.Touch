@@ -5,6 +5,7 @@ using SlidingPanels.Lib;
 using SlidingPanels.Lib.PanelContainers;
 using Cirrious.MvvmCross.Touch.Views;
 using MvxSlidingPanelsSample.Core.ViewModels;
+using Cirrious.MvvmCross.ViewModels;
 
 namespace MvxSlidingPanels.Touch
 {
@@ -52,26 +53,56 @@ namespace MvxSlidingPanels.Touch
 			base.ShowFirstView(viewController);
 		}
 
+		protected void AddPanel<T>(PanelType panelType) where T : MvxViewModel
+		{
+			MvxViewController vc = _slidingPanelVC.ParentViewController as MvxViewController;
+			UIViewController viewToAdd = (UIViewController) vc.CreateViewControllerFor<T>();
+
+			if (vc != null)
+			{
+				switch (panelType)
+				{
+					case PanelType.LeftPanel:
+						_slidingPanelVC.InsertPanel(new LeftPanelContainer(viewToAdd));
+						break;
+
+					case PanelType.RightPanel:
+						_slidingPanelVC.InsertPanel(new RightPanelContainer(viewToAdd));
+						break;
+
+					case PanelType.BottomPanel:
+						_slidingPanelVC.InsertPanel(new BottomPanelContainer(viewToAdd));
+						break;
+
+					default:
+						throw new Exception("blah!");
+				};
+			}
+		}
+
 		protected override void OnMasterNavigationControllerCreated ()
 		{
 			base.OnMasterNavigationControllerCreated();
+
+			AddPanel<LeftPanelViewModel>(PanelType.LeftPanel);
+			AddPanel<RightPanelViewModel>(PanelType.RightPanel);
+			AddPanel<BottomPanelViewModel>(PanelType.BottomPanel);
+
+			//ShowViewModel(typeof(FirstViewModel));
+			MvxViewController vc = _slidingPanelVC.ParentViewController as MvxViewController;
+			UIViewController viewToAdd = (UIViewController) vc.CreateViewControllerFor<FirstViewModel>();
+
+			if (vc != null)
+			{
+				_slidingPanelVC.SetVisibleContentViewController (viewToAdd);
+			}
+
+
 		}
 
 		public override void Show (Cirrious.MvvmCross.Touch.Views.IMvxTouchView view)
 		{
-			if (view is ILeftPanelView)
-			{
-				_slidingPanelVC.InsertPanel(new LeftPanelContainer((UIViewController) view));
-			}
-			else if (view is IRightPanelView)
-			{
-				_slidingPanelVC.InsertPanel(new RightPanelContainer((UIViewController) view));
-			}
-			else if (view is IBottomPanelView)
-			{
-				_slidingPanelVC.InsertPanel(new BottomPanelContainer((UIViewController) view));
-			}
-			else if (view is IContentView)
+			if (view is IContentView)
 			{
 				_slidingPanelVC.SetVisibleContentViewController ((UIViewController) view);
 			}

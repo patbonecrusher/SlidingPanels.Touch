@@ -32,13 +32,7 @@ namespace MvxSlidingPanelsSample.Core.ViewModels
 //			ShowViewModel(typeof(BottomPanelViewModel));
 //			ShowViewModel(typeof(FirstViewModel));
 		}
-		public void BringItUp ()
-		{
-			ShowViewModel(typeof(LeftPanelViewModel));
-			ShowViewModel(typeof(RightPanelViewModel));
-			ShowViewModel(typeof(BottomPanelViewModel));
-			ShowViewModel(typeof(FirstViewModel));
-		}
+
     }
 }
 

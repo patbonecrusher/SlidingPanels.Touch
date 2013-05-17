@@ -117,6 +117,8 @@ namespace SlidingPanels.Lib
 			}
 		}
 
+		private bool _firstTime = true;
+
 		public void SetVisibleContentViewController (UIViewController visibleContentViewController)
 		{
 			// Panel must be realizing interface IPanel.
@@ -135,24 +137,18 @@ namespace SlidingPanels.Lib
 			_visibleContentViewController.View.Layer.ShadowColor = UIColor.Black.CGColor;
 			_visibleContentViewController.View.Layer.ShadowOpacity = .75f;
 
-//			_visibleContentViewController.View.Frame = View.Frame;
-//			if (!UIApplication.SharedApplication.StatusBarHidden) {
-//				RectangleF rect = _visibleContentViewController.View.Frame;
-//				rect.Y = UIApplication.SharedApplication.StatusBarFrame.Height;
-//				rect.Height -= UIApplication.SharedApplication.StatusBarFrame.Height;
-//				_visibleContentViewController.View.Frame = rect;
-//				_visibleContentViewController.View.BackgroundColor = UIColor.Green;
-//			}
-
 			if (prevVC != null)
 			{
 				prevVC.View.RemoveFromSuperview ();
 				prevVC.RemoveFromParentViewController ();
 			}
 
-			// If we are up and running, we need to swap to this view.
-			AddChildViewController (_visibleContentViewController);
-			View.AddSubview (_visibleContentViewController.View);
+			if (!_firstTime)
+			{
+				// If we are up and running, we need to swap to this view.
+				AddChildViewController (_visibleContentViewController);
+				View.AddSubview (_visibleContentViewController.View);
+			}
 
 			_slidingGesture.ViewControllerToSwipe = _visibleContentViewController;
 		}
@@ -233,10 +229,38 @@ namespace SlidingPanels.Lib
 			}
 		}
 
+		public override void ViewWillAppear (bool animated)
+		{
+			base.ViewWillAppear(animated);
+
+			if (_firstTime)
+			{
+				foreach (PanelContainer p in _panelContainers)
+				{
+
+					AddChildViewController (p);
+					if (_visibleContentViewController != null)
+					{
+						View.InsertSubviewBelow (p.View, _visibleContentViewController.View);
+					}
+					else
+					{
+						View.AddSubview (p.View);
+					}
+
+				}
+
+				// If we are up and running, we need to swap to this view.
+				AddChildViewController (_visibleContentViewController);
+				View.AddSubview (_visibleContentViewController.View);
+
+				_firstTime = false;
+			}
+		}
+
 		public void InsertPanel(PanelContainer container)
 		{
 			_panelContainers.Add (container);
-			AddChildViewController (container);
 
 			container.Panel.TopViewSwapped += (object sender, EventArgs e) => {
 				TopViewSwappedEventArgs eventArgs = (TopViewSwappedEventArgs)e;
@@ -246,13 +270,17 @@ namespace SlidingPanels.Lib
 				}
 			};
 
-			if (_visibleContentViewController != null)
+			if (!_firstTime)
 			{
-				View.InsertSubviewBelow (container.View, _visibleContentViewController.View);
-			}
-			else
-			{
-				View.AddSubview (container.View);
+				AddChildViewController (container);
+				if (_visibleContentViewController != null)
+				{
+					View.InsertSubviewBelow (container.View, _visibleContentViewController.View);
+				}
+				else
+				{
+					View.AddSubview (container.View);
+				}
 			}
 		}
 

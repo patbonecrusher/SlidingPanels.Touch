@@ -1,6 +1,7 @@
 using System;
 using SlidingPanels.Lib;
 using Cirrious.MvvmCross.Touch.Views;
+using MonoTouch.UIKit;
 
 namespace MvxSlidingPanels.Touch.Views
 {
@@ -33,6 +34,9 @@ namespace MvxSlidingPanels.Touch.Views
 		public override void ViewDidLoad ()
 		{
 			base.ViewDidLoad();
+			View.BackgroundColor = UIColor.Yellow;
+
+
 		}
     }
 }

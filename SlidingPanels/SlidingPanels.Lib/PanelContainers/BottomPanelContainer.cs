@@ -35,15 +35,8 @@ namespace SlidingPanels.Lib.PanelContainers
 		{
 			base.ViewDidLoad ();
 
-
-		}
-
-		public virtual void Position()
-		{
-			base.Position ();
-
-			RectangleF frame = PanelVC.View.Frame;
-			frame.Y = (PanelVC.View.Frame.Height - Panel.Size.Height);
+			RectangleF frame = View.Bounds;
+			frame.Y = (View.Bounds.Height - Panel.Size.Height);
 			frame.Height = Panel.Size.Height;
 			PanelVC.View.Frame = frame;
 		}
@@ -51,30 +44,24 @@ namespace SlidingPanels.Lib.PanelContainers
 		public override RectangleF GetTopViewPositionWhenSliderIsVisible(RectangleF topViewCurrentFrame)
 		{
 			topViewCurrentFrame.Y = - Panel.Size.Height;
-			if (!UIApplication.SharedApplication.StatusBarHidden) {
-				topViewCurrentFrame.Y += UIApplication.SharedApplication.StatusBarFrame.Height;
-			}
 			return topViewCurrentFrame;
 		}
 
 		public override RectangleF GetTopViewPositionWhenSliderIsHidden(RectangleF topViewCurrentFrame)
 		{
 			topViewCurrentFrame.Y = 0;
-			if (!UIApplication.SharedApplication.StatusBarHidden) {
-				topViewCurrentFrame.Y += UIApplication.SharedApplication.StatusBarFrame.Height;
-			}
 			return topViewCurrentFrame;
 		}
 
 		public override bool CanStartPanning(PointF touchPosition, RectangleF topViewCurrentFrame)
 		{
-//			if (!UIApplication.SharedApplication.StatusBarHidden) {
-//				touchPosition.Y -= UIApplication.SharedApplication.StatusBarFrame.Height;
-//			}
+			float offset = 0;
+			offset += NavigationController.NavigationBarHidden ? 0 : NavigationController.NavigationBar.Frame.Height;
+			touchPosition.Y += offset;
 
 			if (!IsVisible)
 			{
-				return (touchPosition.Y >= PanelVC.View.Bounds.Size.Height-40f && touchPosition.Y <= PanelVC.View.Bounds.Size.Height);
+				return (touchPosition.Y >= (View.Bounds.Size.Height - 40f) && touchPosition.Y <= View.Bounds.Size.Height);
 			}
 			else
 			{
@@ -93,23 +80,18 @@ namespace SlidingPanels.Lib.PanelContainers
 
 		public override RectangleF Panning (PointF touchPosition, RectangleF topViewCurrentFrame)
 		{
-			float screenHeight = View.Bounds.Size.Height;
-			float panelHeight = Panel.Size.Height;
-			float topEdge = screenHeight - panelHeight;
-
-			if (!UIApplication.SharedApplication.StatusBarHidden) {
-				topEdge += UIApplication.SharedApplication.StatusBarFrame.Height;
-			}
-
 			float translation = touchPosition.Y - touchPositionStartYPosition;
 
 			RectangleF frame = topViewCurrentFrame;
 			frame.Y = topViewStartYPosition + translation;
-			var y = frame.Y + frame.Height;
-
-			if (y >= screenHeight) { frame.Y = 0; }
-			if (y <= topEdge) { frame.Y = topEdge - frame.Height; }
-
+			if (frame.Y >= 0) 
+			{ 
+				frame.Y = 0; 
+			}
+			else if (frame.Y <= -Panel.Size.Height)
+			{
+				frame.Y = -Panel.Size.Height;
+			}
 			return frame;
 		}
 
