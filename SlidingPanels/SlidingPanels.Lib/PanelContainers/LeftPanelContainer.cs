@@ -34,11 +34,12 @@ namespace SlidingPanels.Lib.PanelContainers
 		public override void ViewDidLoad ()
 		{
 			base.ViewDidLoad ();
-
 		}
 
 		public virtual void Position()
 		{
+			base.Position ();
+
 			RectangleF frame = PanelVC.View.Frame;
 			frame.Y = 0;
 			frame.Height = UIScreen.MainScreen.Bounds.Height;

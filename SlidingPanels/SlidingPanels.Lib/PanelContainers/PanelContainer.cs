@@ -43,7 +43,7 @@ namespace SlidingPanels.Lib.PanelContainers
 		{
 			base.ViewDidLoad ();
 
-			Position ();
+			View.Frame = View.Bounds;
 			View.BackgroundColor = UIColor.Blue;
 
 			Hide ();

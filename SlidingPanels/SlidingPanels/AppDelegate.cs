@@ -35,7 +35,7 @@ namespace SlidingPanels
 	{
 		// class-level declarations
 		UIWindow window;
-		MasterContainerViewController viewController;
+		UINavigationController viewController;
 		//
 		// This method is invoked when the application has loaded and is ready to run. In this 
 		// method you should instantiate the window, load the UI into it and then make the window
@@ -47,7 +47,7 @@ namespace SlidingPanels
 		{
 			window = new UIWindow (UIScreen.MainScreen.Bounds);
 			
-			viewController = new MasterContainerViewController ();
+			viewController = new UINavigationController(new MasterContainerViewController ());
 			window.RootViewController = viewController;
 			window.MakeKeyAndVisible ();
 			

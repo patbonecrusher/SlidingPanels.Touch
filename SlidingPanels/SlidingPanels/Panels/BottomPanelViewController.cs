@@ -24,9 +24,9 @@ using MonoTouch.UIKit;
 using SlidingPanels.Lib;
 using System.Drawing;
 
-namespace SlidingPanels
+namespace SlidingPanels.Panels
 {
-	public class BottomPanelViewController : UIViewController, IPanelView
+	public partial class BottomPanelViewController : UIViewController, IPanelView
 	{
 		public BottomPanelViewController () : base ("BottomPanelViewController", null)
 		{
@@ -35,7 +35,7 @@ namespace SlidingPanels
 		public override void ViewDidLoad ()
 		{
 			base.ViewDidLoad ();
-			View.BackgroundColor = UIColor.DarkGray;
+			View.BackgroundColor = UIColor.Brown;
 		}
 
 		#region IPanel implementation

@@ -27,7 +27,7 @@ using SlidingPanels.Panels;
 
 namespace SlidingPanels
 {
-	public class MasterContainerViewController : UINavigationController
+	public class MasterContainerViewController : UIViewController
 	{
 		private SlidingPanelsViewController _slidingPanelVC;
 

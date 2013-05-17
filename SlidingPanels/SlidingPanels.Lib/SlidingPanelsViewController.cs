@@ -59,6 +59,7 @@ namespace SlidingPanels.Lib
 		{
 			base.ViewDidLoad ();
 
+			View.BackgroundColor = UIColor.Cyan;
 			_tapToClose = new UITapGestureRecognizer();
 			_tapToClose.AddTarget(() => { HidePanel (CurrentActivePanelContainer); });
 
@@ -75,21 +76,21 @@ namespace SlidingPanels.Lib
 		public override void ViewWillLayoutSubviews ()
 		{
 			base.ViewWillLayoutSubviews ();
-			foreach(PanelContainer p in _panelContainers) {
-				p.Position ();
-			}
-
-			if (_visibleContentViewController != null)
-			{
-				_visibleContentViewController.View.Frame = View.Frame;
-				if (!UIApplication.SharedApplication.StatusBarHidden) {
-					RectangleF rect = _visibleContentViewController.View.Frame;
-					rect.Y = UIApplication.SharedApplication.StatusBarFrame.Height;
-					rect.Height -= UIApplication.SharedApplication.StatusBarFrame.Height;
-					_visibleContentViewController.View.Frame = rect;
-					_visibleContentViewController.View.BackgroundColor = UIColor.Green;
-				}
-			}
+//			foreach(PanelContainer p in _panelContainers) {
+//				p.Position ();
+//			}
+//
+//			if (_visibleContentViewController != null)
+//			{
+//				_visibleContentViewController.View.Frame = View.Frame;
+//				if (!UIApplication.SharedApplication.StatusBarHidden) {
+//					RectangleF rect = _visibleContentViewController.View.Frame;
+//					rect.Y = UIApplication.SharedApplication.StatusBarFrame.Height;
+//					rect.Height -= UIApplication.SharedApplication.StatusBarFrame.Height;
+//					_visibleContentViewController.View.Frame = rect;
+//					_visibleContentViewController.View.BackgroundColor = UIColor.Green;
+//				}
+//			}
 		}
 
 		bool ShouldReceiveTouch(UIGestureRecognizer sender, UITouch touch)
@@ -134,14 +135,14 @@ namespace SlidingPanels.Lib
 			_visibleContentViewController.View.Layer.ShadowColor = UIColor.Black.CGColor;
 			_visibleContentViewController.View.Layer.ShadowOpacity = .75f;
 
-			_visibleContentViewController.View.Frame = View.Frame;
-			if (!UIApplication.SharedApplication.StatusBarHidden) {
-				RectangleF rect = _visibleContentViewController.View.Frame;
-				rect.Y = UIApplication.SharedApplication.StatusBarFrame.Height;
-				rect.Height -= UIApplication.SharedApplication.StatusBarFrame.Height;
-				_visibleContentViewController.View.Frame = rect;
-				_visibleContentViewController.View.BackgroundColor = UIColor.Green;
-			}
+//			_visibleContentViewController.View.Frame = View.Frame;
+//			if (!UIApplication.SharedApplication.StatusBarHidden) {
+//				RectangleF rect = _visibleContentViewController.View.Frame;
+//				rect.Y = UIApplication.SharedApplication.StatusBarFrame.Height;
+//				rect.Height -= UIApplication.SharedApplication.StatusBarFrame.Height;
+//				_visibleContentViewController.View.Frame = rect;
+//				_visibleContentViewController.View.BackgroundColor = UIColor.Green;
+//			}
 
 			if (prevVC != null)
 			{
