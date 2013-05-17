@@ -52,6 +52,11 @@ namespace MvxSlidingPanels.Touch
 			base.ShowFirstView(viewController);
 		}
 
+		protected override void OnMasterNavigationControllerCreated ()
+		{
+			base.OnMasterNavigationControllerCreated();
+		}
+
 		public override void Show (Cirrious.MvvmCross.Touch.Views.IMvxTouchView view)
 		{
 			if (view is ILeftPanelView)
