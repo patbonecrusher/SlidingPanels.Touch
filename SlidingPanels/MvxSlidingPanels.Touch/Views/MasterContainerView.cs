@@ -23,6 +23,12 @@ namespace MvxSlidingPanels.Touch.Views
 			set.Bind(label).To(vm => vm.DisplayName);
 			set.Apply();
 		}
+
+		public override void ViewWillAppear (bool animated)
+		{
+			base.ViewWillAppear (animated);
+			((MasterContainerViewModel)ViewModel).BringItUp ();
+		}
     }
 }
 

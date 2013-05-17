@@ -68,13 +68,13 @@ namespace SlidingPanels.Lib.PanelContainers
 
 		public override bool CanStartPanning(PointF touchPosition, RectangleF topViewCurrentFrame)
 		{
-			if (!UIApplication.SharedApplication.StatusBarHidden) {
-				touchPosition.Y -= UIApplication.SharedApplication.StatusBarFrame.Height;
-			}
+//			if (!UIApplication.SharedApplication.StatusBarHidden) {
+//				touchPosition.Y -= UIApplication.SharedApplication.StatusBarFrame.Height;
+//			}
 
 			if (!IsVisible)
 			{
-				return (touchPosition.Y >= View.Bounds.Size.Height-40f && touchPosition.Y <= View.Bounds.Size.Height);
+				return (touchPosition.Y >= PanelVC.View.Bounds.Size.Height-40f && touchPosition.Y <= PanelVC.View.Bounds.Size.Height);
 			}
 			else
 			{

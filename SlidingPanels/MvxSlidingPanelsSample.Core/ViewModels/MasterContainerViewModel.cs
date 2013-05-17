@@ -27,6 +27,13 @@ namespace MvxSlidingPanelsSample.Core.ViewModels
 		public override void Start ()
 		{
 			base.Start();
+//			ShowViewModel(typeof(LeftPanelViewModel));
+//			ShowViewModel(typeof(RightPanelViewModel));
+//			ShowViewModel(typeof(BottomPanelViewModel));
+//			ShowViewModel(typeof(FirstViewModel));
+		}
+		public void BringItUp ()
+		{
 			ShowViewModel(typeof(LeftPanelViewModel));
 			ShowViewModel(typeof(RightPanelViewModel));
 			ShowViewModel(typeof(BottomPanelViewModel));
