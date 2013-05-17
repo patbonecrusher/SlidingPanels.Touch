@@ -95,6 +95,8 @@ namespace SlidingPanels.Lib
 			if (prevVC != null)
 			{
 				_visibleContentViewController.View.Frame = prevVC.View.Frame;
+				prevVC.View.RemoveFromSuperview ();
+				prevVC.RemoveFromParentViewController ();
 			}
 
 			// If we are up and running, we need to swap to this view.

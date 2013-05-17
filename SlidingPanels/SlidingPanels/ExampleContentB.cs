@@ -15,6 +15,16 @@ namespace SlidingPanels
 		public ExampleContentB ()
 			: base (UserInterfaceIdiomIsPhone ? "ExampleContentB_iPhone" : "ExampleContentB_iPad", null)
 		{
+			NavigationItem.LeftBarButtonItem = new UIBarButtonItem (UIBarButtonSystemItem.Action, delegate {
+				if (ToggleFlyout != null) {
+					ToggleFlyout(PanelType.LeftPanel);
+				}
+			});
+			NavigationItem.RightBarButtonItem = new UIBarButtonItem (UIBarButtonSystemItem.Action, delegate {
+				if (ToggleFlyout != null) {
+					ToggleFlyout(PanelType.RightPanel);
+				}
+			});
 		}
 
 		public override void DidReceiveMemoryWarning ()
