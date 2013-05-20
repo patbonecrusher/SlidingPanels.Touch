@@ -16,6 +16,8 @@ namespace MvxSlidingPanels.Touch.Views
 			View = new UIView(){ BackgroundColor = UIColor.White};
 			base.ViewDidLoad();
 
+			Title = "Master Container";
+
 			var label = new UILabel(new RectangleF(10, 10, 300, 40));
 			Add(label);
 
@@ -27,6 +29,7 @@ namespace MvxSlidingPanels.Touch.Views
 		public override void ViewWillAppear (bool animated)
 		{
 			base.ViewWillAppear (animated);
+			NavigationController.NavigationBarHidden = true;
 		}
     }
 }
