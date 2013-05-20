@@ -1,12 +1,42 @@
 using System;
-using SlidingPanels.Lib;
-using Cirrious.MvvmCross.Touch.Views;
+using System.Drawing;
+using MonoTouch.Foundation;
 using MonoTouch.UIKit;
+using Cirrious.MvvmCross.Touch.Views;
+using SlidingPanels.Lib;
 
 namespace MvxSlidingPanels.Touch.Views
 {
-	public class RightPanelView : MvxViewController, IRightPanelView
+	public partial class RightPanelView : MvxViewController, IRightPanelView
     {
+        static bool UserInterfaceIdiomIsPhone
+        {
+            get
+            {
+                return UIDevice.CurrentDevice.UserInterfaceIdiom == UIUserInterfaceIdiom.Phone;
+            }
+        }
+
+        public RightPanelView ()
+            : base (UserInterfaceIdiomIsPhone ? "RightPanelView_iPhone" : "RightPanelView_iPad", null)
+        {
+        }
+
+        public override void DidReceiveMemoryWarning ()
+        {
+            // Releases the view if it doesn't have a superview.
+            base.DidReceiveMemoryWarning();
+            
+            // Release any cached data, images, etc that aren't in use.
+        }
+
+        public override void ViewDidLoad ()
+        {
+            base.ViewDidLoad();
+            
+            // Perform any additional setup after loading the view, typically from a nib.
+        }
+
 		#region IPanelView implementation
 
 		public event EventHandler TopViewSwapped;
@@ -27,17 +57,6 @@ namespace MvxSlidingPanels.Touch.Views
 
 		#endregion
 
-        public RightPanelView ()
-        {
-        }
-
-		public override void ViewDidLoad ()
-		{
-			base.ViewDidLoad();
-			View.BackgroundColor = UIColor.Yellow;
-
-
-		}
     }
 }
 

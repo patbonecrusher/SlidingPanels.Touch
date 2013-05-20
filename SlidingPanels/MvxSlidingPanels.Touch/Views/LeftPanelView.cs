@@ -1,12 +1,42 @@
 using System;
-using SlidingPanels.Lib;
-using Cirrious.MvvmCross.Touch.Views;
+using System.Drawing;
+using MonoTouch.Foundation;
 using MonoTouch.UIKit;
+using Cirrious.MvvmCross.Touch.Views;
+using SlidingPanels.Lib;
 
 namespace MvxSlidingPanels.Touch.Views
 {
-    public class LeftPanelView : MvxViewController, ILeftPanelView
+	public partial class LeftPanelView : MvxViewController, ILeftPanelView
     {
+        static bool UserInterfaceIdiomIsPhone
+        {
+            get
+            {
+                return UIDevice.CurrentDevice.UserInterfaceIdiom == UIUserInterfaceIdiom.Phone;
+            }
+        }
+
+        public LeftPanelView ()
+            : base (UserInterfaceIdiomIsPhone ? "LeftPanelView_iPhone" : "LeftPanelView_iPad", null)
+        {
+        }
+
+        public override void DidReceiveMemoryWarning ()
+        {
+            // Releases the view if it doesn't have a superview.
+            base.DidReceiveMemoryWarning();
+            
+            // Release any cached data, images, etc that aren't in use.
+        }
+
+        public override void ViewDidLoad ()
+        {
+            base.ViewDidLoad();
+            
+            // Perform any additional setup after loading the view, typically from a nib.
+        }
+
 		#region IPanelView implementation
 
 		public event EventHandler TopViewSwapped;
@@ -27,16 +57,7 @@ namespace MvxSlidingPanels.Touch.Views
 
 		#endregion
 
-        public LeftPanelView ()
-        {
-        }
 
-		public override void ViewDidLoad ()
-		{
-			base.ViewDidLoad();
-			View.BackgroundColor = UIColor.Red;
-
-		}
     }
 }
 

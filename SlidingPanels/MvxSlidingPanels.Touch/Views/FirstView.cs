@@ -6,12 +6,24 @@ using Cirrious.MvvmCross.Touch.Views;
 using Cirrious.MvvmCross.Binding.BindingContext;
 using MvxSlidingPanelsSample.Core.ViewModels;
 using SlidingPanels.Lib;
+using System.Collections.Generic;
+using CrossUI.Touch.Dialog.Elements;
 
 namespace MvxSlidingPanels.Touch.Views
 {
 	public partial class FirstView : MvxViewController, IContentView
     {
-        static bool UserInterfaceIdiomIsPhone
+		public string TestString { get; set; }
+
+		public new FirstViewModel ViewModel
+		{
+			get
+			{
+				return base.ViewModel as FirstViewModel;
+			}
+		}
+			
+		static bool UserInterfaceIdiomIsPhone
         {
             get
             {
@@ -19,9 +31,26 @@ namespace MvxSlidingPanels.Touch.Views
             }
         }
 
+		private UIBarButtonItem CreateSliderButton(string imageName, PanelType panelType)
+		{
+			UIButton button = new UIButton(new RectangleF(0, 0, 40f, 40f));
+			button.SetBackgroundImage(UIImage.FromBundle(imageName), UIControlState.Normal);
+			button.TouchUpInside += delegate
+			{
+				if (ToggleFlyout != null)
+				{
+					ToggleFlyout(panelType);
+				}
+			};
+
+			return new UIBarButtonItem(button);
+		}
+
         public FirstView ()
             : base (UserInterfaceIdiomIsPhone ? "FirstView_iPhone" : "FirstView_iPad", null)
         {
+			NavigationItem.LeftBarButtonItem = CreateSliderButton("Images/SlideRight40.png", PanelType.LeftPanel);
+			NavigationItem.RightBarButtonItem = CreateSliderButton("Images/SlideLeft40.png", PanelType.RightPanel);
         }
 
         public override void DidReceiveMemoryWarning ()
@@ -32,16 +61,32 @@ namespace MvxSlidingPanels.Touch.Views
             // Release any cached data, images, etc that aren't in use.
         }
 
-        public override void ViewDidLoad ()
+		public override void ViewDidLoad ()
         {
             base.ViewDidLoad();
-            
+
             // Perform any additional setup after loading the view, typically from a nib.
-			var set = this.CreateBindingSet<FirstView, FirstViewModel>();
-			set.Bind(DisplayText).To(vm => vm.DisplayName);
-			set.Apply();
+			LeftArrowImage.Image = UIImage.FromBundle("Images/LeftArrow.png");
+			UpArrowImage.Image = UIImage.FromBundle("Images/UpArrow.png");
+			RightArrowImage.Image = UIImage.FromBundle("Images/RightArrow.png");
+
+			this.AddBindings(
+				new Dictionary<object, string>()
+			    {
+					{this, "Title DisplayName"}
+				});
+
+
+
         }
 
+
+
+		public override void ViewWillAppear (bool animated)
+		{
+			base.ViewWillAppear(animated);
+
+		}
 		public event Action<PanelType> ToggleFlyout;
     }
 }

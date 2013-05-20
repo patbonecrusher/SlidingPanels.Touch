@@ -212,10 +212,12 @@
     <Reference Include="SystemXmlSerializationTouch">
       <HintPath>..\..\..\MvvmCross-Binaries\XS-iOS-Mac\bin\Debug\Mvx\Touch\SystemXmlSerializationTouch.dll</HintPath>
     </Reference>
+    <Reference Include="MonoTouch.Dialog-1" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\" />
     <Folder Include="Views\" />
+    <Folder Include="Images\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />
@@ -230,13 +232,28 @@
     </Compile>
     <Compile Include="MvxSlidingPanelsTouchViewPresenter.cs" />
     <Compile Include="Views\MasterContainerView.cs" />
-    <Compile Include="Views\LeftPanelView.cs" />
     <Compile Include="Views\BottomPanelView.cs" />
+    <Compile Include="Views\BottomPanelView.designer.cs">
+      <DependentUpon>BottomPanelView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\LeftPanelView.cs" />
+    <Compile Include="Views\LeftPanelView.designer.cs">
+      <DependentUpon>LeftPanelView.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\RightPanelView.cs" />
+    <Compile Include="Views\RightPanelView.designer.cs">
+      <DependentUpon>RightPanelView.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="Views\FirstView_iPhone.xib" />
     <InterfaceDefinition Include="Views\FirstView_iPad.xib" />
+    <InterfaceDefinition Include="Views\BottomPanelView_iPhone.xib" />
+    <InterfaceDefinition Include="Views\BottomPanelView_iPad.xib" />
+    <InterfaceDefinition Include="Views\LeftPanelView_iPhone.xib" />
+    <InterfaceDefinition Include="Views\LeftPanelView_iPad.xib" />
+    <InterfaceDefinition Include="Views\RightPanelView_iPhone.xib" />
+    <InterfaceDefinition Include="Views\RightPanelView_iPad.xib" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -251,5 +268,12 @@
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Default-568h%402x.png" />
+    <BundleResource Include="Images\UpArrow.png" />
+    <BundleResource Include="Images\RightArrow.png" />
+    <BundleResource Include="Images\LeftArrow.png" />
+    <BundleResource Include="Images\SlideLeft20.png" />
+    <BundleResource Include="Images\SlideLeft40.png" />
+    <BundleResource Include="Images\SlideRight20.png" />
+    <BundleResource Include="Images\SlideRight40.png" />
   </ItemGroup>
 </Project>

@@ -12,13 +12,37 @@ namespace MvxSlidingPanels.Touch.Views
 	partial class FirstView
 	{
 		[Outlet]
-		MonoTouch.UIKit.UILabel DisplayText { get; set; }
+		MonoTouch.UIKit.UILabel CenterText { get; set; }
+
+		[Outlet]
+		MonoTouch.UIKit.UIImageView RightArrowImage { get; set; }
+
+		[Outlet]
+		MonoTouch.UIKit.UIImageView LeftArrowImage { get; set; }
+
+		[Outlet]
+		MonoTouch.UIKit.UIImageView UpArrowImage { get; set; }
 		
 		void ReleaseDesignerOutlets ()
 		{
-			if (DisplayText != null) {
-				DisplayText.Dispose ();
-				DisplayText = null;
+			if (CenterText != null) {
+				CenterText.Dispose ();
+				CenterText = null;
+			}
+
+			if (RightArrowImage != null) {
+				RightArrowImage.Dispose ();
+				RightArrowImage = null;
+			}
+
+			if (LeftArrowImage != null) {
+				LeftArrowImage.Dispose ();
+				LeftArrowImage = null;
+			}
+
+			if (UpArrowImage != null) {
+				UpArrowImage.Dispose ();
+				UpArrowImage = null;
 			}
 		}
 	}
