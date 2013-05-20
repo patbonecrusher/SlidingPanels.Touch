@@ -13,7 +13,6 @@ namespace MvxSlidingPanelsSample.Core
 		{
 			CreatableTypes().EndingWith("Service").AsInterfaces().RegisterAsLazySingleton();
 			RegisterAppStart<ViewModels.MasterContainerViewModel>();
-
 		}  
 	}
 }

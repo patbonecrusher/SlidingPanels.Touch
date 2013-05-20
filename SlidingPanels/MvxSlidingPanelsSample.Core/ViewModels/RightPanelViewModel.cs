@@ -3,10 +3,11 @@ using Cirrious.MvvmCross.ViewModels;
 
 namespace MvxSlidingPanelsSample.Core.ViewModels
 {
-    public class RightPanelViewModel : MvxViewModel
+    public class RightPanelViewModel : BaseViewModel
     {
         public RightPanelViewModel ()
         {
+			DisplayName = "Right Panel";
         }
     }
 }

@@ -30,7 +30,6 @@ namespace MvxSlidingPanels.Touch.Views
 		{
 			NavigationController.NavigationBarHidden = true;
 			base.ViewWillAppear (animated);
-			((MasterContainerViewModel)ViewModel).Go ();
 		}
     }
 }

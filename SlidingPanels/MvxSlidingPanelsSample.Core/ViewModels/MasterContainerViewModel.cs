@@ -3,22 +3,8 @@ using Cirrious.MvvmCross.ViewModels;
 
 namespace MvxSlidingPanelsSample.Core.ViewModels
 {
-    public class MasterContainerViewModel : MvxViewModel
+    public class MasterContainerViewModel : BaseViewModel
     {
-		private string _displayName;
-		public string DisplayName
-		{
-			get
-			{
-				return _displayName;
-			}
-			set
-			{
-				_displayName = value;
-				RaisePropertyChanged(() => DisplayName);
-			}
-		}
-
 		public MasterContainerViewModel()
 		{
 			DisplayName = "Default Master";
@@ -27,15 +13,8 @@ namespace MvxSlidingPanelsSample.Core.ViewModels
 		public override void Start ()
 		{
 			base.Start();
-//			ShowViewModel(typeof(LeftPanelViewModel));
-//			ShowViewModel(typeof(RightPanelViewModel));
-//			ShowViewModel(typeof(BottomPanelViewModel));
 		}
-
-		public void Go()
-		{
-			ShowViewModel(typeof(FirstViewModel));
-		}
+	
     }
 }
 

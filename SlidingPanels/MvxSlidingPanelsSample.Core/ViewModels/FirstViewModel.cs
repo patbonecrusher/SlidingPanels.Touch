@@ -3,25 +3,11 @@ using Cirrious.MvvmCross.ViewModels;
 
 namespace MvxSlidingPanelsSample.Core.ViewModels
 {
-    public class FirstViewModel : MvxViewModel
+    public class FirstViewModel : BaseViewModel
     {
-		private string _displayName;
-		public string DisplayName
-		{
-			get
-			{
-				return _displayName;
-			}
-			set
-			{
-				_displayName = value;
-				RaisePropertyChanged(() => DisplayName);
-			}
-		}
-
 		public FirstViewModel()
 		{
-			DisplayName = "Default";
+			DisplayName = "First View";
 		}
     }
 }
