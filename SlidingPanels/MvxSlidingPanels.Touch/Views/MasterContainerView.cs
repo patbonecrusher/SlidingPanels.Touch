@@ -26,10 +26,11 @@ namespace MvxSlidingPanels.Touch.Views
 			set.Apply();
 		}
 
-		public override void ViewWillAppear (bool animated)
+		public override void ViewDidAppear (bool animated)
 		{
-			base.ViewWillAppear (animated);
 			NavigationController.NavigationBarHidden = true;
+			base.ViewWillAppear (animated);
+			((MasterContainerViewModel)ViewModel).Go ();
 		}
     }
 }
