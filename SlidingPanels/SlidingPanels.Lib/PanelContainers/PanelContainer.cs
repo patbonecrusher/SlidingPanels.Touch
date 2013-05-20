@@ -49,20 +49,6 @@ namespace SlidingPanels.Lib.PanelContainers
 			Hide ();
 		}
 
-		public virtual void Position() 
-		{
-			RectangleF frame = View.Frame;
-			if (!UIApplication.SharedApplication.StatusBarHidden) {
-				frame.Y = UIApplication.SharedApplication.StatusBarFrame.Height;
-				frame.Height = UIScreen.MainScreen.Bounds.Height - UIApplication.SharedApplication.StatusBarFrame.Height;
-			} else {
-				frame.Y = 0;
-				frame.Height = UIScreen.MainScreen.Bounds.Height;
-			}
-			View.Frame = frame;
-
-		}
-
 		public override void ViewWillAppear (bool animated)
 		{
 			base.ViewWillAppear (animated);

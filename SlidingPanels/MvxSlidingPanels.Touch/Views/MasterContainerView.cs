@@ -26,6 +26,7 @@ namespace MvxSlidingPanels.Touch.Views
 
 		public override void ViewWillAppear (bool animated)
 		{
+			NavigationController.NavigationBarHidden = true;
 			base.ViewWillAppear (animated);
 		}
     }

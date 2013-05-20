@@ -73,24 +73,10 @@ namespace SlidingPanels.Lib
 			View.AddGestureRecognizer (_slidingGesture);
 		}
 
-		public override void ViewWillLayoutSubviews ()
+		public override void ViewDidLayoutSubviews ()
 		{
-			base.ViewWillLayoutSubviews ();
-//			foreach(PanelContainer p in _panelContainers) {
-//				p.Position ();
-//			}
-//
-//			if (_visibleContentViewController != null)
-//			{
-//				_visibleContentViewController.View.Frame = View.Frame;
-//				if (!UIApplication.SharedApplication.StatusBarHidden) {
-//					RectangleF rect = _visibleContentViewController.View.Frame;
-//					rect.Y = UIApplication.SharedApplication.StatusBarFrame.Height;
-//					rect.Height -= UIApplication.SharedApplication.StatusBarFrame.Height;
-//					_visibleContentViewController.View.Frame = rect;
-//					_visibleContentViewController.View.BackgroundColor = UIColor.Green;
-//				}
-//			}
+			base.ViewDidLayoutSubviews ();
+
 		}
 
 		bool ShouldReceiveTouch(UIGestureRecognizer sender, UITouch touch)
@@ -251,8 +237,8 @@ namespace SlidingPanels.Lib
 				}
 
 				// If we are up and running, we need to swap to this view.
-				AddChildViewController (_visibleContentViewController);
-				View.AddSubview (_visibleContentViewController.View);
+//				AddChildViewController (_visibleContentViewController);
+//				View.AddSubview (_visibleContentViewController.View);
 
 				_firstTime = false;
 			}

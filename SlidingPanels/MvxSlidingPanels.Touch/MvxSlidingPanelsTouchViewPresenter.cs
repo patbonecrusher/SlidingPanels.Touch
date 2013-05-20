@@ -20,7 +20,6 @@ namespace MvxSlidingPanels.Touch
 		{
 			// specialized construction logic goes here
 		}
-        
 
 		public override void ChangePresentation (Cirrious.MvvmCross.ViewModels.MvxPresentationHint hint)
 		{
@@ -94,10 +93,8 @@ namespace MvxSlidingPanels.Touch
 
 			if (vc != null)
 			{
-				_slidingPanelVC.SetVisibleContentViewController (viewToAdd);
+				_slidingPanelVC.SetVisibleContentViewController (new UINavigationController(viewToAdd));
 			}
-
-
 		}
 
 		public override void Show (Cirrious.MvvmCross.Touch.Views.IMvxTouchView view)
