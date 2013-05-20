@@ -35,7 +35,6 @@ namespace SlidingPanels.Panels
 		public override void ViewDidLoad ()
 		{
 			base.ViewDidLoad ();
-			View.BackgroundColor = UIColor.Brown;
 		}
 
 		#region IPanel implementation

@@ -13,12 +13,14 @@ namespace MvxSlidingPanels.Touch
     {
 		private SlidingPanelsViewController _slidingPanelVC;
 
+		private UIWindow _window;
 
 
 		public MvxSlidingPanelsTouchViewPresenter(UIApplicationDelegate applicationDelegate, UIWindow window) :
 			base(applicationDelegate, window)
 		{
 			// specialized construction logic goes here
+			_window = window;
 		}
 
 		public override void ChangePresentation (Cirrious.MvvmCross.ViewModels.MvxPresentationHint hint)

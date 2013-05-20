@@ -36,9 +36,33 @@ namespace SlidingPanels.Lib.PanelContainers
 			base.ViewDidLoad ();
 
 			RectangleF frame = View.Bounds;
-			frame.Height = Panel.Size.Height;
-			frame.Y = View.Bounds.Height - Panel.Size.Height;
+//			frame.Height = Panel.Size.Height;
+//			frame.Y = View.Bounds.Height - Panel.Size.Height;
 			PanelVC.View.Frame = frame;
+		}
+
+		public override void Show ()
+		{
+			RectangleF frame = View.Bounds;
+//			frame.Height = Panel.Size.Height;
+//			frame.Y = View.Bounds.Height - Panel.Size.Height;
+			PanelVC.View.Frame = frame;
+			base.Show ();
+		}
+
+		public override void WillRotate (UIInterfaceOrientation toInterfaceOrientation, double duration)
+		{
+			base.WillRotate (toInterfaceOrientation, duration);
+
+			RectangleF frame = View.Bounds;
+//			frame.Height = Panel.Size.Height;
+//			frame.Y = View.Bounds.Height - Panel.Size.Height;
+			PanelVC.View.Frame = frame;
+		}
+
+		public override void DidRotate (UIInterfaceOrientation fromInterfaceOrientation)
+		{
+			base.DidRotate (fromInterfaceOrientation);
 		}
 
 		public override RectangleF GetTopViewPositionWhenSliderIsVisible(RectangleF topViewCurrentFrame)

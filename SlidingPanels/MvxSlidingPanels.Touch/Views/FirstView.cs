@@ -76,6 +76,8 @@ namespace MvxSlidingPanels.Touch.Views
 					{this, "Title DisplayName"},
 					{CenterText, "Text CenterText"}
 				});
+
+			NavigationController.NavigationBar.TintColor = UIColor.Black;
         }
 
 

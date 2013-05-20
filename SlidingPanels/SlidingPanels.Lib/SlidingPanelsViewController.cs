@@ -59,7 +59,7 @@ namespace SlidingPanels.Lib
 		{
 			base.ViewDidLoad ();
 
-			View.BackgroundColor = UIColor.Cyan;
+			//View.BackgroundColor = UIColor.Cyan;
 			_tapToClose = new UITapGestureRecognizer();
 			_tapToClose.AddTarget(() => { HidePanel (CurrentActivePanelContainer); });
 

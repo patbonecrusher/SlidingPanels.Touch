@@ -75,6 +75,6 @@ Global
 		{C3A3727F-DEB8-497B-A92B-C917E5A09601} = {5F68691E-C76A-4EB9-8B14-D2BCEA70DC0B}
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
-		StartupItem = MvxSlidingPanels.Touch\MvxSlidingPanels.Touch.csproj
+		StartupItem = SlidingPanels\SlidingPanels.Touch.Sample.csproj
 	EndGlobalSection
 EndGlobal
