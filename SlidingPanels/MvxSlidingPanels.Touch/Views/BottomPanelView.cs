@@ -4,6 +4,8 @@ using MonoTouch.Foundation;
 using MonoTouch.UIKit;
 using Cirrious.MvvmCross.Touch.Views;
 using SlidingPanels.Lib;
+using Cirrious.MvvmCross.Binding.BindingContext;
+using System.Collections.Generic;
 
 namespace MvxSlidingPanels.Touch.Views
 {
@@ -35,6 +37,11 @@ namespace MvxSlidingPanels.Touch.Views
             base.ViewDidLoad();
             
             // Perform any additional setup after loading the view, typically from a nib.
+			this.AddBindings(
+				new Dictionary<object, string>()
+				{
+					{DisplayText, "Text DisplayName"}
+				});
         }
 
 		#region IPanelView implementation

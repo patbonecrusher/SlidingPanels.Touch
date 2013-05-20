@@ -73,11 +73,9 @@ namespace MvxSlidingPanels.Touch.Views
 			this.AddBindings(
 				new Dictionary<object, string>()
 			    {
-					{this, "Title DisplayName"}
+					{this, "Title DisplayName"},
+					{CenterText, "Text CenterText"}
 				});
-
-
-
         }
 
 

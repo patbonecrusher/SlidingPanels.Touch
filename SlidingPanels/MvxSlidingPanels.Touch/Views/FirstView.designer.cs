@@ -12,7 +12,7 @@ namespace MvxSlidingPanels.Touch.Views
 	partial class FirstView
 	{
 		[Outlet]
-		MonoTouch.UIKit.UILabel CenterText { get; set; }
+		MonoTouch.UIKit.UITextView CenterText { get; set; }
 
 		[Outlet]
 		MonoTouch.UIKit.UIImageView RightArrowImage { get; set; }
