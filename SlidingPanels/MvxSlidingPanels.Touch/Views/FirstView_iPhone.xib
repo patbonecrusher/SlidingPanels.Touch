@@ -44,7 +44,7 @@
 								<reference key="NSNextResponder" ref="319633246"/>
 								<int key="NSvFlags">274</int>
 								<array class="NSMutableArray" key="NSSubviews"/>
-								<string key="NSFrame">{{20, 20}, {280, 484}}</string>
+								<string key="NSFrame">{{20, 20}, {280, 464}}</string>
 								<reference key="NSSuperview" ref="319633246"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="95886511"/>
@@ -59,7 +59,7 @@
 								<reference key="NSNextResponder" ref="319633246"/>
 								<int key="NSvFlags">274</int>
 								<array class="NSMutableArray" key="NSSubviews"/>
-								<string key="NSFrame">{{40, 40}, {240, 444}}</string>
+								<string key="NSFrame">{{40, 40}, {240, 424}}</string>
 								<reference key="NSSuperview" ref="319633246"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="481050315"/>
@@ -108,7 +108,7 @@
 										<bool key="IBUIAdjustsFontSizeToFit">NO</bool>
 									</object>
 								</array>
-								<string key="NSFrame">{{60, 60}, {200, 404}}</string>
+								<string key="NSFrame">{{60, 60}, {200, 384}}</string>
 								<reference key="NSSuperview" ref="319633246"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="198293843"/>
@@ -123,7 +123,7 @@
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 							</object>
 						</array>
-						<string key="NSFrameSize">{320, 524}</string>
+						<string key="NSFrameSize">{320, 504}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="972190314"/>
@@ -135,7 +135,7 @@
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 					</object>
 				</array>
-				<string key="NSFrame">{{0, 44}, {320, 524}}</string>
+				<string key="NSFrame">{{0, 64}, {320, 504}}</string>
 				<reference key="NSSuperview"/>
 				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="319633246"/>
@@ -144,6 +144,7 @@
 					<bytes key="NSWhite">MQA</bytes>
 					<reference key="NSCustomColorSpace" ref="726337442"/>
 				</object>
+				<object class="IBUISimulatedStatusBarMetrics" key="IBUISimulatedStatusBarMetrics"/>
 				<object class="IBUISimulatedNavigationBarMetrics" key="IBUISimulatedTopBarMetrics">
 					<bool key="IBUIPrompted">NO</bool>
 				</object>

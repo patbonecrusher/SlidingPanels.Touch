@@ -76,7 +76,6 @@ namespace SlidingPanels.Lib
 		public override void ViewDidLayoutSubviews ()
 		{
 			base.ViewDidLayoutSubviews ();
-
 		}
 
 		bool ShouldReceiveTouch(UIGestureRecognizer sender, UITouch touch)
@@ -215,7 +214,7 @@ namespace SlidingPanels.Lib
 			}
 		}
 
-		public override void ViewWillAppear (bool animated)
+		public override void ViewDidAppear (bool animated)
 		{
 			base.ViewWillAppear(animated);
 
@@ -239,6 +238,8 @@ namespace SlidingPanels.Lib
 				// If we are up and running, we need to swap to this view.
 //				AddChildViewController (_visibleContentViewController);
 //				View.AddSubview (_visibleContentViewController.View);
+				AddChildViewController (_visibleContentViewController);
+				View.AddSubview (_visibleContentViewController.View);
 
 				_firstTime = false;
 			}

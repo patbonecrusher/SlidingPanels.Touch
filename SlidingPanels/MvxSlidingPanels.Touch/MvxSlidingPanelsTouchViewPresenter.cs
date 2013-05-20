@@ -30,11 +30,6 @@ namespace MvxSlidingPanels.Touch
 		{
 			_slidingPanelVC = new SlidingPanelsViewController ();
 
-			_slidingPanelVC.View.Frame = UIScreen.MainScreen.Bounds;
-			//viewController.View.Frame =  UIScreen.MainScreen.Bounds;
-			viewController.AddChildViewController (_slidingPanelVC);
-			viewController.View.AddSubview (_slidingPanelVC.View);
-
 			//_slidingPanelVC.InsertPanel (PanelType.LeftPanel, new LeftPanelViewController ());
 			//_slidingPanelVC.InsertPanel (PanelType.RightPanel, new RightPanelViewController ());
 
@@ -89,19 +84,32 @@ namespace MvxSlidingPanels.Touch
 
 			//ShowViewModel(typeof(FirstViewModel));
 			MvxViewController vc = _slidingPanelVC.ParentViewController as MvxViewController;
-			UIViewController viewToAdd = (UIViewController) vc.CreateViewControllerFor<FirstViewModel>();
-
 			if (vc != null)
 			{
+				UIViewController viewToAdd = (UIViewController) vc.CreateViewControllerFor<FirstViewModel>();
 				_slidingPanelVC.SetVisibleContentViewController (new UINavigationController(viewToAdd));
 			}
+		}
+
+		protected override UINavigationController CreateNavigationController (UIViewController viewController)
+		{
+			UINavigationController navController = new UINavigationController (viewController);
+			navController.View.Frame = UIScreen.MainScreen.Bounds;
+			viewController.View.Frame = UIScreen.MainScreen.Bounds;
+			viewController.AddChildViewController (_slidingPanelVC);
+			viewController.View.AddSubview (_slidingPanelVC.View);
+			_slidingPanelVC.View.Frame = UIScreen.MainScreen.Bounds;
+
+
+			return navController;
+			//return base.CreateNavigationController (viewController);
 		}
 
 		public override void Show (Cirrious.MvvmCross.Touch.Views.IMvxTouchView view)
 		{
 			if (view is IContentView)
 			{
-				_slidingPanelVC.SetVisibleContentViewController ((UIViewController) view);
+				_slidingPanelVC.SetVisibleContentViewController (new UINavigationController((UIViewController) view));
 			}
 			else
 			{

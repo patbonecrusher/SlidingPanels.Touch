@@ -52,19 +52,13 @@ namespace SlidingPanels
 			_slidingPanelVC.InsertPanel (new BottomPanelContainer(new BottomPanelViewController ()));
 
 			//_slidingPanelVC.SetVisibleContentViewController (new ExampleContentA());
-			//_slidingPanelVC.SetVisibleContentViewController (new UINavigationController(new ExampleContentA()));
+			_slidingPanelVC.SetVisibleContentViewController (new UINavigationController(new ExampleContentA()));
 		}
 
 		public override void ViewWillAppear (bool animated)
 		{
 			base.ViewWillAppear (animated);
 			NavigationController.NavigationBarHidden = true;
-		}
-
-		public override void ViewDidAppear (bool animated)
-		{
-			base.ViewDidAppear (animated);
-			_slidingPanelVC.SetVisibleContentViewController (new UINavigationController(new ExampleContentA()));
 		}
 	}
 }
