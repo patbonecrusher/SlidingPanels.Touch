@@ -28,8 +28,14 @@ namespace SlidingPanels.Panels
 {
 	public partial class BottomPanelViewController : UIViewController, IPanelView
 	{
-		public BottomPanelViewController () : base ("BottomPanelViewController", null)
+		public SlidingPanelsNavigationViewController PanelsNavController {
+			get;
+			private set;
+		}
+
+		public BottomPanelViewController (SlidingPanelsNavigationViewController controller) : base ("BottomPanelViewController", null)
 		{
+			PanelsNavController = controller;
 		}
 
 		public override void ViewDidLoad ()

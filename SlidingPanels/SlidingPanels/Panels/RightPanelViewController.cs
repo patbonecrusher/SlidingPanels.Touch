@@ -28,8 +28,14 @@ namespace SlidingPanels
 {
 	public class RightPanelViewController : UIViewController, IPanelView
 	{
-		public RightPanelViewController ()
+		public SlidingPanelsNavigationViewController PanelsNavController {
+			get;
+			private set;
+		}
+
+		public RightPanelViewController (SlidingPanelsNavigationViewController controller)
 		{
+			PanelsNavController = controller;
 		}
 
 		public override void ViewDidLoad ()

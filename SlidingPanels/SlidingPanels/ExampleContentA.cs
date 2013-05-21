@@ -78,6 +78,10 @@ namespace SlidingPanels
 			NavigationController.NavigationBar.TintColor = UIColor.Black;
 		}
 
+		partial void DoIt (MonoTouch.Foundation.NSObject sender)
+		{
+			NavigationController.PushViewController(new ExampleContentB(), true);
+		}
 	}
 }
 

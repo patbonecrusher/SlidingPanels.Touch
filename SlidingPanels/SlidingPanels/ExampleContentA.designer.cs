@@ -1,5 +1,6 @@
+// WARNING
 //
-// This file has been generated automatically by MonoDevelop to store outlets and
+// This file has been generated automatically by Xamarin Studio to store outlets and
 // actions made in the Xcode designer. If it is removed, they will be lost.
 // Manual changes to this file may not be handled correctly.
 //
@@ -28,6 +29,9 @@ namespace SlidingPanels
 		[Outlet]
 		MonoTouch.UIKit.UIButton NavigateButton { get; set; }
 
+		[Action ("DoIt:")]
+		partial void DoIt (MonoTouch.Foundation.NSObject sender);
+		
 		void ReleaseDesignerOutlets ()
 		{
 			if (CenterText != null) {
@@ -62,4 +66,3 @@ namespace SlidingPanels
 		}
 	}
 }
-
