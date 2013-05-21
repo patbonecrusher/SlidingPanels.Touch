@@ -120,6 +120,7 @@
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\..\..\MvvmCross-Binaries\XS-iOS-Mac\bin\Debug\Mvx\Portable\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="MonoTouch.Dialog-1" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\" />
@@ -134,5 +135,6 @@
     <Compile Include="ViewModels\RightPanelViewModel.cs" />
     <Compile Include="ViewModels\BottomPanelViewModel.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
+    <Compile Include="ViewModels\SecondViewModel.cs" />
   </ItemGroup>
 </Project>

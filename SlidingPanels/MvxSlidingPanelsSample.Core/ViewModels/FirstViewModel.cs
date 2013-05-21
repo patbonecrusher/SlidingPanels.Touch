@@ -1,5 +1,6 @@
 using System;
 using Cirrious.MvvmCross.ViewModels;
+using System.Windows.Input;
 
 namespace MvxSlidingPanelsSample.Core.ViewModels
 {
@@ -19,11 +20,38 @@ namespace MvxSlidingPanelsSample.Core.ViewModels
 			}
 		}
 
+		private string _doNextLabel;
+		public string DoNextLabel
+		{
+			get
+			{
+				return _doNextLabel;
+			}
+			set
+			{
+				_doNextLabel = value;
+				RaisePropertyChanged(() => DoNextLabel);
+			}
+		}
+
+		public ICommand DoNextCommand
+		{
+			get
+			{
+				return new MvxCommand(NavigateToNext);
+			}
+		}
+
+		void NavigateToNext ()
+		{
+			ShowViewModel(typeof(SecondViewModel));
+		}
 
 		public FirstViewModel()
 		{
 			DisplayName = "First View";
 			CenterText = "Slide Left, Right or Up to reveal the panel underneath.";
+			DoNextLabel = "Click to navigate to second view.";
 		}
     }
 }

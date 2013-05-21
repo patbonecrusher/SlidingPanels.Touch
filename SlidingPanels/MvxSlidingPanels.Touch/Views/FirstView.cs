@@ -13,8 +13,6 @@ namespace MvxSlidingPanels.Touch.Views
 {
 	public partial class FirstView : MvxViewController, IContentView
     {
-		public string TestString { get; set; }
-
 		public new FirstViewModel ViewModel
 		{
 			get
@@ -74,7 +72,9 @@ namespace MvxSlidingPanels.Touch.Views
 				new Dictionary<object, string>()
 			    {
 					{this, "Title DisplayName"},
-					{CenterText, "Text CenterText"}
+					{CenterText, "Text CenterText"},
+					{NavigateText, "Text DoNextLabel"},
+					{NavigateButton, "TouchUpInside DoNextCommand"}
 				});
 
 			NavigationController.NavigationBar.TintColor = UIColor.Black;

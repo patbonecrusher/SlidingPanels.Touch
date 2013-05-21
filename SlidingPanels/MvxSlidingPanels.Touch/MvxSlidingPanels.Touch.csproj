@@ -244,6 +244,10 @@
     <Compile Include="Views\RightPanelView.designer.cs">
       <DependentUpon>RightPanelView.cs</DependentUpon>
     </Compile>
+    <Compile Include="Views\SecondView.cs" />
+    <Compile Include="Views\SecondView.designer.cs">
+      <DependentUpon>SecondView.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="Views\FirstView_iPhone.xib" />
@@ -254,6 +258,8 @@
     <InterfaceDefinition Include="Views\LeftPanelView_iPad.xib" />
     <InterfaceDefinition Include="Views\RightPanelView_iPhone.xib" />
     <InterfaceDefinition Include="Views\RightPanelView_iPad.xib" />
+    <InterfaceDefinition Include="Views\SecondView_iPhone.xib" />
+    <InterfaceDefinition Include="Views\SecondView_iPad.xib" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

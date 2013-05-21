@@ -22,6 +22,12 @@ namespace MvxSlidingPanels.Touch.Views
 
 		[Outlet]
 		MonoTouch.UIKit.UIImageView UpArrowImage { get; set; }
+
+		[Outlet]
+		MonoTouch.UIKit.UITextView NavigateText { get; set; }
+
+		[Outlet]
+		MonoTouch.UIKit.UIButton NavigateButton { get; set; }
 		
 		void ReleaseDesignerOutlets ()
 		{
@@ -43,6 +49,16 @@ namespace MvxSlidingPanels.Touch.Views
 			if (UpArrowImage != null) {
 				UpArrowImage.Dispose ();
 				UpArrowImage = null;
+			}
+
+			if (NavigateText != null) {
+				NavigateText.Dispose ();
+				NavigateText = null;
+			}
+
+			if (NavigateButton != null) {
+				NavigateButton.Dispose ();
+				NavigateButton = null;
 			}
 		}
 	}
