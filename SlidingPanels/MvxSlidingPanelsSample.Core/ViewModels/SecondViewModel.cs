@@ -1,5 +1,6 @@
 using System;
 using Cirrious.MvvmCross.ViewModels;
+using System.Windows.Input;
 
 namespace MvxSlidingPanelsSample.Core.ViewModels
 {
@@ -19,6 +20,19 @@ namespace MvxSlidingPanelsSample.Core.ViewModels
 			}
 		}
 
+
+		public ICommand DoSomethingCommand
+		{
+			get
+			{
+				return new MvxCommand(DoSomething);
+			}
+		}
+
+		void DoSomething ()
+		{
+			CenterText = "You Did Something!";
+		}
 
 		public SecondViewModel()
 		{

@@ -5,6 +5,8 @@ using MonoTouch.UIKit;
 using Cirrious.MvvmCross.Touch.Views;
 using SlidingPanels.Lib;
 using MvxSlidingPanelsSample.Core.ViewModels;
+using Cirrious.MvvmCross.Binding.BindingContext;
+using System.Collections.Generic;
 
 namespace MvxSlidingPanels.Touch.Views
 {
@@ -45,6 +47,14 @@ namespace MvxSlidingPanels.Touch.Views
             base.ViewDidLoad();
             
             // Perform any additional setup after loading the view, typically from a nib.
+			this.AddBindings(
+				new Dictionary<object, string>()
+				{
+					{this, "Title DisplayName"},
+					{CenterText, "Text CenterText"},
+					{DoSomething, "TouchUpInside DoSomethingCommand"}
+			});
+
         }
 
 
