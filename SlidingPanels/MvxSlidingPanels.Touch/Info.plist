@@ -29,5 +29,7 @@
 		<string>Icon@2x</string>
 		<string>Icon</string>
 	</array>
+	<key>CFBundleDisplayName</key>
+	<string>Slide Panels X</string>
 </dict>
 </plist>
