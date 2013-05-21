@@ -8,6 +8,7 @@ using MonoTouch.Foundation;
 
 namespace MvxSlidingPanels.Touch.Views
 {
+
 	[Register ("FirstView")]
 	partial class FirstView
 	{

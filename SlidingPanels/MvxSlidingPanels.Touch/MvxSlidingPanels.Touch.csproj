@@ -218,6 +218,7 @@
     <Folder Include="Resources\" />
     <Folder Include="Views\" />
     <Folder Include="Images\" />
+    <Folder Include="Linker\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />
@@ -248,6 +249,7 @@
     <Compile Include="Views\SecondView.designer.cs">
       <DependentUpon>SecondView.cs</DependentUpon>
     </Compile>
+    <Compile Include="Linker\LinkerInclude.cs" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="Views\FirstView_iPhone.xib" />
