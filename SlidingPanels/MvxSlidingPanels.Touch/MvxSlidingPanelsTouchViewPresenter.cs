@@ -6,23 +6,34 @@ using SlidingPanels.Lib.PanelContainers;
 using Cirrious.MvvmCross.Touch.Views;
 using MvxSlidingPanelsSample.Core.ViewModels;
 using Cirrious.MvvmCross.ViewModels;
+using Cirrious.CrossCore.Exceptions;
+using Cirrious.CrossCore.Platform;
+using Cirrious.MvvmCross.Views;
 
 namespace MvxSlidingPanels.Touch
 {
 	public class MvxSlidingPanelsTouchViewPresenter : MvxTouchViewPresenter
 	{
-		public SlidingPanelsNavigationViewController NavController
-		{
+
+		private UIWindow _window;
+
+		public SlidingPanelsNavigationViewController NavController {
 			get
 			{
-				return base.MasterNavigationController as SlidingPanelsNavigationViewController;
+				return MasterNavigationController as SlidingPanelsNavigationViewController;
 			}
+		}
+
+		public UIViewController RootController {
+			get;
+			private set;
 		}
 
 		public MvxSlidingPanelsTouchViewPresenter(UIApplicationDelegate applicationDelegate, UIWindow window) :
 			base(applicationDelegate, window)
 		{
 			// specialized construction logic goes here
+			_window = window;
 		}
 
 		public override void ChangePresentation (Cirrious.MvvmCross.ViewModels.MvxPresentationHint hint)
@@ -32,7 +43,11 @@ namespace MvxSlidingPanels.Touch
 
 		protected override void ShowFirstView (UIViewController viewController)
 		{
-			base.ShowFirstView(viewController);
+
+			base.ShowFirstView (viewController);
+
+			RootController.AddChildViewController (NavController);
+			RootController.View.AddSubview (NavController.View);
 
 			AddPanel<LeftPanelViewModel>(PanelType.LeftPanel, viewController as MvxViewController);
 			AddPanel<RightPanelViewModel>(PanelType.RightPanel, viewController as MvxViewController);
@@ -62,12 +77,19 @@ namespace MvxSlidingPanels.Touch
 			};
 		}
 
-		UIViewController rootController = new UIViewController ();
 		protected override UINavigationController CreateNavigationController (UIViewController viewController)
 		{
 			SlidingPanelsNavigationViewController navController = new SlidingPanelsNavigationViewController (viewController);
-			return new SlidingPanelsNavigationViewController (viewController);
+			RootController = new UIViewController ();
+			return navController;
 		}
+
+		protected override void SetWindowRootViewController(UIViewController controller)
+		{
+			_window.AddSubview(RootController.View);
+			_window.RootViewController = RootController;
+		}
+
 	}
 }
 

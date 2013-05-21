@@ -36,8 +36,8 @@ namespace SlidingPanels.Lib.PanelContainers
 			base.ViewDidLoad ();
 
 			RectangleF frame = View.Bounds;
-			frame.Height = Panel.Size.Height;
-			frame.Y = View.Bounds.Height - Panel.Size.Height;
+//			frame.Height = Panel.Size.Height;
+//			frame.Y = View.Bounds.Height - Panel.Size.Height;
 			PanelVC.View.Frame = frame;
 		}
 
@@ -62,7 +62,7 @@ namespace SlidingPanels.Lib.PanelContainers
 
 			if (!IsVisible)
 			{
-				return (touchPosition.Y >= (UIScreen.MainScreen.Bounds.Height - 40f) && touchPosition.Y <= UIScreen.MainScreen.Bounds.Height);
+				return (touchPosition.Y >= (View.Bounds.Height - 40f) && touchPosition.Y <= View.Bounds.Height);
 			}
 			else
 			{
@@ -85,10 +85,6 @@ namespace SlidingPanels.Lib.PanelContainers
 
 			RectangleF frame = topViewCurrentFrame;
 			frame.Y = topViewStartYPosition + translation;
-
-			if (!UIApplication.SharedApplication.StatusBarHidden) {
-				frame.Y += UIApplication.SharedApplication.StatusBarFrame.Height;
-			}
 
 			if (frame.Y >= 0) 
 			{ 
