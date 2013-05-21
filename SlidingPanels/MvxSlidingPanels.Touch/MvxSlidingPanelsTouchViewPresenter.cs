@@ -6,6 +6,7 @@ using SlidingPanels.Lib.PanelContainers;
 using Cirrious.MvvmCross.Touch.Views;
 using MvxSlidingPanelsSample.Core.ViewModels;
 using Cirrious.MvvmCross.ViewModels;
+using Cirrious.CrossCore.Exceptions;
 
 namespace MvxSlidingPanels.Touch
 {
@@ -77,11 +78,16 @@ namespace MvxSlidingPanels.Touch
 			};
 		}
 
-		UIViewController rootController = new UIViewController ();
-		protected override UINavigationController CreateNavigationController (UIViewController viewController)
+		public override void Show(IMvxTouchView view)
 		{
-			NavController = new SlidingPanelsNavigationViewController (viewController);
-			return new SlidingPanelsNavigationViewController (viewController);
+			var viewController = view as UIViewController;
+			if (viewController == null)
+				throw new MvxException("Passed in IMvxTouchView is not a UIViewController");
+
+			if (MasterNavigationController == null)
+				ShowFirstView(viewController);
+			else
+				MasterNavigationController.PushViewController(viewController, true /*animated*/);
 		}
 	}
 }
