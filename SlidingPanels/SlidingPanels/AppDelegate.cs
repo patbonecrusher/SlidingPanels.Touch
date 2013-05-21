@@ -24,6 +24,9 @@ using System.Collections.Generic;
 using System.Linq;
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
+using SlidingPanels.Lib;
+using SlidingPanels.Lib.PanelContainers;
+using SlidingPanels.Panels;
 
 namespace SlidingPanels
 {
@@ -35,7 +38,7 @@ namespace SlidingPanels
 	{
 		// class-level declarations
 		UIWindow window;
-		UINavigationController viewController;
+		SlidingPanelsNavigationViewController viewController;
 		//
 		// This method is invoked when the application has loaded and is ready to run. In this 
 		// method you should instantiate the window, load the UI into it and then make the window
@@ -46,11 +49,20 @@ namespace SlidingPanels
 		public override bool FinishedLaunching (UIApplication app, NSDictionary options)
 		{
 			window = new UIWindow (UIScreen.MainScreen.Bounds);
-			
-			viewController = new UINavigationController(new MasterContainerViewController ());
+
+			viewController = new SlidingPanelsNavigationViewController(new ExampleContentA ());
+
+			//UIViewController tmp = new UIViewController ();
+			//tmp.AddChildViewController (viewController);
+			//tmp.View.AddSubview (viewController.View);
+
 			window.RootViewController = viewController;
 			window.MakeKeyAndVisible ();
-			
+
+			viewController.InsertPanel (new LeftPanelContainer(new LeftPanelViewController ()));
+			viewController.InsertPanel (new RightPanelContainer(new RightPanelViewController ()));
+			viewController.InsertPanel (new BottomPanelContainer(new BottomPanelViewController ()));
+
 			return true;
 		}
 	}

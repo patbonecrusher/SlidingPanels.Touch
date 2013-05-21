@@ -24,10 +24,12 @@ using System.Drawing;
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
 using SlidingPanels.Lib;
+using SlidingPanels.Lib.PanelContainers;
+using SlidingPanels.Panels;
 
 namespace SlidingPanels
 {
-	public partial class ExampleContentA : UIViewController, IContentView
+	public partial class ExampleContentA : UIViewController
 	{
 		static bool UserInterfaceIdiomIsPhone {
 			get { return UIDevice.CurrentDevice.UserInterfaceIdiom == UIUserInterfaceIdiom.Phone; }
@@ -37,14 +39,12 @@ namespace SlidingPanels
 			: base (UserInterfaceIdiomIsPhone ? "ExampleContentA_iPhone" : "ExampleContentA_iPad", null)
 		{
 			NavigationItem.LeftBarButtonItem = new UIBarButtonItem (UIBarButtonSystemItem.Action, delegate {
-				if (ToggleFlyout != null) {
-					ToggleFlyout(PanelType.LeftPanel);
-				}
+				SlidingPanelsNavigationViewController navController = SlidingPanelsNavigationViewController.Instance;
+				navController.TogglePanel(PanelType.LeftPanel);
 			});
 			NavigationItem.RightBarButtonItem = new UIBarButtonItem (UIBarButtonSystemItem.Action, delegate {
-				if (ToggleFlyout != null) {
-					ToggleFlyout(PanelType.RightPanel);
-				}
+				SlidingPanelsNavigationViewController navController = SlidingPanelsNavigationViewController.Instance;
+				navController.TogglePanel(PanelType.RightPanel);
 			});
 		}
 
@@ -52,18 +52,18 @@ namespace SlidingPanels
 		{
 			// Releases the view if it doesn't have a superview.
 			base.DidReceiveMemoryWarning ();
-			
+
 			// Release any cached data, images, etc that aren't in use.
 		}
 
 		public override void ViewDidLoad ()
 		{
 			base.ViewDidLoad ();
-			
+
+			SlidingPanelsNavigationViewController navController = NavigationController as SlidingPanelsNavigationViewController;
+
 			// Perform any additional setup after loading the view, typically from a nib.
 		}
-
-		public event Action<PanelType> ToggleFlyout;
 
 	}
 }

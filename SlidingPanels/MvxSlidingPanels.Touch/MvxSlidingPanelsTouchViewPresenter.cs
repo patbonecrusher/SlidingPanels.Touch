@@ -9,18 +9,20 @@ using Cirrious.MvvmCross.ViewModels;
 
 namespace MvxSlidingPanels.Touch
 {
-    public class MvxSlidingPanelsTouchViewPresenter : MvxTouchViewPresenter
-    {
-		private SlidingPanelsViewController _slidingPanelVC;
-
-		private UIWindow _window;
-
+	public class MvxSlidingPanelsTouchViewPresenter : MvxTouchViewPresenter
+	{
+		public SlidingPanelsNavigationViewController NavController
+		{
+			get
+			{
+				return base.MasterNavigationController as SlidingPanelsNavigationViewController;
+			}
+		}
 
 		public MvxSlidingPanelsTouchViewPresenter(UIApplicationDelegate applicationDelegate, UIWindow window) :
 			base(applicationDelegate, window)
 		{
 			// specialized construction logic goes here
-			_window = window;
 		}
 
 		public override void ChangePresentation (Cirrious.MvvmCross.ViewModels.MvxPresentationHint hint)
@@ -30,94 +32,42 @@ namespace MvxSlidingPanels.Touch
 
 		protected override void ShowFirstView (UIViewController viewController)
 		{
-			_slidingPanelVC = new SlidingPanelsViewController ();
-
-			//_slidingPanelVC.InsertPanel (PanelType.LeftPanel, new LeftPanelViewController ());
-			//_slidingPanelVC.InsertPanel (PanelType.RightPanel, new RightPanelViewController ());
-
-			/*
-			IMvxTouchView vc = viewController as IMvxTouchView;
-			if (vc != null)
-			{
-
-				_slidingPanelVC.InsertPanel(new RightPanelContainer(vc.CreateViewControllerFor(RightPanelViewModel)));
-		        _slidingPanelVC.InsertPanel(new BottomPanelContainer(vc.CreateViewControllerFor(BottomPanelViewModel)));
-
-				_slidingPanelVC.SetVisibleContentViewController (viewController);
-			}
-			*/
 			base.ShowFirstView(viewController);
+
+			AddPanel<LeftPanelViewModel>(PanelType.LeftPanel, viewController as MvxViewController);
+			AddPanel<RightPanelViewModel>(PanelType.RightPanel, viewController as MvxViewController);
+			AddPanel<BottomPanelViewModel>(PanelType.BottomPanel, viewController as MvxViewController);
 		}
 
-		protected void AddPanel<T>(PanelType panelType) where T : MvxViewModel
+		protected void AddPanel<T>(PanelType panelType, MvxViewController mvxController) where T : MvxViewModel
 		{
-			MvxViewController vc = _slidingPanelVC.ParentViewController as MvxViewController;
-			UIViewController viewToAdd = (UIViewController) vc.CreateViewControllerFor<T>();
+			UIViewController viewToAdd = (UIViewController) mvxController.CreateViewControllerFor<T>();
 
-			if (vc != null)
+			switch (panelType)
 			{
-				switch (panelType)
-				{
-					case PanelType.LeftPanel:
-						_slidingPanelVC.InsertPanel(new LeftPanelContainer(viewToAdd));
-						break;
+				case PanelType.LeftPanel:
+				NavController.InsertPanel(new LeftPanelContainer(viewToAdd));
+				break;
 
-					case PanelType.RightPanel:
-						_slidingPanelVC.InsertPanel(new RightPanelContainer(viewToAdd));
-						break;
+				case PanelType.RightPanel:
+				NavController.InsertPanel(new RightPanelContainer(viewToAdd));
+				break;
 
-					case PanelType.BottomPanel:
-						_slidingPanelVC.InsertPanel(new BottomPanelContainer(viewToAdd));
-						break;
+				case PanelType.BottomPanel:
+				NavController.InsertPanel(new BottomPanelContainer(viewToAdd));
+				break;
 
-					default:
-						throw new Exception("blah!");
-				};
-			}
+				default:
+				throw new Exception("blah!");
+			};
 		}
 
-		protected override void OnMasterNavigationControllerCreated ()
-		{
-			base.OnMasterNavigationControllerCreated();
-
-			AddPanel<LeftPanelViewModel>(PanelType.LeftPanel);
-			AddPanel<RightPanelViewModel>(PanelType.RightPanel);
-			AddPanel<BottomPanelViewModel>(PanelType.BottomPanel);
-
-			//ShowViewModel(typeof(FirstViewModel));
-			MvxViewController vc = _slidingPanelVC.ParentViewController as MvxViewController;
-			if (vc != null)
-			{
-				UIViewController viewToAdd = (UIViewController) vc.CreateViewControllerFor<FirstViewModel>();
-				_slidingPanelVC.SetVisibleContentViewController (new UINavigationController(viewToAdd));
-			}
-		}
-
+		UIViewController rootController = new UIViewController ();
 		protected override UINavigationController CreateNavigationController (UIViewController viewController)
 		{
-			UINavigationController navController = new UINavigationController (viewController);
-			navController.View.Frame = UIScreen.MainScreen.Bounds;
-			viewController.View.Frame = UIScreen.MainScreen.Bounds;
-			viewController.AddChildViewController (_slidingPanelVC);
-			viewController.View.AddSubview (_slidingPanelVC.View);
-			_slidingPanelVC.View.Frame = UIScreen.MainScreen.Bounds;
-
-
-			return navController;
-			//return base.CreateNavigationController (viewController);
+			SlidingPanelsNavigationViewController navController = new SlidingPanelsNavigationViewController (viewController);
+			return new SlidingPanelsNavigationViewController (viewController);
 		}
-
-		public override void Show (Cirrious.MvvmCross.Touch.Views.IMvxTouchView view)
-		{
-			if (view is IContentView)
-			{
-				_slidingPanelVC.SetVisibleContentViewController (new UINavigationController((UIViewController) view));
-			}
-			else
-			{
-				base.Show(view);
-			}
-		}
-    }
+	}
 }
 
