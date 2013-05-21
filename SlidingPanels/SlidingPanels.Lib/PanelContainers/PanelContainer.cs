@@ -43,7 +43,7 @@ namespace SlidingPanels.Lib.PanelContainers
 		{
 			base.ViewDidLoad ();
 
-			View.Frame = UIScreen.MainScreen.ApplicationFrame;
+			View.Frame = UIScreen.MainScreen.Bounds;
 			View.BackgroundColor = UIColor.Blue;
 
 			AddChildViewController (PanelVC);

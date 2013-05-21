@@ -38,7 +38,7 @@ namespace SlidingPanels
 	{
 		// class-level declarations
 		UIWindow window;
-		SlidingPanelsNavigationViewController viewController;
+
 		//
 		// This method is invoked when the application has loaded and is ready to run. In this 
 		// method you should instantiate the window, load the UI into it and then make the window
@@ -50,18 +50,18 @@ namespace SlidingPanels
 		{
 			window = new UIWindow (UIScreen.MainScreen.Bounds);
 
-			viewController = new SlidingPanelsNavigationViewController(new ExampleContentA ());
+			SlidingPanelsNavigationViewController navController = new SlidingPanelsNavigationViewController(new ExampleContentA ());
 
-			//UIViewController tmp = new UIViewController ();
-			//tmp.AddChildViewController (viewController);
-			//tmp.View.AddSubview (viewController.View);
+			UIViewController rootController = new UIViewController ();
+			rootController.AddChildViewController (navController);
+			rootController.View.AddSubview (navController.View);
 
-			window.RootViewController = viewController;
+			window.RootViewController = rootController;
 			window.MakeKeyAndVisible ();
 
-			viewController.InsertPanel (new LeftPanelContainer(new LeftPanelViewController ()));
-			viewController.InsertPanel (new RightPanelContainer(new RightPanelViewController ()));
-			viewController.InsertPanel (new BottomPanelContainer(new BottomPanelViewController ()));
+			navController.InsertPanel (new LeftPanelContainer(new LeftPanelViewController ()));
+			navController.InsertPanel (new RightPanelContainer(new RightPanelViewController ()));
+			navController.InsertPanel (new BottomPanelContainer(new BottomPanelViewController ()));
 
 			return true;
 		}

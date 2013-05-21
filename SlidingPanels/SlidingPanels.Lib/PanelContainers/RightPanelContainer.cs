@@ -31,8 +31,6 @@ namespace SlidingPanels.Lib.PanelContainers
 		{
 		}
 
-
-
 		public override void ViewDidLoad ()
 		{
 			base.ViewDidLoad ();
