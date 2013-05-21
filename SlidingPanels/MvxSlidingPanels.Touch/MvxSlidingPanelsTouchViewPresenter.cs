@@ -15,15 +15,13 @@ namespace MvxSlidingPanels.Touch
 	public class MvxSlidingPanelsTouchViewPresenter : MvxTouchViewPresenter
 	{
 
-		public override UINavigationController MasterNavigationController {
-			get {
-				return NavController;
-			}
-		}
+		private UIWindow _window;
 
 		public SlidingPanelsNavigationViewController NavController {
-			get;
-			private set;
+			get
+			{
+				return MasterNavigationController as SlidingPanelsNavigationViewController;
+			}
 		}
 
 		public UIViewController RootController {
@@ -35,6 +33,7 @@ namespace MvxSlidingPanels.Touch
 			base(applicationDelegate, window)
 		{
 			// specialized construction logic goes here
+			_window = window;
 		}
 
 		public override void ChangePresentation (Cirrious.MvvmCross.ViewModels.MvxPresentationHint hint)
@@ -44,10 +43,8 @@ namespace MvxSlidingPanels.Touch
 
 		protected override void ShowFirstView (UIViewController viewController)
 		{
-			NavController = new SlidingPanelsNavigationViewController (viewController);
-			RootController = new UIViewController ();
 
-			base.SetWindowRootViewController (RootController);
+			base.ShowFirstView (viewController);
 
 			RootController.AddChildViewController (NavController);
 			RootController.View.AddSubview (NavController.View);
@@ -80,68 +77,18 @@ namespace MvxSlidingPanels.Touch
 			};
 		}
 
-		public override void Show(IMvxTouchView view)
+		protected override UINavigationController CreateNavigationController (UIViewController viewController)
 		{
-			var viewController = view as UIViewController;
-			if (viewController == null)
-				throw new MvxException("Passed in IMvxTouchView is not a UIViewController");
-
-			if (MasterNavigationController == null)
-				ShowFirstView(viewController);
-			else
-				MasterNavigationController.PushViewController(viewController, true /*animated*/);
+			SlidingPanelsNavigationViewController navController = new SlidingPanelsNavigationViewController (viewController);
+			RootController = new UIViewController ();
+			return navController;
 		}
 
-		protected override UIViewController CurrentTopViewController
+		protected override void SetWindowRootViewController(UIViewController controller)
 		{
-			get { return MasterNavigationController.TopViewController; }
+			_window.AddSubview(RootController.View);
+			_window.RootViewController = RootController;
 		}
-
-		public override void ClearBackStack()
-		{
-			if (MasterNavigationController == null)
-				return;
-
-			MasterNavigationController.PopToRootViewController(true);
-			//MasterNavigationController = null;
-		}
-
-		public override void CloseModalViewController()
-		{
-			MasterNavigationController.PopViewControllerAnimated(true);
-		}
-
-		public override void Close(IMvxViewModel toClose)
-		{
-			var topViewController = MasterNavigationController.TopViewController;
-
-			if (topViewController == null)
-			{
-				MvxTrace.Warning( "Don't know how to close this viewmodel - no topmost");
-				return;
-			}
-
-			var topView = topViewController as IMvxTouchView;
-			if (topView == null)
-			{
-				MvxTrace.Warning(
-					"Don't know how to close this viewmodel - topmost is not a touchview");
-				return;
-			}
-
-			var viewModel = topView.ReflectionGetViewModel();
-			if (viewModel != toClose)
-			{
-				MvxTrace.Warning(
-					"Don't know how to close this viewmodel - topmost view does not present this viewmodel");
-				return;
-			}
-
-			MasterNavigationController.PopViewControllerAnimated(true);
-		}
-
-
-
 
 	}
 }
