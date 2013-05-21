@@ -38,15 +38,23 @@ namespace SlidingPanels
 		public ExampleContentA ()
 			: base (UserInterfaceIdiomIsPhone ? "ExampleContentA_iPhone" : "ExampleContentA_iPad", null)
 		{
-			NavigationItem.LeftBarButtonItem = new UIBarButtonItem (UIBarButtonSystemItem.Action, delegate {
-				SlidingPanelsNavigationViewController navController = SlidingPanelsNavigationViewController.Instance;
-				navController.TogglePanel(PanelType.LeftPanel);
-			});
-			NavigationItem.RightBarButtonItem = new UIBarButtonItem (UIBarButtonSystemItem.Action, delegate {
-				SlidingPanelsNavigationViewController navController = SlidingPanelsNavigationViewController.Instance;
-				navController.TogglePanel(PanelType.RightPanel);
-			});
+			NavigationItem.LeftBarButtonItem = CreateSliderButton("Images/SlideRight40.png", PanelType.LeftPanel);
+			NavigationItem.RightBarButtonItem = CreateSliderButton("Images/SlideLeft40.png", PanelType.RightPanel);
 		}
+
+		private UIBarButtonItem CreateSliderButton(string imageName, PanelType panelType)
+		{
+			UIButton button = new UIButton(new RectangleF(0, 0, 40f, 40f));
+			button.SetBackgroundImage(UIImage.FromBundle(imageName), UIControlState.Normal);
+			button.TouchUpInside += delegate
+			{
+				SlidingPanelsNavigationViewController navController = NavigationController as SlidingPanelsNavigationViewController;
+				navController.TogglePanel(panelType);
+			};
+
+			return new UIBarButtonItem(button);
+		}
+
 
 		public override void DidReceiveMemoryWarning ()
 		{
@@ -63,8 +71,15 @@ namespace SlidingPanels
 			SlidingPanelsNavigationViewController navController = NavigationController as SlidingPanelsNavigationViewController;
 
 			// Perform any additional setup after loading the view, typically from a nib.
+			LeftArrowImage.Image = UIImage.FromBundle("Images/LeftArrow.png");
+			UpArrowImage.Image = UIImage.FromBundle("Images/UpArrow.png");
+			RightArrowImage.Image = UIImage.FromBundle("Images/RightArrow.png");
+
+			NavigationController.NavigationBar.TintColor = UIColor.Black;
 		}
 
 	}
 }
+
+
 

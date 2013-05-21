@@ -81,6 +81,7 @@
   <ItemGroup>
     <Folder Include="Resources\" />
     <Folder Include="Panels\" />
+    <Folder Include="Images\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />
@@ -97,7 +98,6 @@
       <DependentUpon>ExampleContentB.cs</DependentUpon>
     </Compile>
     <Compile Include="Panels\RightPanelViewController.cs" />
-    <Compile Include="Panels\LeftPanelViewControllerb.cs" />
     <Compile Include="Panels\LeftPanelViewController.cs" />
     <Compile Include="Panels\LeftPanelViewController.designer.cs">
       <DependentUpon>LeftPanelViewController.cs</DependentUpon>
@@ -124,5 +124,12 @@
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Default-568h%402x.png" />
+    <BundleResource Include="Images\LeftArrow.png" />
+    <BundleResource Include="Images\RightArrow.png" />
+    <BundleResource Include="Images\SlideLeft20.png" />
+    <BundleResource Include="Images\SlideLeft40.png" />
+    <BundleResource Include="Images\SlideRight20.png" />
+    <BundleResource Include="Images\SlideRight40.png" />
+    <BundleResource Include="Images\UpArrow.png" />
   </ItemGroup>
 </Project>

@@ -10,9 +10,22 @@ namespace SlidingPanels
 	[Register ("ExampleContentB")]
 	partial class ExampleContentB
 	{
+		MonoTouch.UIKit.UIButton DoSomething { get; set; }
+
+		[Outlet]
+		MonoTouch.UIKit.UILabel CenterText { get; set; }
+
 		void ReleaseDesignerOutlets ()
 		{
-		}
-	}
+			if (DoSomething != null) {
+				DoSomething.Dispose ();
+				DoSomething = null;
+			}
+
+			if (CenterText != null) {
+				CenterText.Dispose ();
+				CenterText = null;
+			}
+		}	}
 }
 

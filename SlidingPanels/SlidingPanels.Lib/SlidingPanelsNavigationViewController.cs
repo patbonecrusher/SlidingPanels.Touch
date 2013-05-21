@@ -204,8 +204,6 @@ namespace SlidingPanels.Lib
 				View.RemoveFromSuperview ();
 				parent.AddSubview (View);
 			}
-
-			//ParentViewController.AddChildViewController (container);
 		}
 
 		public override void WillChange (NSKeyValueChange changeKind, NSIndexSet indexes, NSString forKey)
