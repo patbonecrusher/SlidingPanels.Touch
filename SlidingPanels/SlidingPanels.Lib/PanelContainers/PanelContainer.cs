@@ -43,23 +43,13 @@ namespace SlidingPanels.Lib.PanelContainers
 		{
 			base.ViewDidLoad ();
 
-			View.Frame = View.Bounds;
-//			View.BackgroundColor = UIColor.Blue;
+			View.Frame = UIScreen.MainScreen.ApplicationFrame;
+			View.BackgroundColor = UIColor.Blue;
+
+			AddChildViewController (PanelVC);
+			View.AddSubview (PanelVC.View);
 
 			Hide ();
-		}
-
-		public override void WillRotate (UIInterfaceOrientation toInterfaceOrientation, double duration)
-		{
-//			RectangleF frame = View.Bounds;
-//			if (toInterfaceOrientation == UIInterfaceOrientation.LandscapeLeft || 
-//			    toInterfaceOrientation == UIInterfaceOrientation.LandscapeRight)
-//			{
-//				frame.Height = View.Bounds.Width;
-//				frame.Width = View.Bounds.Height;
-//			}
-//			View.Frame = frame;
-			base.WillRotate (toInterfaceOrientation, duration);
 		}
 
 		public override void ViewWillAppear (bool animated)
@@ -70,8 +60,6 @@ namespace SlidingPanels.Lib.PanelContainers
 		public override void ViewDidAppear (bool animated)
 		{
 			base.ViewDidAppear (animated);
-			AddChildViewController (PanelVC);
-			View.AddSubview (PanelVC.View);
 		}
 
 		public void Toggle ()
@@ -83,14 +71,14 @@ namespace SlidingPanels.Lib.PanelContainers
 			}
 		}
 
-		public virtual void Show ()
+		public void Show ()
 		{
-//			View.Frame = View.Bounds;
 			Panel.RefreshContent ();
+			View.Layer.ZPosition = -1;
 			View.Hidden = false;
 		}
 
-		public virtual void Hide ()
+		public void Hide ()
 		{
 			View.Hidden = true;
 		}

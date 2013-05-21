@@ -8,10 +8,11 @@ using MvxSlidingPanelsSample.Core.ViewModels;
 using SlidingPanels.Lib;
 using System.Collections.Generic;
 using CrossUI.Touch.Dialog.Elements;
+using SlidingPanels.Lib.PanelContainers;
 
 namespace MvxSlidingPanels.Touch.Views
 {
-	public partial class FirstView : MvxViewController, IContentView
+	public partial class FirstView : MvxViewController
     {
 		public new FirstViewModel ViewModel
 		{
@@ -35,10 +36,8 @@ namespace MvxSlidingPanels.Touch.Views
 			button.SetBackgroundImage(UIImage.FromBundle(imageName), UIControlState.Normal);
 			button.TouchUpInside += delegate
 			{
-				if (ToggleFlyout != null)
-				{
-					ToggleFlyout(panelType);
-				}
+				SlidingPanelsNavigationViewController navController = NavigationController as SlidingPanelsNavigationViewController;
+				navController.TogglePanel(panelType);
 			};
 
 			return new UIBarButtonItem(button);
@@ -92,7 +91,6 @@ namespace MvxSlidingPanels.Touch.Views
 			base.ViewWillAppear(animated);
 
 		}
-		public event Action<PanelType> ToggleFlyout;
     }
 }
 

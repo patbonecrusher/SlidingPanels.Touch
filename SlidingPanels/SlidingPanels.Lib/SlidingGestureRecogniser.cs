@@ -81,10 +81,10 @@ namespace SlidingPanels.Lib
 			{
 				return;
 			}
-		
-			CurrentActivePanelContainer = PanelContainers.Where (p => p.IsVisible).FirstOrDefault ();
+
+			CurrentActivePanelContainer = PanelContainers.FirstOrDefault (p => p.IsVisible);
 			if (CurrentActivePanelContainer == null) {
-				CurrentActivePanelContainer = PanelContainers.Where (p => p.CanStartPanning(touchPt, ViewControllerToSwipe.View.Frame)).FirstOrDefault ();
+				CurrentActivePanelContainer = PanelContainers.FirstOrDefault (p => p.CanStartPanning (touchPt, ViewControllerToSwipe.View.Frame));
 				if (CurrentActivePanelContainer != null) {
 					CurrentActivePanelContainer.Show ();
 					CurrentActivePanelContainer.PanningStarted (touchPt, ViewControllerToSwipe.View.Frame);
@@ -92,7 +92,6 @@ namespace SlidingPanels.Lib
 			} else {
 				CurrentActivePanelContainer.PanningStarted (touchPt, ViewControllerToSwipe.View.Frame);
 			}
-			Console.WriteLine ("aBegan");
 		}
 
 		public override void TouchesMoved (MonoTouch.Foundation.NSSet touches, UIEvent evt)

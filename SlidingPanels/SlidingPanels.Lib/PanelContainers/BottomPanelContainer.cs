@@ -36,33 +36,9 @@ namespace SlidingPanels.Lib.PanelContainers
 			base.ViewDidLoad ();
 
 			RectangleF frame = View.Bounds;
-//			frame.Height = Panel.Size.Height;
-//			frame.Y = View.Bounds.Height - Panel.Size.Height;
+			frame.Height = Panel.Size.Height;
+			frame.Y = View.Bounds.Height - Panel.Size.Height;
 			PanelVC.View.Frame = frame;
-		}
-
-		public override void Show ()
-		{
-			RectangleF frame = View.Bounds;
-//			frame.Height = Panel.Size.Height;
-//			frame.Y = View.Bounds.Height - Panel.Size.Height;
-			PanelVC.View.Frame = frame;
-			base.Show ();
-		}
-
-		public override void WillRotate (UIInterfaceOrientation toInterfaceOrientation, double duration)
-		{
-			base.WillRotate (toInterfaceOrientation, duration);
-
-			RectangleF frame = View.Bounds;
-//			frame.Height = Panel.Size.Height;
-//			frame.Y = View.Bounds.Height - Panel.Size.Height;
-			PanelVC.View.Frame = frame;
-		}
-
-		public override void DidRotate (UIInterfaceOrientation fromInterfaceOrientation)
-		{
-			base.DidRotate (fromInterfaceOrientation);
 		}
 
 		public override RectangleF GetTopViewPositionWhenSliderIsVisible(RectangleF topViewCurrentFrame)
@@ -79,13 +55,14 @@ namespace SlidingPanels.Lib.PanelContainers
 
 		public override bool CanStartPanning(PointF touchPosition, RectangleF topViewCurrentFrame)
 		{
+			// touchPosition is in Screen coordinate.
+
 			float offset = 0;
-			offset += NavigationController.NavigationBarHidden ? 0 : NavigationController.NavigationBar.Frame.Height;
 			touchPosition.Y += offset;
 
 			if (!IsVisible)
 			{
-				return (touchPosition.Y >= (View.Bounds.Size.Height - 40f) && touchPosition.Y <= View.Bounds.Size.Height);
+				return (touchPosition.Y >= (UIScreen.MainScreen.Bounds.Height - 40f) && touchPosition.Y <= UIScreen.MainScreen.Bounds.Height);
 			}
 			else
 			{
@@ -108,20 +85,28 @@ namespace SlidingPanels.Lib.PanelContainers
 
 			RectangleF frame = topViewCurrentFrame;
 			frame.Y = topViewStartYPosition + translation;
+
+			if (!UIApplication.SharedApplication.StatusBarHidden) {
+				frame.Y += UIApplication.SharedApplication.StatusBarFrame.Height;
+			}
+
 			if (frame.Y >= 0) 
 			{ 
 				frame.Y = 0; 
 			}
 			else if (frame.Y <= -Panel.Size.Height)
 			{
-				//frame.Y = -Panel.Size.Height;
+				frame.Y = -Panel.Size.Height;
 			}
 			return frame;
 		}
 
 		public override bool PanningEnded (PointF touchPosition, RectangleF topViewCurrentFrame)
 		{
-			float screenHeight = View.Bounds.Size.Height;
+			// touchPosition will be in View coordinate, and will be adjusted to account
+			// for the nav bar if visible.
+
+			float screenHeight = topViewCurrentFrame.Height;
 			float panelHeight = Panel.Size.Height;
 
 			RectangleF frame = topViewCurrentFrame;

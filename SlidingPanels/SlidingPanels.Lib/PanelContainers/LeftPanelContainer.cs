@@ -78,11 +78,14 @@ namespace SlidingPanels.Lib.PanelContainers
 			float panelWidth = Panel.Size.Width;
 
 			float translation = touchPosition.X - touchPositionStartXPosition;
+
 			RectangleF frame = topViewCurrentFrame;
 
 			frame.X = topViewStartXPosition + translation;
 			if (frame.X <= 0) { frame.X = 0; }
 			if (frame.X >= panelWidth) { frame.X = panelWidth; }
+
+			//			Console.WriteLine ("After: " + frame);
 
 			return frame;
 		}
