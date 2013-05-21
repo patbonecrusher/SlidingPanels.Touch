@@ -88,7 +88,6 @@
   <ItemGroup>
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
-    <Compile Include="MasterContainerViewController.cs" />
     <Compile Include="ExampleContentA.cs" />
     <Compile Include="ExampleContentA.designer.cs">
       <DependentUpon>ExampleContentA.cs</DependentUpon>
