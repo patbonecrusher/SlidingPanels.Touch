@@ -7,6 +7,8 @@ using Cirrious.MvvmCross.Touch.Views;
 using MvxSlidingPanelsSample.Core.ViewModels;
 using Cirrious.MvvmCross.ViewModels;
 using Cirrious.CrossCore.Exceptions;
+using Cirrious.CrossCore.Platform;
+using Cirrious.MvvmCross.Views;
 
 namespace MvxSlidingPanels.Touch
 {
@@ -89,6 +91,58 @@ namespace MvxSlidingPanels.Touch
 			else
 				MasterNavigationController.PushViewController(viewController, true /*animated*/);
 		}
+
+		protected override UIViewController CurrentTopViewController
+		{
+			get { return MasterNavigationController.TopViewController; }
+		}
+
+		public override void ClearBackStack()
+		{
+			if (MasterNavigationController == null)
+				return;
+
+			MasterNavigationController.PopToRootViewController(true);
+			//MasterNavigationController = null;
+		}
+
+		public override void CloseModalViewController()
+		{
+			MasterNavigationController.PopViewControllerAnimated(true);
+		}
+
+		public override void Close(IMvxViewModel toClose)
+		{
+			var topViewController = MasterNavigationController.TopViewController;
+
+			if (topViewController == null)
+			{
+				MvxTrace.Warning( "Don't know how to close this viewmodel - no topmost");
+				return;
+			}
+
+			var topView = topViewController as IMvxTouchView;
+			if (topView == null)
+			{
+				MvxTrace.Warning(
+					"Don't know how to close this viewmodel - topmost is not a touchview");
+				return;
+			}
+
+			var viewModel = topView.ReflectionGetViewModel();
+			if (viewModel != toClose)
+			{
+				MvxTrace.Warning(
+					"Don't know how to close this viewmodel - topmost view does not present this viewmodel");
+				return;
+			}
+
+			MasterNavigationController.PopViewControllerAnimated(true);
+		}
+
+
+
+
 	}
 }
 
