@@ -68,6 +68,11 @@ namespace MvxSlidingPanels.Touch.Views
 			UpArrowImage.Image = UIImage.FromBundle("Images/UpArrow.png");
 			RightArrowImage.Image = UIImage.FromBundle("Images/RightArrow.png");
 
+			Title = "";
+			CenterText.Text = "";
+			NavigateText.Text = "";
+
+
 			this.AddBindings(
 				new Dictionary<object, string>()
 			    {
