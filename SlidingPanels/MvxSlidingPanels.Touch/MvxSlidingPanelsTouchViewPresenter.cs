@@ -11,12 +11,21 @@ namespace MvxSlidingPanels.Touch
 {
 	public class MvxSlidingPanelsTouchViewPresenter : MvxTouchViewPresenter
 	{
-		public SlidingPanelsNavigationViewController NavController
-		{
-			get
-			{
-				return base.MasterNavigationController as SlidingPanelsNavigationViewController;
+
+		public override UINavigationController MasterNavigationController {
+			get {
+				return NavController;
 			}
+		}
+
+		public SlidingPanelsNavigationViewController NavController {
+			get;
+			private set;
+		}
+
+		public UIViewController RootController {
+			get;
+			private set;
 		}
 
 		public MvxSlidingPanelsTouchViewPresenter(UIApplicationDelegate applicationDelegate, UIWindow window) :
@@ -32,7 +41,13 @@ namespace MvxSlidingPanels.Touch
 
 		protected override void ShowFirstView (UIViewController viewController)
 		{
-			base.ShowFirstView(viewController);
+			NavController = new SlidingPanelsNavigationViewController (viewController);
+			RootController = new UIViewController ();
+
+			base.SetWindowRootViewController (RootController);
+
+			RootController.AddChildViewController (NavController);
+			RootController.View.AddSubview (NavController.View);
 
 			AddPanel<LeftPanelViewModel>(PanelType.LeftPanel, viewController as MvxViewController);
 			AddPanel<RightPanelViewModel>(PanelType.RightPanel, viewController as MvxViewController);
@@ -65,7 +80,7 @@ namespace MvxSlidingPanels.Touch
 		UIViewController rootController = new UIViewController ();
 		protected override UINavigationController CreateNavigationController (UIViewController viewController)
 		{
-			SlidingPanelsNavigationViewController navController = new SlidingPanelsNavigationViewController (viewController);
+			NavController = new SlidingPanelsNavigationViewController (viewController);
 			return new SlidingPanelsNavigationViewController (viewController);
 		}
 	}
