@@ -45,7 +45,7 @@ namespace SlidingPanels.Lib.PanelContainers
 		public override void ViewWillAppear (bool animated)
 		{
 			RectangleF frame = PanelVC.View.Bounds;
-			frame.Y = View.Bounds.Height - Size.Height;
+			frame.Y = View.Bounds.Height - View.Bounds.Y - Size.Height;
 			frame.Height = Size.Height;
 			PanelVC.View.Frame = frame;
 			base.ViewWillAppear (animated);
