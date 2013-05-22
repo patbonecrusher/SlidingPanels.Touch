@@ -28,19 +28,6 @@ using System.Drawing;
 
 namespace SlidingPanels.Lib
 {
-	public class SlidingGestureEventArgs : EventArgs
-	{
-		public PanelContainer PanelContainer {
-			get;
-			private set;
-		}
-
-		public SlidingGestureEventArgs(PanelContainer panelContainer)
-		{
-			PanelContainer = panelContainer;
-		}
-	}
-
 	public class SlidingGestureRecogniser : UIPanGestureRecognizer
 	{
 		private List<PanelContainer> PanelContainers;
@@ -49,20 +36,20 @@ namespace SlidingPanels.Lib
 			set;
 		}
 
-		public UIViewController ViewControllerToSwipe {
+		public UIViewController SlidingController {
 			get;
-			set;
+			private set;
 		}
 
 		public event EventHandler ShowPanel;
-
 		public event EventHandler HidePanel;
 
-		public SlidingGestureRecogniser (List<PanelContainer> panelContainers, UITouchEventArgs shouldReceiveTouch)
+		public SlidingGestureRecogniser (List<PanelContainer> panelContainers, UITouchEventArgs shouldReceiveTouch, UIViewController slidingController)
 		{
+			SlidingController = slidingController;
 			PanelContainers = panelContainers;
 			this.ShouldReceiveTouch += (sender, touch) => {
-				if (ViewControllerToSwipe == null) { return false; }
+				if (SlidingController == null) { return false; }
 				if (touch.View is UIButton) { return false; }
 				return shouldReceiveTouch(sender, touch);
 			};
@@ -83,14 +70,18 @@ namespace SlidingPanels.Lib
 			}
 
 			CurrentActivePanelContainer = PanelContainers.FirstOrDefault (p => p.IsVisible);
-			if (CurrentActivePanelContainer == null) {
-				CurrentActivePanelContainer = PanelContainers.FirstOrDefault (p => p.CanStartPanning (touchPt, ViewControllerToSwipe.View.Frame));
-				if (CurrentActivePanelContainer != null) {
+			if (CurrentActivePanelContainer == null) 
+			{
+				CurrentActivePanelContainer = PanelContainers.FirstOrDefault (p => p.CanStartPanning (touchPt, SlidingController.View.Frame));
+				if (CurrentActivePanelContainer != null) 
+				{
 					CurrentActivePanelContainer.Show ();
-					CurrentActivePanelContainer.PanningStarted (touchPt, ViewControllerToSwipe.View.Frame);
+					CurrentActivePanelContainer.PanningStarted (touchPt, SlidingController.View.Frame);
 				}
-			} else {
-				CurrentActivePanelContainer.PanningStarted (touchPt, ViewControllerToSwipe.View.Frame);
+			} 
+			else 
+			{
+				CurrentActivePanelContainer.PanningStarted (touchPt, SlidingController.View.Frame);
 			}
 		}
 
@@ -113,8 +104,8 @@ namespace SlidingPanels.Lib
 				return;
 			}
 
-			RectangleF newFrame = CurrentActivePanelContainer.Panning (touchPt, ViewControllerToSwipe.View.Frame);
-			ViewControllerToSwipe.View.Frame = newFrame;
+			RectangleF newFrame = CurrentActivePanelContainer.Panning (touchPt, SlidingController.View.Frame);
+			SlidingController.View.Frame = newFrame;
 		}
 
 		public override void TouchesEnded (MonoTouch.Foundation.NSSet touches, UIEvent evt)
@@ -136,7 +127,7 @@ namespace SlidingPanels.Lib
 				return;
 			}
 
-			if (CurrentActivePanelContainer.PanningEnded (touchPt, ViewControllerToSwipe.View.Frame)) {
+			if (CurrentActivePanelContainer.PanningEnded (touchPt, SlidingController.View.Frame)) {
 				if (ShowPanel != null) {
 					ShowPanel (this, new SlidingGestureEventArgs (CurrentActivePanelContainer));
 				}

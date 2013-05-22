@@ -56,7 +56,6 @@ namespace SlidingPanels.Panels
 
 		public override void ViewWillAppear (bool animated)
 		{
-			Console.WriteLine ("Leftpanelmappear");
 			base.ViewWillAppear (animated);
 		}
 		partial void ShowScreenA (MonoTouch.Foundation.NSObject sender)
