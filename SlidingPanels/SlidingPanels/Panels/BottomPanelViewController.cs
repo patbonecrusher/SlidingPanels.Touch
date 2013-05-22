@@ -42,26 +42,6 @@ namespace SlidingPanels.Panels
 		{
 			base.ViewDidLoad ();
 		}
-
-		#region IPanel implementation
-
-		public event EventHandler TopViewSwapped;
-
-		public void RefreshContent ()
-		{
-		}
-
-		public SizeF Size
-		{
-			get
-			{
-				// This panel will appear on the left side.  The associated container doesn't
-				// care about the height so we set it to an arbitrary value of -1.
-				return new System.Drawing.SizeF (-1, 150);
-			}
-		}		
-
-		#endregion
 	}
 }
 

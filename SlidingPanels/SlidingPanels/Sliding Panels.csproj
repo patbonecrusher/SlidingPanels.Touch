@@ -99,7 +99,6 @@
     <Compile Include="ExampleContentB.designer.cs">
       <DependentUpon>ExampleContentB.cs</DependentUpon>
     </Compile>
-    <Compile Include="Panels\RightPanelViewController.cs" />
     <Compile Include="Panels\LeftPanelViewController.cs" />
     <Compile Include="Panels\LeftPanelViewController.designer.cs">
       <DependentUpon>LeftPanelViewController.cs</DependentUpon>
@@ -107,6 +106,10 @@
     <Compile Include="Panels\BottomPanelViewController.cs" />
     <Compile Include="Panels\BottomPanelViewController.designer.cs">
       <DependentUpon>BottomPanelViewController.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Panels\RightPanelViewController.cs" />
+    <Compile Include="Panels\RightPanelViewController.designer.cs">
+      <DependentUpon>RightPanelViewController.cs</DependentUpon>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
@@ -123,6 +126,7 @@
     <InterfaceDefinition Include="ExampleContentB_iPad.xib" />
     <InterfaceDefinition Include="Panels\LeftPanelViewController.xib" />
     <InterfaceDefinition Include="Panels\BottomPanelViewController.xib" />
+    <InterfaceDefinition Include="Panels\RightPanelViewController.xib" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Default-568h%402x.png" />

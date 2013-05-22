@@ -1,15 +1,9 @@
-
+﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sliding Panels", "SlidingPanels\Sliding Panels.csproj", "{EB99DC4A-6C39-4A37-8F85-452C2AC8F9BF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SlidingPanels.Touch", "SlidingPanels.Lib\SlidingPanels.Touch.csproj", "{2FD1999D-45B1-4485-BF96-EAB061481945}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MvxSlidingPanels", "MvxSlidingPanels", "{5F68691E-C76A-4EB9-8B14-D2BCEA70DC0B}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MvxSlidingPanelsSample.Core", "MvxSlidingPanelsSample.Core\MvxSlidingPanelsSample.Core.csproj", "{4CB11857-A29E-4566-A5F2-C234C2D85411}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MvxSlidingPanels.Touch", "MvxSlidingPanels.Touch\MvxSlidingPanels.Touch.csproj", "{C3A3727F-DEB8-497B-A92B-C917E5A09601}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,30 +27,6 @@ Global
 		{2FD1999D-45B1-4485-BF96-EAB061481945}.Release|iPhone.Build.0 = Release|Any CPU
 		{2FD1999D-45B1-4485-BF96-EAB061481945}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
 		{2FD1999D-45B1-4485-BF96-EAB061481945}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
-		{4CB11857-A29E-4566-A5F2-C234C2D85411}.Ad-Hoc|iPhone.ActiveCfg = Release|Any CPU
-		{4CB11857-A29E-4566-A5F2-C234C2D85411}.Ad-Hoc|iPhone.Build.0 = Release|Any CPU
-		{4CB11857-A29E-4566-A5F2-C234C2D85411}.AppStore|iPhone.ActiveCfg = Release|Any CPU
-		{4CB11857-A29E-4566-A5F2-C234C2D85411}.AppStore|iPhone.Build.0 = Release|Any CPU
-		{4CB11857-A29E-4566-A5F2-C234C2D85411}.Debug|iPhone.ActiveCfg = Debug|Any CPU
-		{4CB11857-A29E-4566-A5F2-C234C2D85411}.Debug|iPhone.Build.0 = Debug|Any CPU
-		{4CB11857-A29E-4566-A5F2-C234C2D85411}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
-		{4CB11857-A29E-4566-A5F2-C234C2D85411}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
-		{4CB11857-A29E-4566-A5F2-C234C2D85411}.Release|iPhone.ActiveCfg = Release|Any CPU
-		{4CB11857-A29E-4566-A5F2-C234C2D85411}.Release|iPhone.Build.0 = Release|Any CPU
-		{4CB11857-A29E-4566-A5F2-C234C2D85411}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
-		{4CB11857-A29E-4566-A5F2-C234C2D85411}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
-		{C3A3727F-DEB8-497B-A92B-C917E5A09601}.Ad-Hoc|iPhone.ActiveCfg = Ad-Hoc|iPhone
-		{C3A3727F-DEB8-497B-A92B-C917E5A09601}.Ad-Hoc|iPhone.Build.0 = Ad-Hoc|iPhone
-		{C3A3727F-DEB8-497B-A92B-C917E5A09601}.AppStore|iPhone.ActiveCfg = AppStore|iPhone
-		{C3A3727F-DEB8-497B-A92B-C917E5A09601}.AppStore|iPhone.Build.0 = AppStore|iPhone
-		{C3A3727F-DEB8-497B-A92B-C917E5A09601}.Debug|iPhone.ActiveCfg = Debug|iPhone
-		{C3A3727F-DEB8-497B-A92B-C917E5A09601}.Debug|iPhone.Build.0 = Debug|iPhone
-		{C3A3727F-DEB8-497B-A92B-C917E5A09601}.Debug|iPhoneSimulator.ActiveCfg = Debug|iPhoneSimulator
-		{C3A3727F-DEB8-497B-A92B-C917E5A09601}.Debug|iPhoneSimulator.Build.0 = Debug|iPhoneSimulator
-		{C3A3727F-DEB8-497B-A92B-C917E5A09601}.Release|iPhone.ActiveCfg = Release|iPhone
-		{C3A3727F-DEB8-497B-A92B-C917E5A09601}.Release|iPhone.Build.0 = Release|iPhone
-		{C3A3727F-DEB8-497B-A92B-C917E5A09601}.Release|iPhoneSimulator.ActiveCfg = Release|iPhoneSimulator
-		{C3A3727F-DEB8-497B-A92B-C917E5A09601}.Release|iPhoneSimulator.Build.0 = Release|iPhoneSimulator
 		{EB99DC4A-6C39-4A37-8F85-452C2AC8F9BF}.Ad-Hoc|iPhone.ActiveCfg = Ad-Hoc|iPhone
 		{EB99DC4A-6C39-4A37-8F85-452C2AC8F9BF}.Ad-Hoc|iPhone.Build.0 = Ad-Hoc|iPhone
 		{EB99DC4A-6C39-4A37-8F85-452C2AC8F9BF}.AppStore|iPhone.ActiveCfg = AppStore|iPhone
@@ -69,10 +39,6 @@ Global
 		{EB99DC4A-6C39-4A37-8F85-452C2AC8F9BF}.Release|iPhone.Build.0 = Release|iPhone
 		{EB99DC4A-6C39-4A37-8F85-452C2AC8F9BF}.Release|iPhoneSimulator.ActiveCfg = Release|iPhoneSimulator
 		{EB99DC4A-6C39-4A37-8F85-452C2AC8F9BF}.Release|iPhoneSimulator.Build.0 = Release|iPhoneSimulator
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{4CB11857-A29E-4566-A5F2-C234C2D85411} = {5F68691E-C76A-4EB9-8B14-D2BCEA70DC0B}
-		{C3A3727F-DEB8-497B-A92B-C917E5A09601} = {5F68691E-C76A-4EB9-8B14-D2BCEA70DC0B}
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
 		StartupItem = SlidingPanels\Sliding Panels.csproj

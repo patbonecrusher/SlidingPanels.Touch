@@ -277,5 +277,21 @@ namespace SlidingPanels.Lib
 				});
 		}
 		#endregion	
+
+		#region overrides to pass to container
+
+		public override void WillRotate (UIInterfaceOrientation toInterfaceOrientation, double duration)
+		{
+			_panelContainers.ForEach (c => c.WillRotate (toInterfaceOrientation, duration));
+			base.WillRotate (toInterfaceOrientation, duration);
+		}
+
+		public override void DidRotate (UIInterfaceOrientation toInterfaceOrientation)
+		{
+			_panelContainers.ForEach (c => c.DidRotate (toInterfaceOrientation));
+			base.DidRotate (toInterfaceOrientation);
+		}
+
+		#endregion
 	}
 }

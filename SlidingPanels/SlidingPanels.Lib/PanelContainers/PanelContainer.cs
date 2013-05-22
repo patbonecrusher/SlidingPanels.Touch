@@ -31,7 +31,6 @@ namespace SlidingPanels.Lib.PanelContainers
 		public PanelType PanelType { get; private set; }
 		public bool IsVisible { get { return !View.Hidden; } }
 
-		//public IPanelView Panel { get { return (IPanelView) PanelVC; } }
 		public SizeF Size { get; private set; }
 
 		protected PanelContainer (UIViewController panel, PanelType panelType)
@@ -47,13 +46,18 @@ namespace SlidingPanels.Lib.PanelContainers
 		{
 			base.ViewDidLoad ();
 
-			View.Frame = UIScreen.MainScreen.Bounds;
-			//View.BackgroundColor = UIColor.Blue;
+			View.Frame = UIScreen.MainScreen.ApplicationFrame;
 
 			AddChildViewController (PanelVC);
 			View.AddSubview (PanelVC.View);
 
 			Hide ();
+		}
+
+		public override void WillAnimateRotation (UIInterfaceOrientation toInterfaceOrientation, double duration)
+		{
+			PanelVC.WillAnimateRotation (toInterfaceOrientation, duration);
+			base.WillAnimateRotation (toInterfaceOrientation, duration);
 		}
 
 		public override void ViewWillAppear (bool animated)
