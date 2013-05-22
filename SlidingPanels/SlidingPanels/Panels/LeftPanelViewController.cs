@@ -29,8 +29,14 @@ namespace SlidingPanels.Panels
 {
 	public partial class LeftPanelViewController : UIViewController, IPanelView
 	{
-		public LeftPanelViewController () : base ("LeftPanelViewController", null)
+		public SlidingPanelsNavigationViewController PanelsNavController {
+			get;
+			private set;
+		}
+
+		public LeftPanelViewController (SlidingPanelsNavigationViewController controller) : base ("LeftPanelViewController", null)
 		{
+			PanelsNavController = controller;
 		}
 
 		public override void DidReceiveMemoryWarning ()
@@ -46,16 +52,19 @@ namespace SlidingPanels.Panels
 			base.ViewDidLoad ();
 			
 			// Perform any additional setup after loading the view, typically from a nib.
+			PanelsNavController.PanelDidShow
 		}
 
 		partial void ShowScreenA (MonoTouch.Foundation.NSObject sender)
 		{
-			TopViewSwapped(this, new TopViewSwappedEventArgs(new UINavigationController(new ExampleContentA())));
+			PanelsNavController.PopToRootViewController(false);
+			PanelsNavController.TogglePanel(SlidingPanels.Lib.PanelContainers.PanelType.LeftPanel);
 		}
 
 		partial void ShowScreenB (MonoTouch.Foundation.NSObject sender)
 		{
-			TopViewSwapped(this, new TopViewSwappedEventArgs(new UINavigationController(new ExampleContentB())));
+			PanelsNavController.PushViewController(new ExampleContentB(), true);
+			PanelsNavController.TogglePanel(SlidingPanels.Lib.PanelContainers.PanelType.LeftPanel);
 		}
 
 		#region IPanel implementation

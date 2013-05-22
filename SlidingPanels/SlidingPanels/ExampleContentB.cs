@@ -37,14 +37,6 @@ namespace SlidingPanels
 		public ExampleContentB ()
 			: base (UserInterfaceIdiomIsPhone ? "ExampleContentB_iPhone" : "ExampleContentB_iPad", null)
 		{
-			NavigationItem.LeftBarButtonItem = new UIBarButtonItem (UIBarButtonSystemItem.Action, delegate {
-				SlidingPanelsNavigationViewController navController = SlidingPanelsNavigationViewController.Instance;
-				navController.TogglePanel(PanelType.LeftPanel);
-			});
-			NavigationItem.RightBarButtonItem = new UIBarButtonItem (UIBarButtonSystemItem.Action, delegate {
-				SlidingPanelsNavigationViewController navController = SlidingPanelsNavigationViewController.Instance;
-				navController.TogglePanel(PanelType.BottomPanel);
-			});
 		}
 
 		public override void DidReceiveMemoryWarning ()

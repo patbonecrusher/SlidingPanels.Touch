@@ -73,7 +73,6 @@ namespace SlidingPanels.Lib.PanelContainers
 
 		public void Show ()
 		{
-			Panel.RefreshContent ();
 			View.Layer.ZPosition = -1;
 			View.Hidden = false;
 		}

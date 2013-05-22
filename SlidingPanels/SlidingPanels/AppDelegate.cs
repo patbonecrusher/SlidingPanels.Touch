@@ -59,9 +59,9 @@ namespace SlidingPanels
 			window.RootViewController = rootController;
 			window.MakeKeyAndVisible ();
 
-			navController.InsertPanel (new LeftPanelContainer(new LeftPanelViewController ()));
-			navController.InsertPanel (new RightPanelContainer(new RightPanelViewController ()));
-			navController.InsertPanel (new BottomPanelContainer(new BottomPanelViewController ()));
+			navController.InsertPanel (new LeftPanelContainer(new LeftPanelViewController (navController)));
+			navController.InsertPanel (new RightPanelContainer(new RightPanelViewController (navController)));
+			navController.InsertPanel (new BottomPanelContainer(new BottomPanelViewController (navController)));
 
 			return true;
 		}
