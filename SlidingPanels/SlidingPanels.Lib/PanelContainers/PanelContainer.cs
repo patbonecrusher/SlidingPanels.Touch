@@ -47,7 +47,7 @@ namespace SlidingPanels.Lib.PanelContainers
 			base.ViewDidLoad ();
 
 			View.BackgroundColor = UIColor.Brown;
-			View.Frame = UIScreen.MainScreen.Bounds;
+			View.Frame = UIScreen.MainScreen.ApplicationFrame;
 
 			AddChildViewController (PanelVC);
 			View.AddSubview (PanelVC.View);
@@ -64,37 +64,48 @@ namespace SlidingPanels.Lib.PanelContainers
 //			View.Frame = newFrame;
 
 			//PanelVC.WillRotate (toInterfaceOrientation, duration);
-			base.WillRotate (toInterfaceOrientation, duration);
-
-			RectangleF frame = UIScreen.MainScreen.Bounds;
-			if (toInterfaceOrientation == UIInterfaceOrientation.LandscapeLeft || 
-			    toInterfaceOrientation == UIInterfaceOrientation.LandscapeRight)
-			{
-				frame.X = UIScreen.MainScreen.Bounds.Y;
-				frame.Y = UIScreen.MainScreen.Bounds.X;
-				frame.Height = UIScreen.MainScreen.Bounds.Width;
-				frame.Width = UIScreen.MainScreen.Bounds.Height;
-			}
-			View.Frame = frame;
+//			base.WillRotate (toInterfaceOrientation, duration);
+//
+//			RectangleF frame = UIScreen.MainScreen.ApplicationFrame;
+//			if (toInterfaceOrientation == UIInterfaceOrientation.LandscapeLeft || 
+//			    toInterfaceOrientation == UIInterfaceOrientation.LandscapeRight)
+//			{
+//				frame.X = UIScreen.MainScreen.Bounds.Y;
+//				frame.Y = UIScreen.MainScreen.Bounds.X;
+//				frame.Height = UIScreen.MainScreen.Bounds.Width;
+//				frame.Width = UIScreen.MainScreen.Bounds.Height;
+//			}
+//			View.Frame = frame;
 		}
 
 		public override void DidRotate (UIInterfaceOrientation fromInterfaceOrientation)
 		{
 			//PanelVC.DidRotate (toInterfaceOrientation);
 			base.DidRotate (fromInterfaceOrientation);
-			RectangleF frame = UIScreen.MainScreen.Bounds;
-			if (fromInterfaceOrientation == UIInterfaceOrientation.Portrait)
-			{
-				frame.X = UIScreen.MainScreen.Bounds.Y;
-				frame.Y = UIScreen.MainScreen.Bounds.X;
-				frame.Height = UIScreen.MainScreen.Bounds.Width;
-				frame.Width = UIScreen.MainScreen.Bounds.Height;
-			}
-			View.Frame = frame;
+//			RectangleF frame = UIScreen.MainScreen.ApplicationFrame;
+//			if (fromInterfaceOrientation == UIInterfaceOrientation.Portrait)
+//			{
+//				frame.X = UIScreen.MainScreen.Bounds.Y;
+//				frame.Y = UIScreen.MainScreen.Bounds.X;
+//				frame.Height = UIScreen.MainScreen.Bounds.Width;
+//				frame.Width = UIScreen.MainScreen.Bounds.Height;
+//			}
+//			View.Frame = frame;
 		}
 
 		public override void ViewWillAppear (bool animated)
 		{
+			RectangleF frame = UIScreen.MainScreen.ApplicationFrame;
+			if (UIApplication.SharedApplication.StatusBarOrientation == UIInterfaceOrientation.LandscapeLeft ||
+			    UIApplication.SharedApplication.StatusBarOrientation == UIInterfaceOrientation.LandscapeRight)
+			{
+				frame.Width = UIScreen.MainScreen.ApplicationFrame.Height;
+				frame.Height = UIScreen.MainScreen.ApplicationFrame.Width;
+				frame.X = UIScreen.MainScreen.ApplicationFrame.Y;
+				frame.Y = UIScreen.MainScreen.ApplicationFrame.X;
+			}
+
+			View.Frame = frame;
 			PanelVC.ViewWillAppear (animated);
 			base.ViewWillAppear (animated);
 		}

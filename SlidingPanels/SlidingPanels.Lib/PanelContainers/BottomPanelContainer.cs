@@ -54,8 +54,8 @@ namespace SlidingPanels.Lib.PanelContainers
 
 		public override void ViewWillAppear (bool animated)
 		{
-			//PanelVC.View.Frame = PanelPosition;
 			base.ViewWillAppear (animated);
+			PanelVC.View.Frame = PanelPosition;
 		}
 
 		public override void WillRotate (UIInterfaceOrientation toInterfaceOrientation, double duration)
@@ -90,19 +90,19 @@ namespace SlidingPanels.Lib.PanelContainers
 		public override void DidRotate (UIInterfaceOrientation fromInterfaceOrientation)
 		{
 			base.DidRotate (fromInterfaceOrientation);
-			RectangleF frame = UIScreen.MainScreen.Bounds;
-
-			if (fromInterfaceOrientation == UIInterfaceOrientation.Portrait)
-			{
-				frame.X = UIScreen.MainScreen.Bounds.Y;
-				frame.Y = UIScreen.MainScreen.Bounds.X;
-				frame.Height = UIScreen.MainScreen.Bounds.Width;
-				frame.Width = UIScreen.MainScreen.Bounds.Height;
-			}
-
-			frame.Y = frame.Height - frame.Y - Size.Height - 20;
-			frame.Height = Size.Height;
-			PanelVC.View.Frame = frame;
+//			RectangleF frame = UIScreen.MainScreen.Bounds;
+//
+//			if (fromInterfaceOrientation == UIInterfaceOrientation.Portrait)
+//			{
+//				frame.X = UIScreen.MainScreen.Bounds.Y;
+//				frame.Y = UIScreen.MainScreen.Bounds.X;
+//				frame.Height = UIScreen.MainScreen.Bounds.Width;
+//				frame.Width = UIScreen.MainScreen.Bounds.Height;
+//			}
+//
+//			frame.Y = frame.Height - frame.Y - Size.Height - 20;
+//			frame.Height = Size.Height;
+//			PanelVC.View.Frame = frame;
 		}
 
 		public override RectangleF GetTopViewPositionWhenSliderIsVisible(RectangleF topViewCurrentFrame)
