@@ -27,7 +27,7 @@ using SlidingPanels.Lib;
 
 namespace SlidingPanels.Panels
 {
-	public partial class LeftPanelViewController : UIViewController, IPanelView
+	public partial class LeftPanelViewController : UIViewController
 	{
 		public SlidingPanelsNavigationViewController PanelsNavController {
 			get;

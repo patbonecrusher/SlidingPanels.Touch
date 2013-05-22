@@ -9,7 +9,7 @@ using System.Collections.Generic;
 
 namespace MvxSlidingPanels.Touch.Views
 {
-	public partial class BottomPanelView : MvxViewController, IPanelView
+	public partial class BottomPanelView : MvxViewController
     {
         static bool UserInterfaceIdiomIsPhone
         {

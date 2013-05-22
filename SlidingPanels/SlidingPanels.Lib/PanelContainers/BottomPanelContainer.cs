@@ -41,7 +41,7 @@ namespace SlidingPanels.Lib.PanelContainers
 
 		public override RectangleF GetTopViewPositionWhenSliderIsVisible(RectangleF topViewCurrentFrame)
 		{
-			topViewCurrentFrame.Y = - Panel.Size.Height;
+			topViewCurrentFrame.Y = - Size.Height;
 			return topViewCurrentFrame;
 		}
 
@@ -88,9 +88,9 @@ namespace SlidingPanels.Lib.PanelContainers
 			{ 
 				frame.Y = 0; 
 			}
-			else if (frame.Y <= -Panel.Size.Height)
+			else if (frame.Y <= -Size.Height)
 			{
-				frame.Y = -Panel.Size.Height;
+				frame.Y = -Size.Height;
 			}
 			return frame;
 		}
@@ -101,7 +101,7 @@ namespace SlidingPanels.Lib.PanelContainers
 			// for the nav bar if visible.
 
 			float screenHeight = topViewCurrentFrame.Height;
-			float panelHeight = Panel.Size.Height;
+			float panelHeight = Size.Height;
 
 			RectangleF frame = topViewCurrentFrame;
 			float y = frame.Y + frame.Height;

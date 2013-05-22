@@ -26,7 +26,7 @@ using System.Drawing;
 
 namespace SlidingPanels
 {
-	public class RightPanelViewController : UIViewController, IPanelView
+	public class RightPanelViewController : UIViewController
 	{
 		public SlidingPanelsNavigationViewController PanelsNavController {
 			get;
