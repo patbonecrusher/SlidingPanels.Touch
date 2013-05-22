@@ -33,17 +33,5 @@ namespace SlidingPanels.Lib
 		/// <returns>The size.</returns>
 		SizeF Size { get; }
 	}
-
-	public interface ILeftPanelView : IPanelView
-	{
-	}
-
-	public interface IRightPanelView : IPanelView
-	{
-	}
-
-	public interface IBottomPanelView : IPanelView
-	{
-	}
 }
 
