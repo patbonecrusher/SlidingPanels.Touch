@@ -52,7 +52,7 @@ namespace SlidingPanels.Panels
 			base.ViewDidLoad ();
 			
 			// Perform any additional setup after loading the view, typically from a nib.
-			PanelsNavController.PanelDidShow
+			PanelsNavController.PanelDidShow += (object sender, EventArgs e) => {};
 		}
 
 		partial void ShowScreenA (MonoTouch.Foundation.NSObject sender)
