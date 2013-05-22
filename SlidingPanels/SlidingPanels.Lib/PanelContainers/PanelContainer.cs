@@ -54,12 +54,26 @@ namespace SlidingPanels.Lib.PanelContainers
 
 		public override void ViewWillAppear (bool animated)
 		{
+			PanelVC.ViewWillAppear (animated);
 			base.ViewWillAppear (animated);
 		}
 
 		public override void ViewDidAppear (bool animated)
 		{
+			PanelVC.ViewDidAppear (animated);
 			base.ViewDidAppear (animated);
+		}
+
+		public override void ViewWillDisappear (bool animated)
+		{
+			PanelVC.ViewWillDisappear (animated);
+			base.ViewWillDisappear (animated);
+		}
+
+		public override void ViewDidDisappear (bool animated)
+		{
+			PanelVC.ViewDidDisappear (animated);
+			base.ViewDidDisappear (animated);
 		}
 
 		public void Toggle ()

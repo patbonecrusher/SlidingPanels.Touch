@@ -11,11 +11,6 @@ namespace SlidingPanels.Lib
 {
 	public partial class SlidingPanelsNavigationViewController : UINavigationController
 	{
-		public event EventHandler PanelWillShow;
-		public event EventHandler PanelDidShow;
-		public event EventHandler PanelWillHide;
-		public event EventHandler PanelDidHide;
-
 		public SlidingPanelsNavigationViewController(UIViewController controller) : base(controller)
 		{
 		}
@@ -75,7 +70,8 @@ namespace SlidingPanels.Lib
 		public override void ViewWillAppear (bool animated)
 		{
 			base.ViewWillAppear (animated);
-			//			View.Superview.AddGestureRecognizer (_slidingGesture);
+			Console.WriteLine ("NavControllerWilLAppear");
+
 			_slidingGesture.ViewControllerToSwipe = this;
 
 			View.Layer.ShadowRadius = 5;
@@ -211,9 +207,8 @@ namespace SlidingPanels.Lib
 		/// <param name="container">Container.</param>
 		public void ShowPanel(PanelContainer container)
 		{
+			container.ViewWillAppear (true);
 			container.Show ();
-
-			if (PanelWillShow != null) { PanelWillShow (this, new PanelEventArgs (container.PanelVC)); }
 
 			UIView.Animate(AnimationSpeed, 0, UIViewAnimationOptions.CurveEaseInOut,
 			    delegate {
@@ -221,7 +216,7 @@ namespace SlidingPanels.Lib
 				},
 				delegate {
 					View.AddGestureRecognizer(_tapToClose);
-					if (PanelDidShow != null) { PanelDidShow (this, new PanelEventArgs (container.PanelVC)); }
+					container.ViewDidAppear (true);
 				});
 		}
 
@@ -231,7 +226,7 @@ namespace SlidingPanels.Lib
 		/// <param name="container">Container.</param>
 		public void HidePanel(PanelContainer container)
 		{
-			if (PanelWillHide != null) { PanelWillHide (this, new PanelEventArgs (container.PanelVC)); }
+			container.ViewWillDisappear (true);
 
 			UIView.Animate(AnimationSpeed, 0, UIViewAnimationOptions.CurveEaseInOut,
 			    delegate {
@@ -240,7 +235,7 @@ namespace SlidingPanels.Lib
 				delegate {
 					View.RemoveGestureRecognizer(_tapToClose);
 					container.Hide ();
-					if (PanelDidHide != null) { PanelDidHide (this, new PanelEventArgs (container.PanelVC)); }
+					container.ViewDidDisappear (true);
 				});
 		}
 		#endregion	

@@ -52,9 +52,13 @@ namespace SlidingPanels.Panels
 			base.ViewDidLoad ();
 			
 			// Perform any additional setup after loading the view, typically from a nib.
-			PanelsNavController.PanelDidShow += (object sender, EventArgs e) => {};
 		}
 
+		public override void ViewWillAppear (bool animated)
+		{
+			Console.WriteLine ("Leftpanelmappear");
+			base.ViewWillAppear (animated);
+		}
 		partial void ShowScreenA (MonoTouch.Foundation.NSObject sender)
 		{
 			PanelsNavController.PopToRootViewController(false);
