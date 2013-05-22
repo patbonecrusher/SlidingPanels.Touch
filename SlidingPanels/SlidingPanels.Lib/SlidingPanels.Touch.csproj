@@ -47,8 +47,8 @@
     <Compile Include="IPanelView.cs" />
     <Compile Include="SlidingGestureRecogniser.cs" />
     <Compile Include="PanelContainers\BottomPanelContainer.cs" />
-    <Compile Include="TopViewSwappedEventArgs.cs" />
     <Compile Include="SlidingPanelsNavigationViewController.cs" />
     <Compile Include="PanelContainers\PanelType.cs" />
+    <Compile Include="PanelEventArgs.cs" />
   </ItemGroup>
 </Project>

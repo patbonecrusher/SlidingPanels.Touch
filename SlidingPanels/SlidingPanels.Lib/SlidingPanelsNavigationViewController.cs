@@ -11,11 +11,13 @@ namespace SlidingPanels.Lib
 {
 	public partial class SlidingPanelsNavigationViewController : UINavigationController
 	{
-		public static SlidingPanelsNavigationViewController Instance;
+		public event EventHandler PanelWillShow;
+		public event EventHandler PanelDidShow;
+		public event EventHandler PanelWillHide;
+		public event EventHandler PanelDidHide;
 
 		public SlidingPanelsNavigationViewController(UIViewController controller) : base(controller)
 		{
-			Instance = this;
 		}
 
 		const float AnimationSpeed = 0.25f;
@@ -188,14 +190,6 @@ namespace SlidingPanels.Lib
 		{
 			_panelContainers.Add (container);
 
-			container.Panel.TopViewSwapped += (object sender, EventArgs e) => {
-				TopViewSwappedEventArgs eventArgs = (TopViewSwappedEventArgs)e;
-				//SetVisibleContentViewController(eventArgs.ViewController);
-				if (eventArgs.HidePanel && CurrentActivePanelContainer != null) {
-					HidePanel (CurrentActivePanelContainer);
-				}
-			};
-
 			if (!_firstTime)
 			{
 				UIView parent = View.Superview;
@@ -211,29 +205,43 @@ namespace SlidingPanels.Lib
 			base.WillChange (changeKind, indexes, forKey);
 		}
 
+		/// <summary>
+		/// Shows the panel.
+		/// </summary>
+		/// <param name="container">Container.</param>
 		public void ShowPanel(PanelContainer container)
 		{
 			container.Show ();
 
+			if (PanelWillShow != null) { PanelWillShow (this, new PanelEventArgs (container.PanelVC)); }
+
 			UIView.Animate(AnimationSpeed, 0, UIViewAnimationOptions.CurveEaseInOut,
-			               delegate {
-				View.Frame = container.GetTopViewPositionWhenSliderIsVisible(View.Frame);
-			},
-			delegate {
-				View.AddGestureRecognizer(_tapToClose);
-			});
+			    delegate {
+					View.Frame = container.GetTopViewPositionWhenSliderIsVisible(View.Frame);
+				},
+				delegate {
+					View.AddGestureRecognizer(_tapToClose);
+					if (PanelDidShow != null) { PanelDidShow (this, new PanelEventArgs (container.PanelVC)); }
+				});
 		}
 
+		/// <summary>
+		/// Hides the panel.
+		/// </summary>
+		/// <param name="container">Container.</param>
 		public void HidePanel(PanelContainer container)
 		{
+			if (PanelWillHide != null) { PanelWillHide (this, new PanelEventArgs (container.PanelVC)); }
+
 			UIView.Animate(AnimationSpeed, 0, UIViewAnimationOptions.CurveEaseInOut,
-			               delegate {
-				View.Frame = container.GetTopViewPositionWhenSliderIsHidden(View.Frame);
-			},
-			delegate {
-				View.RemoveGestureRecognizer(_tapToClose);
-				container.Hide ();
-			});
+			    delegate {
+					View.Frame = container.GetTopViewPositionWhenSliderIsHidden(View.Frame);
+				},
+				delegate {
+					View.RemoveGestureRecognizer(_tapToClose);
+					container.Hide ();
+					if (PanelDidHide != null) { PanelDidHide (this, new PanelEventArgs (container.PanelVC)); }
+				});
 		}
 		#endregion	
 	}
