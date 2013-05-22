@@ -48,5 +48,6 @@
     <Compile Include="PanelContainers\BottomPanelContainer.cs" />
     <Compile Include="SlidingPanelsNavigationViewController.cs" />
     <Compile Include="PanelContainers\PanelType.cs" />
+    <Compile Include="SlidingGestureEventArgs.cs" />
   </ItemGroup>
 </Project>
