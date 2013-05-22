@@ -106,6 +106,7 @@
     <Compile Include="Panels\BottomPanelViewController.designer.cs">
       <DependentUpon>BottomPanelViewController.cs</DependentUpon>
     </Compile>
+    <Compile Include="MasterContainerViewController.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
