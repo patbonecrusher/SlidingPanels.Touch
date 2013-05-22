@@ -34,14 +34,18 @@ namespace SlidingPanels.Lib.PanelContainers
 		public override void ViewDidLoad ()
 		{
 			base.ViewDidLoad ();
+			View.BackgroundColor = UIColor.Red;
 
-			RectangleF frame = View.Bounds;
+			RectangleF frame = PanelVC.View.Bounds;
+//			PanelVC.View.Frame = frame;
+			frame.Y = UIScreen.MainScreen.Bounds.Height - Size.Height;
+			frame.Height = Size.Height;
 			PanelVC.View.Frame = frame;
 		}
 
 		public override RectangleF GetTopViewPositionWhenSliderIsVisible(RectangleF topViewCurrentFrame)
 		{
-			topViewCurrentFrame.Y = - Size.Height;
+			topViewCurrentFrame.Y = UIScreen.MainScreen.Bounds.Height - topViewCurrentFrame.Height - Size.Height;
 			return topViewCurrentFrame;
 		}
 
@@ -88,9 +92,9 @@ namespace SlidingPanels.Lib.PanelContainers
 			{ 
 				frame.Y = 0; 
 			}
-			else if (frame.Y <= -Size.Height)
+			else if (frame.Y <= (UIScreen.MainScreen.Bounds.Height - topViewCurrentFrame.Height - Size.Height))
 			{
-				frame.Y = -Size.Height;
+				frame.Y = UIScreen.MainScreen.Bounds.Height - topViewCurrentFrame.Height - Size.Height;
 			}
 			return frame;
 		}

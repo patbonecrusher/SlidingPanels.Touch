@@ -9,6 +9,7 @@ using Cirrious.MvvmCross.ViewModels;
 using Cirrious.CrossCore.Exceptions;
 using Cirrious.CrossCore.Platform;
 using Cirrious.MvvmCross.Views;
+using System.Drawing;
 
 namespace MvxSlidingPanels.Touch
 {
@@ -61,15 +62,15 @@ namespace MvxSlidingPanels.Touch
 			switch (panelType)
 			{
 				case PanelType.LeftPanel:
-				NavController.InsertPanel(new LeftPanelContainer(viewToAdd));
+					NavController.InsertPanel(new LeftPanelContainer(viewToAdd));
 				break;
 
 				case PanelType.RightPanel:
-				NavController.InsertPanel(new RightPanelContainer(viewToAdd));
+					NavController.InsertPanel(new RightPanelContainer(viewToAdd));
 				break;
 
 				case PanelType.BottomPanel:
-				NavController.InsertPanel(new BottomPanelContainer(viewToAdd));
+					NavController.InsertPanel(new BottomPanelContainer(viewToAdd));
 				break;
 
 				default:

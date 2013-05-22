@@ -29,6 +29,7 @@ namespace SlidingPanels.Lib.PanelContainers
 	{
 		public LeftPanelContainer (UIViewController panel) : base(panel, PanelType.LeftPanel)
 		{
+
 		}
 
 		public override void ViewDidLoad ()
