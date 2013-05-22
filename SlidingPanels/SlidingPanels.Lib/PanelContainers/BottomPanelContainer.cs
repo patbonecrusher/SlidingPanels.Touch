@@ -27,6 +27,19 @@ namespace SlidingPanels.Lib.PanelContainers
 {
 	public class BottomPanelContainer : PanelContainer
 	{
+		public RectangleF PanelPosition
+		{
+			get
+			{
+				RectangleF frame = View.Frame;
+				frame.X = 0;
+				frame.Y = View.Frame.Height - View.Frame.Y - Size.Height;
+				frame.Height = Size.Height;
+				frame.Width = View.Bounds.Width;
+				return frame;
+			}
+		}
+
 		public BottomPanelContainer (UIViewController panel) : base(panel, PanelType.BottomPanel)
 		{
 		}
@@ -36,24 +49,65 @@ namespace SlidingPanels.Lib.PanelContainers
 			base.ViewDidLoad ();
 			View.BackgroundColor = UIColor.Red;
 
-			RectangleF frame = PanelVC.View.Bounds;
-			frame.Y = View.Bounds.Height - Size.Height;
-			frame.Height = Size.Height;
-			PanelVC.View.Frame = frame;
+			PanelVC.View.Frame = PanelPosition;
 		}
 
 		public override void ViewWillAppear (bool animated)
 		{
-			RectangleF frame = PanelVC.View.Bounds;
-			frame.Y = View.Bounds.Height - View.Bounds.Y - Size.Height;
+			//PanelVC.View.Frame = PanelPosition;
+			base.ViewWillAppear (animated);
+		}
+
+		public override void WillRotate (UIInterfaceOrientation toInterfaceOrientation, double duration)
+		{
+			base.WillRotate (toInterfaceOrientation, duration);
+//
+//			
+//			RectangleF frame = UIScreen.MainScreen.Bounds;
+//
+//			if (toInterfaceOrientation == UIInterfaceOrientation.LandscapeLeft || 
+//			    toInterfaceOrientation == UIInterfaceOrientation.LandscapeRight)
+//			{
+//				frame.X = UIScreen.MainScreen.Bounds.Y;
+//				frame.Y = UIScreen.MainScreen.Bounds.X;
+//				frame.Height = UIScreen.MainScreen.Bounds.Width;
+//				frame.Width = UIScreen.MainScreen.Bounds.Height;
+//			}
+//
+//			frame.Y = frame.Height - frame.Y - Size.Height;
+//			frame.Height = Size.Height;
+//			PanelVC.View.Frame = frame;
+
+//			PanelVC.View.Frame = PanelPosition;
+//			UIView.Animate(duration, 0, UIViewAnimationOptions.CurveEaseInOut,
+//			    delegate {
+//					PanelVC.View.Frame = PanelPosition;
+//				},
+//				delegate {
+//				});
+		}
+
+		public override void DidRotate (UIInterfaceOrientation fromInterfaceOrientation)
+		{
+			base.DidRotate (fromInterfaceOrientation);
+			RectangleF frame = UIScreen.MainScreen.Bounds;
+
+			if (fromInterfaceOrientation == UIInterfaceOrientation.Portrait)
+			{
+				frame.X = UIScreen.MainScreen.Bounds.Y;
+				frame.Y = UIScreen.MainScreen.Bounds.X;
+				frame.Height = UIScreen.MainScreen.Bounds.Width;
+				frame.Width = UIScreen.MainScreen.Bounds.Height;
+			}
+
+			frame.Y = frame.Height - frame.Y - Size.Height - 20;
 			frame.Height = Size.Height;
 			PanelVC.View.Frame = frame;
-			base.ViewWillAppear (animated);
 		}
 
 		public override RectangleF GetTopViewPositionWhenSliderIsVisible(RectangleF topViewCurrentFrame)
 		{
-			topViewCurrentFrame.Y = UIScreen.MainScreen.Bounds.Height - topViewCurrentFrame.Height - Size.Height;
+			topViewCurrentFrame.Y = View.Frame.Height - topViewCurrentFrame.Height - Size.Height;
 			return topViewCurrentFrame;
 		}
 
@@ -100,9 +154,9 @@ namespace SlidingPanels.Lib.PanelContainers
 			{ 
 				frame.Y = 0; 
 			}
-			else if (frame.Y <= (UIScreen.MainScreen.Bounds.Height - topViewCurrentFrame.Height - Size.Height))
+			else if (frame.Y <= (View.Bounds.Height - topViewCurrentFrame.Height - Size.Height))
 			{
-				frame.Y = UIScreen.MainScreen.Bounds.Height - topViewCurrentFrame.Height - Size.Height;
+				frame.Y = View.Bounds.Height - topViewCurrentFrame.Height - Size.Height;
 			}
 			return frame;
 		}

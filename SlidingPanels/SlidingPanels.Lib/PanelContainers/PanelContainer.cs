@@ -46,7 +46,8 @@ namespace SlidingPanels.Lib.PanelContainers
 		{
 			base.ViewDidLoad ();
 
-			View.Frame = UIScreen.MainScreen.ApplicationFrame;
+			View.BackgroundColor = UIColor.Brown;
+			View.Frame = UIScreen.MainScreen.Bounds;
 
 			AddChildViewController (PanelVC);
 			View.AddSubview (PanelVC.View);
@@ -54,10 +55,42 @@ namespace SlidingPanels.Lib.PanelContainers
 			Hide ();
 		}
 
-		public override void WillAnimateRotation (UIInterfaceOrientation toInterfaceOrientation, double duration)
+		public override void WillRotate (UIInterfaceOrientation toInterfaceOrientation, double duration)
 		{
-			PanelVC.WillAnimateRotation (toInterfaceOrientation, duration);
-			base.WillAnimateRotation (toInterfaceOrientation, duration);
+//			RectangleF newFrame = UIScreen.MainScreen.ApplicationFrame;
+//			float tmp = newFrame.Width - newFrame.Y;
+//			newFrame.Width = newFrame.Height + newFrame.Y;
+//			newFrame.Height = tmp;
+//			View.Frame = newFrame;
+
+			//PanelVC.WillRotate (toInterfaceOrientation, duration);
+			base.WillRotate (toInterfaceOrientation, duration);
+
+			RectangleF frame = UIScreen.MainScreen.Bounds;
+			if (toInterfaceOrientation == UIInterfaceOrientation.LandscapeLeft || 
+			    toInterfaceOrientation == UIInterfaceOrientation.LandscapeRight)
+			{
+				frame.X = UIScreen.MainScreen.Bounds.Y;
+				frame.Y = UIScreen.MainScreen.Bounds.X;
+				frame.Height = UIScreen.MainScreen.Bounds.Width;
+				frame.Width = UIScreen.MainScreen.Bounds.Height;
+			}
+			View.Frame = frame;
+		}
+
+		public override void DidRotate (UIInterfaceOrientation fromInterfaceOrientation)
+		{
+			//PanelVC.DidRotate (toInterfaceOrientation);
+			base.DidRotate (fromInterfaceOrientation);
+			RectangleF frame = UIScreen.MainScreen.Bounds;
+			if (fromInterfaceOrientation == UIInterfaceOrientation.Portrait)
+			{
+				frame.X = UIScreen.MainScreen.Bounds.Y;
+				frame.Y = UIScreen.MainScreen.Bounds.X;
+				frame.Height = UIScreen.MainScreen.Bounds.Width;
+				frame.Width = UIScreen.MainScreen.Bounds.Height;
+			}
+			View.Frame = frame;
 		}
 
 		public override void ViewWillAppear (bool animated)
