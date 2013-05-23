@@ -1,4 +1,4 @@
-/// Copyright (C) 2013 Pat Laplante & Franc Caico
+/// Copyright (C) 2013 Pat Laplante & Frank Caico
 ///
 ///	Permission is hereby granted, free of charge, to  any person obtaining a copy 
 /// of this software and associated documentation files (the "Software"), to deal 
@@ -27,20 +27,24 @@ namespace SlidingPanels.Lib.PanelContainers
 {
 	public class LeftPanelContainer : PanelContainer
 	{
+		private float _topViewStartXPosition = 0.0f;
+		private float _touchPositionStartXPosition = 0.0f;
+
 		public LeftPanelContainer (UIViewController panel) : base(panel, PanelType.LeftPanel)
 		{
-
 		}
 
 		public override void ViewDidLoad ()
 		{
 			base.ViewDidLoad ();
 
-			RectangleF frame = View.Frame;
-			frame.Y = - View.Frame.Y; 
-			frame.Width = Size.Width;
-			frame.Height = View.Frame.Height;
-			PanelVC.View.Frame = frame;
+			PanelVC.View.Frame = new RectangleF 
+			{
+				X = View.Frame.X,
+				Y = -View.Frame.Y,
+				Width = Size.Width,
+				Height = View.Frame.Height
+			};
 		}
 
 		public override RectangleF GetTopViewPositionWhenSliderIsVisible(RectangleF topViewCurrentFrame)
@@ -59,7 +63,7 @@ namespace SlidingPanels.Lib.PanelContainers
 		{
 			if (!IsVisible)
 			{
-				return (touchPosition.X >= 0.0f && touchPosition.X <= 40.0f);
+				return (touchPosition.X >= 0.0f && touchPosition.X <= EdgeTolerance);
 			}
 			else
 			{
@@ -67,42 +71,36 @@ namespace SlidingPanels.Lib.PanelContainers
 			}
 		}
 
-		private float topViewStartXPosition = 0.0f;
-		private float touchPositionStartXPosition = 0.0f;
-
 		public override void PanningStarted (PointF touchPosition, RectangleF topViewCurrentFrame)
 		{
-			touchPositionStartXPosition = touchPosition.X;
-			topViewStartXPosition = topViewCurrentFrame.X;
+			_touchPositionStartXPosition = touchPosition.X;
+			_topViewStartXPosition = topViewCurrentFrame.X;
 		}
 
 		public override RectangleF Panning (PointF touchPosition, RectangleF topViewCurrentFrame)
 		{
 			float panelWidth = Size.Width;
-
-			float translation = touchPosition.X - touchPositionStartXPosition;
+			float translation = touchPosition.X - _touchPositionStartXPosition;
 
 			RectangleF frame = topViewCurrentFrame;
 
-			frame.X = topViewStartXPosition + translation;
-			if (frame.X <= 0) { frame.X = 0; }
-			if (frame.X >= panelWidth) { frame.X = panelWidth; }
+			frame.X = _topViewStartXPosition + translation;
+			if (frame.X <= 0) 
+			{ 
+				frame.X = 0; 
+			}
 
-			//			Console.WriteLine ("After: " + frame);
+			if (frame.X >= panelWidth) 
+			{ 
+				frame.X = panelWidth; 
+			}
 
 			return frame;
 		}
 
 		public override bool PanningEnded (PointF touchPosition, RectangleF topViewCurrentFrame)
 		{
-			float panelWidth = Size.Width;
-
-			RectangleF frame = topViewCurrentFrame;
-			if (frame.X > (panelWidth/2)) {
-				return true;
-			} else {
-				return false;
-			}
+			return (topViewCurrentFrame.X > (Size.Width / 2));
 		}
 	}
 }

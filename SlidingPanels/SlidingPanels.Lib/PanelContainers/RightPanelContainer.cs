@@ -1,4 +1,4 @@
-/// Copyright (C) 2013 Pat Laplante & Franc Caico
+/// Copyright (C) 2013 Pat Laplante & Frank Caico
 ///
 ///	Permission is hereby granted, free of charge, to  any person obtaining a copy 
 /// of this software and associated documentation files (the "Software"), to deal 
@@ -27,6 +27,9 @@ namespace SlidingPanels.Lib.PanelContainers
 {
 	public class RightPanelContainer : PanelContainer
 	{
+		private float _topViewStartXPosition = 0.0f;
+		private float _touchPositionStartXPosition = 0.0f;
+
 		public RightPanelContainer (UIViewController panel) : base(panel, PanelType.RightPanel)
 		{
 		}
@@ -35,12 +38,13 @@ namespace SlidingPanels.Lib.PanelContainers
 		{
 			base.ViewDidLoad ();
 
-			RectangleF frame = View.Frame;
-			frame.Y = - View.Frame.Y; 
-			frame.X = (frame.Width - Size.Width);
-			frame.Width = Size.Width;
-			frame.Height = View.Frame.Height;
-			PanelVC.View.Frame = frame;
+			PanelVC.View.Frame = new RectangleF 
+			{
+				X = View.Frame.Width - Size.Width,
+				Y = -View.Frame.Y,
+				Width = Size.Width,
+				Height = View.Frame.Height
+			};
 		}
 
 		public override RectangleF GetTopViewPositionWhenSliderIsVisible(RectangleF topViewCurrentFrame)
@@ -59,7 +63,7 @@ namespace SlidingPanels.Lib.PanelContainers
 		{
 			if (!IsVisible)
 			{
-				return (touchPosition.X >= View.Bounds.Size.Width-40f && touchPosition.X <= View.Bounds.Size.Width);
+				return (touchPosition.X >= View.Bounds.Size.Width - EdgeTolerance && touchPosition.X <= View.Bounds.Size.Width);
 			}
 			else
 			{
@@ -67,13 +71,10 @@ namespace SlidingPanels.Lib.PanelContainers
 			}
 		}
 
-		private float topViewStartXPosition = 0.0f;
-		private float touchPositionStartXPosition = 0.0f;
-
 		public override void PanningStarted (PointF touchPosition, RectangleF topViewCurrentFrame)
 		{
-			touchPositionStartXPosition = touchPosition.X;
-			topViewStartXPosition = topViewCurrentFrame.X;
+			_touchPositionStartXPosition = touchPosition.X;
+			_topViewStartXPosition = topViewCurrentFrame.X;
 		}
 
 		public override RectangleF Panning (PointF touchPosition, RectangleF topViewCurrentFrame)
@@ -81,15 +82,21 @@ namespace SlidingPanels.Lib.PanelContainers
 			float screenWidth = View.Bounds.Size.Width;
 			float panelWidth = Size.Width;
 			float leftEdge = screenWidth - panelWidth;
-
-			float translation = touchPosition.X - touchPositionStartXPosition;
+			float translation = touchPosition.X - _touchPositionStartXPosition;
 
 			RectangleF frame = topViewCurrentFrame;
-			frame.X = topViewStartXPosition + translation;
+			frame.X = _topViewStartXPosition + translation;
 			var y = frame.X + frame.Width;
 
-			if (y >= screenWidth) { frame.X = 0; }
-			if (y <= leftEdge) { frame.X = leftEdge - frame.Width; }
+			if (y >= screenWidth) 
+			{ 
+				frame.X = 0; 
+			}
+
+			if (y <= leftEdge) 
+			{ 
+				frame.X = leftEdge - frame.Width; 
+			}
 
 			return frame;
 		}
@@ -101,9 +108,12 @@ namespace SlidingPanels.Lib.PanelContainers
 
 			RectangleF frame = topViewCurrentFrame;
 			float y = frame.X + frame.Width;
-			if (y < (screenWidth - (panelWidth/2))) {
+			if (y < (screenWidth - (panelWidth / 2))) 
+			{
 				return true;
-			} else {
+			} 
+			else 
+			{
 				return false;
 			}
 		}

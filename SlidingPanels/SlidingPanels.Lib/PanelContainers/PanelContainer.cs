@@ -1,4 +1,4 @@
-/// Copyright (C) 2013 Pat Laplante & Franc Caico
+/// Copyright (C) 2013 Pat Laplante & Frank Caico
 ///
 ///	Permission is hereby granted, free of charge, to  any person obtaining a copy 
 /// of this software and associated documentation files (the "Software"), to deal 
@@ -27,11 +27,41 @@ namespace SlidingPanels.Lib.PanelContainers
 {
 	public abstract class PanelContainer : UIViewController
 	{
-		public UIViewController PanelVC { get; private set; }
-		public PanelType PanelType { get; private set; }
-		public bool IsVisible { get { return !View.Hidden; } }
+		const float DefaultEdgeTolerance = 40F;
 
-		public SizeF Size { get; private set; }
+		public UIViewController PanelVC 
+		{ 
+			get; 
+			private set; 
+		}
+
+		public PanelType PanelType 
+		{ 
+			get; 
+			private set; 
+		}
+
+		public virtual bool IsVisible 
+		{ 
+			get 
+			{ 
+				return !View.Hidden; 
+			} 
+		}
+
+		public virtual SizeF Size 
+		{ 
+			get; 
+			private set; 
+		}
+
+		public virtual float EdgeTolerance
+		{
+			get
+			{
+				return DefaultEdgeTolerance;
+			}
+		}
 
 		protected PanelContainer (UIViewController panel, PanelType panelType)
 		{
@@ -46,7 +76,6 @@ namespace SlidingPanels.Lib.PanelContainers
 		{
 			base.ViewDidLoad ();
 
-			View.BackgroundColor = UIColor.Brown;
 			View.Frame = UIScreen.MainScreen.ApplicationFrame;
 
 			AddChildViewController (PanelVC);
@@ -55,54 +84,25 @@ namespace SlidingPanels.Lib.PanelContainers
 			Hide ();
 		}
 
-		public override void WillRotate (UIInterfaceOrientation toInterfaceOrientation, double duration)
-		{
-//			RectangleF newFrame = UIScreen.MainScreen.ApplicationFrame;
-//			float tmp = newFrame.Width - newFrame.Y;
-//			newFrame.Width = newFrame.Height + newFrame.Y;
-//			newFrame.Height = tmp;
-//			View.Frame = newFrame;
-
-			//PanelVC.WillRotate (toInterfaceOrientation, duration);
-//			base.WillRotate (toInterfaceOrientation, duration);
-//
-//			RectangleF frame = UIScreen.MainScreen.ApplicationFrame;
-//			if (toInterfaceOrientation == UIInterfaceOrientation.LandscapeLeft || 
-//			    toInterfaceOrientation == UIInterfaceOrientation.LandscapeRight)
-//			{
-//				frame.X = UIScreen.MainScreen.Bounds.Y;
-//				frame.Y = UIScreen.MainScreen.Bounds.X;
-//				frame.Height = UIScreen.MainScreen.Bounds.Width;
-//				frame.Width = UIScreen.MainScreen.Bounds.Height;
-//			}
-//			View.Frame = frame;
-		}
-
-		public override void DidRotate (UIInterfaceOrientation fromInterfaceOrientation)
-		{
-			//PanelVC.DidRotate (toInterfaceOrientation);
-			base.DidRotate (fromInterfaceOrientation);
-//			RectangleF frame = UIScreen.MainScreen.ApplicationFrame;
-//			if (fromInterfaceOrientation == UIInterfaceOrientation.Portrait)
-//			{
-//				frame.X = UIScreen.MainScreen.Bounds.Y;
-//				frame.Y = UIScreen.MainScreen.Bounds.X;
-//				frame.Height = UIScreen.MainScreen.Bounds.Width;
-//				frame.Width = UIScreen.MainScreen.Bounds.Height;
-//			}
-//			View.Frame = frame;
-		}
-
 		public override void ViewWillAppear (bool animated)
 		{
 			RectangleF frame = UIScreen.MainScreen.ApplicationFrame;
-			if (UIApplication.SharedApplication.StatusBarOrientation == UIInterfaceOrientation.LandscapeLeft ||
-			    UIApplication.SharedApplication.StatusBarOrientation == UIInterfaceOrientation.LandscapeRight)
+
+			if (InterfaceOrientation != UIInterfaceOrientation.Portrait)
 			{
 				frame.Width = UIScreen.MainScreen.ApplicationFrame.Height;
 				frame.Height = UIScreen.MainScreen.ApplicationFrame.Width;
 				frame.X = UIScreen.MainScreen.ApplicationFrame.Y;
-				frame.Y = UIScreen.MainScreen.ApplicationFrame.X;
+
+				if (UIApplication.SharedApplication.StatusBarOrientation == UIInterfaceOrientation.LandscapeLeft)
+				{
+					frame.Y = UIScreen.MainScreen.ApplicationFrame.X;
+				}
+				else
+				{
+					frame.Y = UIScreen.MainScreen.Bounds.Width - UIScreen.MainScreen.ApplicationFrame.Width;
+				}
+
 			}
 
 			View.Frame = frame;
@@ -128,22 +128,25 @@ namespace SlidingPanels.Lib.PanelContainers
 			base.ViewDidDisappear (animated);
 		}
 
-		public void Toggle ()
+		public virtual void Toggle ()
 		{
-			if (View.Hidden) {
+			if (View.Hidden) 
+			{
 				Show ();
-			} else {
+			} 
+			else 
+			{
 				Hide ();
 			}
 		}
 
-		public void Show ()
+		public virtual void Show ()
 		{
 			View.Layer.ZPosition = -1;
 			View.Hidden = false;
 		}
 
-		public void Hide ()
+		public virtual void Hide ()
 		{
 			View.Hidden = true;
 		}

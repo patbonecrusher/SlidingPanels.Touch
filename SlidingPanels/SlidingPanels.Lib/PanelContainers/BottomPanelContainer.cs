@@ -1,4 +1,4 @@
-/// Copyright (C) 2013 Pat Laplante & Franc Caico
+/// Copyright (C) 2013 Pat Laplante & Frank Caico
 ///
 ///	Permission is hereby granted, free of charge, to  any person obtaining a copy 
 /// of this software and associated documentation files (the "Software"), to deal 
@@ -27,16 +27,21 @@ namespace SlidingPanels.Lib.PanelContainers
 {
 	public class BottomPanelContainer : PanelContainer
 	{
+		private float _topViewStartYPosition = 0.0f;
+		private float _touchPositionStartYPosition = 0.0f;
+
+
 		public RectangleF PanelPosition
 		{
 			get
 			{
-				RectangleF frame = View.Frame;
-				frame.X = 0;
-				frame.Y = View.Frame.Height - View.Frame.Y - Size.Height;
-				frame.Height = Size.Height;
-				frame.Width = View.Bounds.Width;
-				return frame;
+				return new RectangleF 
+				{
+					X = 0,
+					Y = View.Frame.Height - View.Frame.Y - Size.Height,
+					Height = Size.Height,
+					Width = View.Bounds.Width
+				};
 			}
 		}
 
@@ -47,8 +52,6 @@ namespace SlidingPanels.Lib.PanelContainers
 		public override void ViewDidLoad ()
 		{
 			base.ViewDidLoad ();
-			View.BackgroundColor = UIColor.Red;
-
 			PanelVC.View.Frame = PanelPosition;
 		}
 
@@ -56,53 +59,6 @@ namespace SlidingPanels.Lib.PanelContainers
 		{
 			base.ViewWillAppear (animated);
 			PanelVC.View.Frame = PanelPosition;
-		}
-
-		public override void WillRotate (UIInterfaceOrientation toInterfaceOrientation, double duration)
-		{
-			base.WillRotate (toInterfaceOrientation, duration);
-//
-//			
-//			RectangleF frame = UIScreen.MainScreen.Bounds;
-//
-//			if (toInterfaceOrientation == UIInterfaceOrientation.LandscapeLeft || 
-//			    toInterfaceOrientation == UIInterfaceOrientation.LandscapeRight)
-//			{
-//				frame.X = UIScreen.MainScreen.Bounds.Y;
-//				frame.Y = UIScreen.MainScreen.Bounds.X;
-//				frame.Height = UIScreen.MainScreen.Bounds.Width;
-//				frame.Width = UIScreen.MainScreen.Bounds.Height;
-//			}
-//
-//			frame.Y = frame.Height - frame.Y - Size.Height;
-//			frame.Height = Size.Height;
-//			PanelVC.View.Frame = frame;
-
-//			PanelVC.View.Frame = PanelPosition;
-//			UIView.Animate(duration, 0, UIViewAnimationOptions.CurveEaseInOut,
-//			    delegate {
-//					PanelVC.View.Frame = PanelPosition;
-//				},
-//				delegate {
-//				});
-		}
-
-		public override void DidRotate (UIInterfaceOrientation fromInterfaceOrientation)
-		{
-			base.DidRotate (fromInterfaceOrientation);
-//			RectangleF frame = UIScreen.MainScreen.Bounds;
-//
-//			if (fromInterfaceOrientation == UIInterfaceOrientation.Portrait)
-//			{
-//				frame.X = UIScreen.MainScreen.Bounds.Y;
-//				frame.Y = UIScreen.MainScreen.Bounds.X;
-//				frame.Height = UIScreen.MainScreen.Bounds.Width;
-//				frame.Width = UIScreen.MainScreen.Bounds.Height;
-//			}
-//
-//			frame.Y = frame.Height - frame.Y - Size.Height - 20;
-//			frame.Height = Size.Height;
-//			PanelVC.View.Frame = frame;
 		}
 
 		public override RectangleF GetTopViewPositionWhenSliderIsVisible(RectangleF topViewCurrentFrame)
@@ -126,7 +82,7 @@ namespace SlidingPanels.Lib.PanelContainers
 
 			if (!IsVisible)
 			{
-				return (touchPosition.Y >= (View.Bounds.Height - 40f) && touchPosition.Y <= View.Bounds.Height);
+				return (touchPosition.Y >= (View.Bounds.Height - EdgeTolerance) && touchPosition.Y <= View.Bounds.Height);
 			}
 			else
 			{
@@ -134,21 +90,18 @@ namespace SlidingPanels.Lib.PanelContainers
 			}
 		}
 
-		private float topViewStartYPosition = 0.0f;
-		private float touchPositionStartYPosition = 0.0f;
-
 		public override void PanningStarted (PointF touchPosition, RectangleF topViewCurrentFrame)
 		{
-			touchPositionStartYPosition = touchPosition.Y;
-			topViewStartYPosition = topViewCurrentFrame.Y;
+			_touchPositionStartYPosition = touchPosition.Y;
+			_topViewStartYPosition = topViewCurrentFrame.Y;
 		}
 
 		public override RectangleF Panning (PointF touchPosition, RectangleF topViewCurrentFrame)
 		{
-			float translation = touchPosition.Y - touchPositionStartYPosition;
+			float translation = touchPosition.Y - _touchPositionStartYPosition;
 
 			RectangleF frame = topViewCurrentFrame;
-			frame.Y = topViewStartYPosition + translation;
+			frame.Y = _topViewStartYPosition + translation;
 
 			if (frame.Y >= 0) 
 			{ 
@@ -169,13 +122,8 @@ namespace SlidingPanels.Lib.PanelContainers
 			float screenHeight = topViewCurrentFrame.Height;
 			float panelHeight = Size.Height;
 
-			RectangleF frame = topViewCurrentFrame;
-			float y = frame.Y + frame.Height;
-			if (y < (screenHeight - (panelHeight/2))) {
-				return true;
-			} else {
-				return false;
-			}
+			float y = topViewCurrentFrame.Y + topViewCurrentFrame.Height;
+			return (y < (screenHeight - (panelHeight / 2)));
 		}
 	}
 }
