@@ -26,7 +26,8 @@ namespace SlidingPanels.Lib
 {
 	public class SlidingGestureEventArgs : EventArgs
 	{
-		public PanelContainer PanelContainer {
+		public PanelContainer PanelContainer 
+		{
 			get;
 			private set;
 		}

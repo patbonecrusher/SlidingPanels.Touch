@@ -111,11 +111,13 @@ namespace SlidingPanels.Lib
 			);
 
 			_slidingGesture = new SlidingGestureRecogniser (_panelContainers, ShouldReceiveTouch, this);
+
 			_slidingGesture.ShowPanel += (object sender, EventArgs e) => {
-				this.ShowPanel(((SlidingGestureEventArgs)e).PanelContainer);
+				ShowPanel(((SlidingGestureEventArgs)e).PanelContainer);
 			};
+
 			_slidingGesture.HidePanel += (object sender, EventArgs e) => {
-				this.HidePanel(((SlidingGestureEventArgs)e).PanelContainer);
+				HidePanel(((SlidingGestureEventArgs)e).PanelContainer);
 			};
 		}
 

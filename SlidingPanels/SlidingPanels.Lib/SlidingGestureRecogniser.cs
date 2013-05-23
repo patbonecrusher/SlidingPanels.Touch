@@ -30,13 +30,16 @@ namespace SlidingPanels.Lib
 {
 	public class SlidingGestureRecogniser : UIPanGestureRecognizer
 	{
-		private List<PanelContainer> PanelContainers;
-		protected PanelContainer CurrentActivePanelContainer {
+		private List<PanelContainer> _panelContainers;
+
+		protected PanelContainer CurrentActivePanelContainer 
+		{
 			get;
 			set;
 		}
 
-		public UIViewController SlidingController {
+		public UIViewController SlidingController 
+		{
 			get;
 			private set;
 		}
@@ -47,10 +50,19 @@ namespace SlidingPanels.Lib
 		public SlidingGestureRecogniser (List<PanelContainer> panelContainers, UITouchEventArgs shouldReceiveTouch, UIViewController slidingController)
 		{
 			SlidingController = slidingController;
-			PanelContainers = panelContainers;
+			_panelContainers = panelContainers;
+
 			this.ShouldReceiveTouch += (sender, touch) => {
-				if (SlidingController == null) { return false; }
-				if (touch.View is UIButton) { return false; }
+				if (SlidingController == null) 
+				{ 
+					return false; 
+				}
+
+				if (touch.View is UIButton) 
+				{ 
+					return false; 
+				}
+
 				return shouldReceiveTouch(sender, touch);
 			};
 		}
@@ -61,7 +73,8 @@ namespace SlidingPanels.Lib
 
 			PointF touchPt;
 			UITouch touch = touches.AnyObject as UITouch;
-			if (touch != null) {
+			if (touch != null) 
+			{
 				touchPt = touch.LocationInView (this.View);
 			}
 			else
@@ -69,10 +82,10 @@ namespace SlidingPanels.Lib
 				return;
 			}
 
-			CurrentActivePanelContainer = PanelContainers.FirstOrDefault (p => p.IsVisible);
+			CurrentActivePanelContainer = _panelContainers.FirstOrDefault (p => p.IsVisible);
 			if (CurrentActivePanelContainer == null) 
 			{
-				CurrentActivePanelContainer = PanelContainers.FirstOrDefault (p => p.CanStartPanning (touchPt, SlidingController.View.Frame));
+				CurrentActivePanelContainer = _panelContainers.FirstOrDefault (p => p.CanStartPanning (touchPt, SlidingController.View.Frame));
 				if (CurrentActivePanelContainer != null) 
 				{
 					CurrentActivePanelContainer.Show ();
@@ -96,7 +109,8 @@ namespace SlidingPanels.Lib
 
 			PointF touchPt;
 			UITouch touch = touches.AnyObject as UITouch;
-			if (touch != null) {
+			if (touch != null) 
+			{
 				touchPt = touch.LocationInView (this.View);
 			}
 			else
@@ -119,7 +133,8 @@ namespace SlidingPanels.Lib
 
 			PointF touchPt;
 			UITouch touch = touches.AnyObject as UITouch;
-			if (touch != null) {
+			if (touch != null) 
+			{
 				touchPt = touch.LocationInView (this.View);
 			}
 			else
@@ -127,12 +142,17 @@ namespace SlidingPanels.Lib
 				return;
 			}
 
-			if (CurrentActivePanelContainer.PanningEnded (touchPt, SlidingController.View.Frame)) {
-				if (ShowPanel != null) {
+			if (CurrentActivePanelContainer.PanningEnded (touchPt, SlidingController.View.Frame)) 
+			{
+				if (ShowPanel != null) 
+				{
 					ShowPanel (this, new SlidingGestureEventArgs (CurrentActivePanelContainer));
 				}
-			} else {
-				if (HidePanel != null) {
+			} 
+			else 
+			{
+				if (HidePanel != null) 
+				{
 					HidePanel (this, new SlidingGestureEventArgs (CurrentActivePanelContainer));
 				}
 			}

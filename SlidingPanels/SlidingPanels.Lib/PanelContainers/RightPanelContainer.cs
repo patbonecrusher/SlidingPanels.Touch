@@ -85,8 +85,10 @@ namespace SlidingPanels.Lib.PanelContainers
 			float translation = touchPosition.X - _touchPositionStartXPosition;
 
 			RectangleF frame = topViewCurrentFrame;
+
 			frame.X = _topViewStartXPosition + translation;
-			var y = frame.X + frame.Width;
+
+			float y = frame.X + frame.Width;
 
 			if (y >= screenWidth) 
 			{ 
@@ -106,16 +108,8 @@ namespace SlidingPanels.Lib.PanelContainers
 			float screenWidth = View.Bounds.Size.Width;
 			float panelWidth = Size.Width;
 
-			RectangleF frame = topViewCurrentFrame;
-			float y = frame.X + frame.Width;
-			if (y < (screenWidth - (panelWidth / 2))) 
-			{
-				return true;
-			} 
-			else 
-			{
-				return false;
-			}
+			float y = topViewCurrentFrame.X + topViewCurrentFrame.Width;
+			return (y < (screenWidth - (panelWidth / 2)));
 		}
 	}
 }
