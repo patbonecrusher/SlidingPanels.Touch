@@ -27,14 +27,21 @@ using SlidingPanels.Lib.PanelContainers;
 
 namespace SlidingPanels.Lib
 {
+	/// <summary>
+	/// Sliding Panels Main View Controller
+	/// </summary>
 	public partial class SlidingPanelsNavigationViewController : UINavigationController
 	{
-		#region Constants/Properties
+		#region Constants
 
 		/// <summary>
 		/// How fast do we show/hide panels.
 		/// </summary>
 		const float AnimationSpeed = 0.25f;
+
+		#endregion
+
+		#region Data Members
 
 		/// <summary>
 		/// This is to work around an issue.  Since the panels are added to the 
@@ -63,6 +70,16 @@ namespace SlidingPanels.Lib
 		/// </summary>
 		private List<PanelContainer> _panelContainers;
 
+		#endregion
+
+		#region Properties
+
+		/// <summary>
+		/// Provides a hook for application to override the decision to allow
+		/// a panel to be swiped in or not.
+		/// </summary>
+		public Predicate<UITouch> CanSwipeToShowPanel;
+
 		/// <summary>
 		/// This is a handy Accessor to get the currently active panel, if any.
 		/// </summary>
@@ -75,13 +92,9 @@ namespace SlidingPanels.Lib
 			}
 		}
 
-		/// <summary>
-		/// Provides a hook for application to override the decision to allow
-		/// a panel to be swiped in or not.
-		/// </summary>
-		public Predicate<UITouch> CanSwipeToShowPanel;
-
 		#endregion
+
+		#region Construction/Destruction
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="SlidingPanels.Lib.SlidingPanelsNavigationViewController"/> class.
@@ -91,9 +104,12 @@ namespace SlidingPanels.Lib
 		{
 		}
 
+		#endregion
+
 		#region ViewLifecycle
 
 		/// <summary>
+		/// Called when the view is first loaded
 		/// </summary>
 		public override void ViewDidLoad ()
 		{
@@ -101,6 +117,7 @@ namespace SlidingPanels.Lib
 
 			_panelContainers = new List<PanelContainer> ();
 
+			//TODO: We should expose these as properties of the sliding panel controller
 			View.Layer.ShadowRadius = 5;
 			View.Layer.ShadowColor = UIColor.Black.CGColor;
 			View.Layer.ShadowOpacity = .75f;
@@ -167,6 +184,32 @@ namespace SlidingPanels.Lib
 			}
 		}
 
+		#region overrides to pass to container
+
+		/// <summary>
+		/// Called when the view will rotate.
+		/// This override forwards the WillRotate callback on to each of the panel containers
+		/// </summary>
+		/// <param name="toInterfaceOrientation">To interface orientation.</param>
+		/// <param name="duration">Duration.</param>
+		public override void WillRotate (UIInterfaceOrientation toInterfaceOrientation, double duration)
+		{
+			base.WillRotate (toInterfaceOrientation, duration);
+			_panelContainers.ForEach (c => c.WillRotate (toInterfaceOrientation, duration));
+		}
+
+		/// <summary>
+		/// Called after the view rotated
+		/// This override forwards the DidRotate callback on to each of the panel containers
+		/// </summary>
+		/// <param name="fromInterfaceOrientation">From interface orientation.</param>
+		public override void DidRotate (UIInterfaceOrientation fromInterfaceOrientation)
+		{
+			base.DidRotate (fromInterfaceOrientation);
+			_panelContainers.ForEach (c => c.DidRotate (fromInterfaceOrientation));
+		}
+
+		#endregion
 		#endregion
 
 		#region Panel stuff
@@ -279,21 +322,5 @@ namespace SlidingPanels.Lib
 				});
 		}
 		#endregion	
-
-		#region overrides to pass to container
-
-		public override void WillRotate (UIInterfaceOrientation toInterfaceOrientation, double duration)
-		{
-			base.WillRotate (toInterfaceOrientation, duration);
-			_panelContainers.ForEach (c => c.WillRotate (toInterfaceOrientation, duration));
-		}
-
-		public override void DidRotate (UIInterfaceOrientation fromInterfaceOrientation)
-		{
-			base.DidRotate (fromInterfaceOrientation);
-			_panelContainers.ForEach (c => c.DidRotate (fromInterfaceOrientation));
-		}
-
-		#endregion
 	}
 }

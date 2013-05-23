@@ -23,6 +23,9 @@ using System;
 
 namespace SlidingPanels.Lib.PanelContainers
 {
+	/// <summary>
+	/// Indicates the type of sliding panel
+	/// </summary>
 	public enum PanelType 
 	{
 		LeftPanel, 

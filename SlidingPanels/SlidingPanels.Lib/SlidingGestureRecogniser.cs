@@ -28,25 +28,62 @@ using System.Drawing;
 
 namespace SlidingPanels.Lib
 {
+	/// <summary>
+	/// Sliding Panels gesture recogniser.
+	/// </summary>
 	public class SlidingGestureRecogniser : UIPanGestureRecognizer
 	{
+		#region Data Members
+
+		/// <summary>
+		/// The list of panels that need to be monitored for gestures
+		/// </summary>
 		private List<PanelContainer> _panelContainers;
 
+		#endregion
+
+		#region Properties
+
+		/// <summary>
+		/// The currently showing panel
+		/// </summary>
+		/// <value>The current active panel container.</value>
 		protected PanelContainer CurrentActivePanelContainer 
 		{
 			get;
 			set;
 		}
 
+		/// <summary>
+		/// Gets the sliding controller.
+		/// </summary>
+		/// <value>The sliding controller.</value>
 		public UIViewController SlidingController 
 		{
 			get;
 			private set;
 		}
 
+		/// <summary>
+		/// Occurs when a sliding panel should be shown
+		/// </summary>
 		public event EventHandler ShowPanel;
+
+		/// <summary>
+		/// Occurs when a sliding panel should be hidden
+		/// </summary>
 		public event EventHandler HidePanel;
 
+		#endregion
+
+		#region Construction / Destruction
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="SlidingPanels.Lib.SlidingGestureRecogniser"/> class.
+		/// </summary>
+		/// <param name="panelContainers">List of Panel Containers to monitor for gestures</param>
+		/// <param name="shouldReceiveTouch">Indicates that touch events should be monitored</param>
+		/// <param name="slidingController">The Sliding Panels controller</param>
 		public SlidingGestureRecogniser (List<PanelContainer> panelContainers, UITouchEventArgs shouldReceiveTouch, UIViewController slidingController)
 		{
 			SlidingController = slidingController;
@@ -67,6 +104,15 @@ namespace SlidingPanels.Lib
 			};
 		}
 
+		#endregion
+
+		#region Touch Methods
+
+		/// <summary>
+		/// Manages what happens when the user begins a possible slide 
+		/// </summary>
+		/// <param name="touches">Touches.</param>
+		/// <param name="evt">Evt.</param>
 		public override void TouchesBegan (MonoTouch.Foundation.NSSet touches, UIEvent evt)
 		{
 			base.TouchesBegan (touches, evt);
@@ -85,19 +131,24 @@ namespace SlidingPanels.Lib
 			CurrentActivePanelContainer = _panelContainers.FirstOrDefault (p => p.IsVisible);
 			if (CurrentActivePanelContainer == null) 
 			{
-				CurrentActivePanelContainer = _panelContainers.FirstOrDefault (p => p.CanStartPanning (touchPt, SlidingController.View.Frame));
+				CurrentActivePanelContainer = _panelContainers.FirstOrDefault (p => p.CanStartSliding (touchPt, SlidingController.View.Frame));
 				if (CurrentActivePanelContainer != null) 
 				{
 					CurrentActivePanelContainer.Show ();
-					CurrentActivePanelContainer.PanningStarted (touchPt, SlidingController.View.Frame);
+					CurrentActivePanelContainer.SlidingStarted (touchPt, SlidingController.View.Frame);
 				}
 			} 
 			else 
 			{
-				CurrentActivePanelContainer.PanningStarted (touchPt, SlidingController.View.Frame);
+				CurrentActivePanelContainer.SlidingStarted (touchPt, SlidingController.View.Frame);
 			}
 		}
 
+		/// <summary>
+		/// Manages what happens while the user is mid-slide
+		/// </summary>
+		/// <param name="touches">Touches.</param>
+		/// <param name="evt">Evt.</param>
 		public override void TouchesMoved (MonoTouch.Foundation.NSSet touches, UIEvent evt)
 		{
 			base.TouchesMoved (touches, evt);
@@ -118,10 +169,15 @@ namespace SlidingPanels.Lib
 				return;
 			}
 
-			RectangleF newFrame = CurrentActivePanelContainer.Panning (touchPt, SlidingController.View.Frame);
+			RectangleF newFrame = CurrentActivePanelContainer.Sliding (touchPt, SlidingController.View.Frame);
 			SlidingController.View.Frame = newFrame;
 		}
 
+		/// <summary>
+		/// Manages what happens when the user completes a slide
+		/// </summary>
+		/// <param name="touches">Touches.</param>
+		/// <param name="evt">Evt.</param>
 		public override void TouchesEnded (MonoTouch.Foundation.NSSet touches, UIEvent evt)
 		{
 			base.TouchesEnded (touches, evt);
@@ -142,7 +198,7 @@ namespace SlidingPanels.Lib
 				return;
 			}
 
-			if (CurrentActivePanelContainer.PanningEnded (touchPt, SlidingController.View.Frame)) 
+			if (CurrentActivePanelContainer.SlidingEnded (touchPt, SlidingController.View.Frame)) 
 			{
 				if (ShowPanel != null) 
 				{
@@ -158,10 +214,17 @@ namespace SlidingPanels.Lib
 			}
 		}
 
+		/// <summary>
+		/// Manages what happens when a slide is interrupted
+		/// </summary>
+		/// <param name="touches">Touches.</param>
+		/// <param name="evt">Evt.</param>
 		public override void TouchesCancelled (MonoTouch.Foundation.NSSet touches, UIEvent evt)
 		{
 			base.TouchesCancelled (touches, evt);
 		}
+
+		#endregion
 	}
 }
 
