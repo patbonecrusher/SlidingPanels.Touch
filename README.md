@@ -1,5 +1,4 @@
-This is a library providing panels to a monotouch app, much like the Facebook iOS left and right panels.
+This is a library providing sliding panels (often called Hamburger menus or Flyout menus) to a monotouch app, much like the Facebook iOS left and right panels.
 
-This is fresh out of the oven.  Mostly have bugs.  Not tested on iPad yet.  
-
+This has been tested on iPhone and iPad and currently seems to be working pretty well.  No unit tests as of yet (bad bad coder!)...
 
