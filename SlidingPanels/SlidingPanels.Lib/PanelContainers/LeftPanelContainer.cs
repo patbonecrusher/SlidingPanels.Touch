@@ -42,6 +42,24 @@ namespace SlidingPanels.Lib.PanelContainers
 		/// </summary>
 		private float _touchPositionStartXPosition = 0.0f;
 
+		/// <summary>
+		/// Gets the panel position.
+		/// </summary>
+		/// <value>The panel position.</value>
+		public RectangleF PanelPosition
+		{
+			get
+			{
+				return new RectangleF 
+				{
+					X = View.Frame.X,
+					Y = -View.Frame.Y,
+					Width = Size.Width,
+					Height = View.Bounds.Height
+				};
+			}
+		}
+
 		#endregion
 
 		#region Construction
@@ -64,14 +82,17 @@ namespace SlidingPanels.Lib.PanelContainers
 		public override void ViewDidLoad ()
 		{
 			base.ViewDidLoad ();
+			PanelVC.View.Frame = PanelPosition;
+		}
 
-			PanelVC.View.Frame = new RectangleF 
-			{
-				X = View.Frame.X,
-				Y = -View.Frame.Y,
-				Width = Size.Width,
-				Height = View.Frame.Height
-			};
+		/// <summary>
+		/// Called whenever the Panel is about to become visible
+		/// </summary>
+		/// <param name="animated">If set to <c>true</c> animated.</param>
+		public override void ViewWillAppear (bool animated)
+		{
+			base.ViewWillAppear (animated);
+			PanelVC.View.Frame = PanelPosition;
 		}
 
 		#endregion
