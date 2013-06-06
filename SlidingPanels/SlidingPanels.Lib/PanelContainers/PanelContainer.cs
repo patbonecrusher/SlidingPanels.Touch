@@ -34,9 +34,9 @@ namespace SlidingPanels.Lib.PanelContainers
 		#region Constants
 
 		/// <summary>
-		/// Designates the default edge tolerance in pts
+		/// Designates the edge tolerance in pts.  This defaults to 40 pts.
 		/// </summary>
-		const float DefaultEdgeTolerance = 40F;
+		private float _edgeTolerance = 40F;
 
 		#endregion 
 
@@ -93,7 +93,11 @@ namespace SlidingPanels.Lib.PanelContainers
 		{
 			get
 			{
-				return DefaultEdgeTolerance;
+				return _edgeTolerance;
+			}
+			set
+			{
+				_edgeTolerance = value;
 			}
 		}
 
