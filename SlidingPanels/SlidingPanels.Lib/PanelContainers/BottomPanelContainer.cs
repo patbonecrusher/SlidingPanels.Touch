@@ -90,7 +90,7 @@ namespace SlidingPanels.Lib.PanelContainers
 		}
 
 		/// <summary>
-		/// Called when the Panel will be shown for the first time
+		/// Called whenever the Panel is about to become visible
 		/// </summary>
 		/// <param name="animated">If set to <c>true</c> animated.</param>
 		public override void ViewWillAppear (bool animated)
