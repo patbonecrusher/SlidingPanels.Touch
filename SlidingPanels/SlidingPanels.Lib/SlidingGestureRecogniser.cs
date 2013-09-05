@@ -109,6 +109,15 @@ namespace SlidingPanels.Lib
 		#region Touch Methods
 
 		/// <summary>
+		/// We want to prevent any other gesture to be recognized on the window!
+		/// </summary>
+		/// <param name="preventingGestureRecognizer">Preventing gesture recognizer.</param>
+		public override bool CanBePreventedByGestureRecognizer (UIGestureRecognizer preventingGestureRecognizer)
+		{
+			return preventingGestureRecognizer == this;
+		}
+
+		/// <summary>
 		/// Manages what happens when the user begins a possible slide 
 		/// </summary>
 		/// <param name="touches">Touches.</param>
