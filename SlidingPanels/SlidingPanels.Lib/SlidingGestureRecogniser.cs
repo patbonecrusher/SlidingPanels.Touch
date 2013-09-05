@@ -114,7 +114,7 @@ namespace SlidingPanels.Lib
 		/// <param name="preventingGestureRecognizer">Preventing gesture recognizer.</param>
 		public override bool CanBePreventedByGestureRecognizer (UIGestureRecognizer preventingGestureRecognizer)
 		{
-			return preventingGestureRecognizer == this;
+			return State != UIGestureRecognizerState.Began;
 		}
 
 		/// <summary>
@@ -134,6 +134,7 @@ namespace SlidingPanels.Lib
 			}
 			else
 			{
+				State = UIGestureRecognizerState.Failed;
 				return;
 			}
 
@@ -145,6 +146,10 @@ namespace SlidingPanels.Lib
 				{
 					CurrentActivePanelContainer.Show ();
 					CurrentActivePanelContainer.SlidingStarted (touchPt, SlidingController.View.Frame);
+				}
+				else
+				{
+					State = UIGestureRecognizerState.Failed;
 				}
 			} 
 			else 
