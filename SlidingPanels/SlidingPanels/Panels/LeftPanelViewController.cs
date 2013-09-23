@@ -29,14 +29,20 @@ namespace SlidingPanels.Panels
 {
 	public partial class LeftPanelViewController : UIViewController
 	{
-		public SlidingPanelsNavigationViewController PanelsNavController {
+		public SlidingPanelViewController PanelsNavController {
 			get;
 			private set;
 		}
 
-		public LeftPanelViewController (SlidingPanelsNavigationViewController controller) : base ("LeftPanelViewController", null)
+		public UINavigationController TargetController {
+			get;
+			private set;
+		}
+
+		public LeftPanelViewController (SlidingPanelViewController controller, UINavigationController targetController) : base ("LeftPanelViewController", null)
 		{
 			PanelsNavController = controller;
+			TargetController = targetController;
 		}
 
 		public override void DidReceiveMemoryWarning ()
@@ -60,14 +66,14 @@ namespace SlidingPanels.Panels
 		}
 		partial void ShowScreenA (MonoTouch.Foundation.NSObject sender)
 		{
-			PanelsNavController.PopToRootViewController(false);
-			PanelsNavController.TogglePanel(SlidingPanels.Lib.PanelContainers.PanelType.LeftPanel);
+			TargetController.PopToRootViewController(true);
+			//PanelsNavController.TogglePanel(SlidingPanels.Lib.PanelContainers.PanelType.LeftPanel);
 		}
 
 		partial void ShowScreenB (MonoTouch.Foundation.NSObject sender)
 		{
-			PanelsNavController.PushViewController(new ExampleContentB(), true);
-			PanelsNavController.TogglePanel(SlidingPanels.Lib.PanelContainers.PanelType.LeftPanel);
+			TargetController.PushViewController(new ExampleContentB(PanelsNavController), true);
+			//PanelsNavController.TogglePanel(SlidingPanels.Lib.PanelContainers.PanelType.LeftPanel);
 		}
 	}
 }

@@ -38,6 +38,9 @@
   <ItemGroup>
     <Folder Include="Resources\" />
     <Folder Include="PanelContainers\" />
+    <Folder Include="Layouts\" />
+    <Folder Include="Layouts\FollowMe\" />
+    <Folder Include="Containers\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -49,5 +52,10 @@
     <Compile Include="SlidingPanelsNavigationViewController.cs" />
     <Compile Include="PanelContainers\PanelType.cs" />
     <Compile Include="SlidingGestureEventArgs.cs" />
+    <Compile Include="Layouts\FollowMe\FollowMeLayout.cs" />
+    <Compile Include="Containers\DisplayConstraints.cs" />
+    <Compile Include="SlidingPanelViewController.cs" />
+    <Compile Include="Containers\Container.cs" />
+    <Compile Include="Layouts\Layout.cs" />
   </ItemGroup>
 </Project>

@@ -20,44 +20,62 @@
 // /// -----------------------------------------------------------------------------
 //
 using System;
-using System.Drawing;
-using MonoTouch.Foundation;
 using MonoTouch.UIKit;
-using SlidingPanels.Lib;
+using System.Collections.Generic;
+using System.Drawing;
 
-namespace SlidingPanels.Panels
+namespace SlidingPanels.Lib.Layouts
 {
-	public partial class RightPanelViewController : UIViewController
+	public class Layout
 	{
-		public SlidingPanelViewController PanelsNavController {
-			get;
-			private set;
-		}
+		private List<Containers.Container> _panelContainers;
+		private UIView _parentView;
 
-		public UINavigationController TargetController {
-			get;
-			private set;
-		}
-
-		public RightPanelViewController (SlidingPanelViewController controller, UINavigationController targetController) : base ("RightPanelViewController", null)
+		public UIView ParentView
 		{
-			TargetController = targetController;
-			PanelsNavController = controller;
+			get 
+			{
+				return _parentView;
+			}
 		}
 
-		public override void DidReceiveMemoryWarning ()
+		public Layout ()
 		{
-			// Releases the view if it doesn't have a superview.
-			base.DidReceiveMemoryWarning ();
-			
-			// Release any cached data, images, etc that aren't in use.
+			_panelContainers = new List<SlidingPanels.Lib.Containers.Container> ();
 		}
 
-		public override void ViewDidLoad ()
+		public virtual void InsertPanelsIntoParentView(UIView parent)
 		{
-			base.ViewDidLoad ();
-			
-			// Perform any additional setup after loading the view, typically from a nib.
+			_parentView = parent;
+			foreach(Containers.Container container in _panelContainers)
+			{
+				InsertPanelIntoParentView (container, _parentView);
+			}
+		}
+
+		public virtual void AddPanelContainer(Containers.Container panelContainer)
+		{
+			_panelContainers.Add (panelContainer);
+			InsertPanelIntoParentView (panelContainer, _parentView);
+		}
+
+		private void InsertPanelIntoParentView(Containers.Container container, UIView parent) 
+		{
+			if (_parentView != null)
+			{
+				RectangleF newPosition = new RectangleF();
+				newPosition.Location = container.Constraints.StartingPosition;
+				newPosition.Size = new SizeF (
+					container.Constraints.Size.Width,
+					_parentView.Frame.Size.Height
+					);
+				container.Content.View.Frame = newPosition;
+				if (_parentView != container.Content.View)
+				{
+					_parentView.AddSubview (container.Content.View);
+				}
+				container.Content.View.Hidden = false;
+			}
 		}
 	}
 }

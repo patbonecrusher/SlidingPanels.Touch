@@ -20,44 +20,26 @@
 // /// -----------------------------------------------------------------------------
 //
 using System;
-using System.Drawing;
-using MonoTouch.Foundation;
 using MonoTouch.UIKit;
-using SlidingPanels.Lib;
 
-namespace SlidingPanels.Panels
+namespace SlidingPanels.Lib.Containers
 {
-	public partial class RightPanelViewController : UIViewController
+	public class Container
 	{
-		public SlidingPanelViewController PanelsNavController {
+		public Container ()
+		{
+		}
+
+		public UIViewController Content 
+		{
 			get;
-			private set;
+			set;
 		}
 
-		public UINavigationController TargetController {
+		public DisplayConstraints Constraints
+		{
 			get;
-			private set;
-		}
-
-		public RightPanelViewController (SlidingPanelViewController controller, UINavigationController targetController) : base ("RightPanelViewController", null)
-		{
-			TargetController = targetController;
-			PanelsNavController = controller;
-		}
-
-		public override void DidReceiveMemoryWarning ()
-		{
-			// Releases the view if it doesn't have a superview.
-			base.DidReceiveMemoryWarning ();
-			
-			// Release any cached data, images, etc that aren't in use.
-		}
-
-		public override void ViewDidLoad ()
-		{
-			base.ViewDidLoad ();
-			
-			// Perform any additional setup after loading the view, typically from a nib.
+			set;
 		}
 	}
 }

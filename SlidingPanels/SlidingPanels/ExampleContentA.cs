@@ -31,13 +31,19 @@ namespace SlidingPanels
 {
 	public partial class ExampleContentA : UIViewController
 	{
+		public SlidingPanelViewController PanelsNavController {
+			get;
+			private set;
+		}
+
 		static bool UserInterfaceIdiomIsPhone {
 			get { return UIDevice.CurrentDevice.UserInterfaceIdiom == UIUserInterfaceIdiom.Phone; }
 		}
 
-		public ExampleContentA ()
+		public ExampleContentA (SlidingPanelViewController controller)
 			: base (UserInterfaceIdiomIsPhone ? "ExampleContentA_iPhone" : "ExampleContentA_iPad", null)
 		{
+			PanelsNavController = controller;
 			NavigationItem.LeftBarButtonItem = CreateSliderButton("Images/SlideRight40.png", PanelType.LeftPanel);
 			NavigationItem.RightBarButtonItem = CreateSliderButton("Images/SlideLeft40.png", PanelType.BottomPanel);
 		}
@@ -80,7 +86,7 @@ namespace SlidingPanels
 
 		partial void DoIt (MonoTouch.Foundation.NSObject sender)
 		{
-			NavigationController.PushViewController(new ExampleContentB(), true);
+			NavigationController.PushViewController(new ExampleContentB(PanelsNavController), true);
 		}
 
 		public override void DidRotate (UIInterfaceOrientation fromInterfaceOrientation)

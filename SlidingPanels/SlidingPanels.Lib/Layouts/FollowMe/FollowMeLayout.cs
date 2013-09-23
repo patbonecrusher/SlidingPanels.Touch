@@ -20,44 +20,42 @@
 // /// -----------------------------------------------------------------------------
 //
 using System;
-using System.Drawing;
-using MonoTouch.Foundation;
 using MonoTouch.UIKit;
-using SlidingPanels.Lib;
 
-namespace SlidingPanels.Panels
+namespace SlidingPanels.Lib.Layouts.FollowMe
 {
-	public partial class RightPanelViewController : UIViewController
+	public class FollowMeLayout : Layout
 	{
-		public SlidingPanelViewController PanelsNavController {
-			get;
-			private set;
-		}
+		private UISwipeGestureRecognizer _leftRecognizer;
+		private UISwipeGestureRecognizer _rightRecognizer;
 
-		public UINavigationController TargetController {
-			get;
-			private set;
-		}
-
-		public RightPanelViewController (SlidingPanelViewController controller, UINavigationController targetController) : base ("RightPanelViewController", null)
+		public FollowMeLayout ()
 		{
-			TargetController = targetController;
-			PanelsNavController = controller;
+			_leftRecognizer = new UISwipeGestureRecognizer(HandleSwipeLeft);
+
+			_leftRecognizer.Direction = UISwipeGestureRecognizerDirection.Left;
+			_rightRecognizer = new UISwipeGestureRecognizer(HandleSwipeRight);
+			_rightRecognizer.Direction = UISwipeGestureRecognizerDirection.Right;
 		}
 
-		public override void DidReceiveMemoryWarning ()
+		public override void InsertPanelsIntoParentView (UIView parent)
 		{
-			// Releases the view if it doesn't have a superview.
-			base.DidReceiveMemoryWarning ();
-			
-			// Release any cached data, images, etc that aren't in use.
+			base.InsertPanelsIntoParentView (parent);
 		}
 
-		public override void ViewDidLoad ()
+		public override void AddPanelContainer (Containers.Container panelContainer)
 		{
-			base.ViewDidLoad ();
-			
-			// Perform any additional setup after loading the view, typically from a nib.
+			base.AddPanelContainer (panelContainer);
+		}
+
+		private void HandleSwipeLeft(UIGestureRecognizer gestureRecognizer)
+		{
+
+		}
+
+		private void HandleSwipeRight(UIGestureRecognizer gestureRecognizer)
+		{
+
 		}
 	}
 }

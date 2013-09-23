@@ -27,6 +27,9 @@ using MonoTouch.UIKit;
 using SlidingPanels.Lib;
 using SlidingPanels.Lib.PanelContainers;
 using SlidingPanels.Panels;
+using SlidingPanels.Lib.Layouts.FollowMe;
+using SlidingPanels.Lib.Containers;
+using System.Drawing;
 
 namespace SlidingPanels
 {
@@ -50,18 +53,55 @@ namespace SlidingPanels
 		{
 			window = new UIWindow (UIScreen.MainScreen.Bounds);
 
-			SlidingPanelsNavigationViewController navController = new SlidingPanelsNavigationViewController(new ExampleContentA ());
+			SlidingPanelViewController slidingPanelController = new SlidingPanelViewController();
 
-			UIViewController rootController = new UIViewController ();
-			rootController.AddChildViewController (navController);
-			rootController.View.AddSubview (navController.View);
-
-			window.RootViewController = rootController;
+			window.RootViewController = slidingPanelController;
 			window.MakeKeyAndVisible ();
 
-			navController.InsertPanel (new LeftPanelContainer(new LeftPanelViewController (navController)));
-			navController.InsertPanel (new RightPanelContainer(new RightPanelViewController (navController)));
-			navController.InsertPanel (new BottomPanelContainer(new BottomPanelViewController (navController)));
+			UINavigationController nav = new UINavigationController (new ExampleContentA (slidingPanelController));
+
+			DisplayConstraints leftConstraints = new DisplayConstraints {
+				StartingPosition = new PointF(0, 0),
+				Size = new SizeF(200, 0),
+				Limit = new PointF(-200, 0),
+				ZOrder = 1
+			};
+
+			Container leftContainer = new Container {
+				Content = new LeftPanelViewController(slidingPanelController, nav),
+				Constraints = leftConstraints
+			};
+
+			DisplayConstraints middleConstraints = new DisplayConstraints {
+				StartingPosition = new PointF(200, 0),
+				Size = new SizeF(400, 0),
+				Limit = new PointF(0, 0),
+				ZOrder = 1
+			};
+
+			Container middleContainer = new Container {
+				Content = nav,
+				Constraints = middleConstraints
+			};
+
+			DisplayConstraints rightConstraints = new DisplayConstraints {
+				StartingPosition = new PointF(600, 0),
+				Size = new SizeF(200, 0),
+				Limit = new PointF(0, 0),
+				ZOrder = 1
+			};
+
+			Container rightContainer = new Container {
+				Content = new RightPanelViewController(slidingPanelController, nav),
+				Constraints = rightConstraints
+			};
+
+			FollowMeLayout layout = new FollowMeLayout ();
+			layout.AddPanelContainer (leftContainer);
+			layout.AddPanelContainer (rightContainer);
+			layout.AddPanelContainer (middleContainer);
+
+			slidingPanelController.AddLayout (layout);
 
 			return true;
 		}

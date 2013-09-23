@@ -30,13 +30,19 @@ namespace SlidingPanels
 {
 	public partial class ExampleContentB : UIViewController
 	{
+		public SlidingPanelViewController PanelsNavController {
+			get;
+			private set;
+		}
+
 		static bool UserInterfaceIdiomIsPhone {
 			get { return UIDevice.CurrentDevice.UserInterfaceIdiom == UIUserInterfaceIdiom.Phone; }
 		}
 
-		public ExampleContentB ()
+		public ExampleContentB (SlidingPanelViewController controller)
 			: base (UserInterfaceIdiomIsPhone ? "ExampleContentB_iPhone" : "ExampleContentB_iPad", null)
 		{
+			PanelsNavController = controller;
 		}
 
 		public override void DidReceiveMemoryWarning ()
