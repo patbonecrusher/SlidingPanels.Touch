@@ -41,6 +41,12 @@ namespace SlidingPanels.Lib.Containers
 			get;
 			set;
 		}
+
+		public int PanelID
+		{
+			get;
+			set;
+		}
 	}
 }
 

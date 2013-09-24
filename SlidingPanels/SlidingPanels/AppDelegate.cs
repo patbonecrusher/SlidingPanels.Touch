@@ -69,7 +69,8 @@ namespace SlidingPanels
 
 			Container leftContainer = new Container {
 				Content = new LeftPanelViewController(slidingPanelController, nav),
-				Constraints = leftConstraints
+				Constraints = leftConstraints,
+				PanelID = 1
 			};
 
 			DisplayConstraints middleConstraints = new DisplayConstraints {
@@ -81,7 +82,8 @@ namespace SlidingPanels
 
 			Container middleContainer = new Container {
 				Content = nav,
-				Constraints = middleConstraints
+				Constraints = middleConstraints,
+				PanelID = 0
 			};
 
 			DisplayConstraints rightConstraints = new DisplayConstraints {
@@ -93,13 +95,14 @@ namespace SlidingPanels
 
 			Container rightContainer = new Container {
 				Content = new RightPanelViewController(slidingPanelController, nav),
-				Constraints = rightConstraints
+				Constraints = rightConstraints,
+				PanelID = 2
 			};
 
 			FollowMeLayout layout = new FollowMeLayout ();
-			layout.AddPanelContainer (leftContainer);
-			layout.AddPanelContainer (rightContainer);
-			layout.AddPanelContainer (middleContainer);
+			layout.LeftContainer = leftContainer;
+			layout.RightContainer = rightContainer;
+			layout.MasterContainer = middleContainer;
 
 			slidingPanelController.AddLayout (layout);
 

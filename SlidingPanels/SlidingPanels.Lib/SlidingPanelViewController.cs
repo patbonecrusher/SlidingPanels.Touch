@@ -22,6 +22,7 @@
 using System;
 using MonoTouch.UIKit;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace SlidingPanels.Lib
 {
@@ -127,7 +128,17 @@ namespace SlidingPanels.Lib
 		}
 
 		#endregion
+
 		#endregion
+
+		public void ShowPanel(int panelID)
+		{
+			Layouts.Layout layout = _layouts.FirstOrDefault (l => l.ContainsPanel (panelID));
+			if (layout != null) {
+				layout.ShowPanel (panelID);
+			}
+		}
+
 
 	}
 }

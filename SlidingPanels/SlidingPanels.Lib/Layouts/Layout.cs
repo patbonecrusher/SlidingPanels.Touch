@@ -23,6 +23,7 @@ using System;
 using MonoTouch.UIKit;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 
 namespace SlidingPanels.Lib.Layouts
 {
@@ -55,11 +56,22 @@ namespace SlidingPanels.Lib.Layouts
 
 		public virtual void AddPanelContainer(Containers.Container panelContainer)
 		{
-			_panelContainers.Add (panelContainer);
-			InsertPanelIntoParentView (panelContainer, _parentView);
+			if (!_panelContainers.Contains(panelContainer))
+			{
+				_panelContainers.Add (panelContainer);
+				InsertPanelIntoParentView (panelContainer, _parentView);
+			}
 		}
 
-		private void InsertPanelIntoParentView(Containers.Container container, UIView parent) 
+		public virtual bool ContainsPanel(int panelID) {
+			return (_panelContainers.FirstOrDefault (p => p.PanelID == panelID) != null);
+		}
+
+		public virtual void ShowPanel (int panelID)
+		{
+		}
+
+		protected virtual void InsertPanelIntoParentView(Containers.Container container, UIView parent) 
 		{
 			if (_parentView != null)
 			{
