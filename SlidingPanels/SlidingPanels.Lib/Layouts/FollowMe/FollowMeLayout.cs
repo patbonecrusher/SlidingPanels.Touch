@@ -22,6 +22,7 @@
 using System;
 using MonoTouch.UIKit;
 using System.Drawing;
+using MonoTouch.CoreGraphics;
 
 namespace SlidingPanels.Lib.Layouts.FollowMe
 {
@@ -191,23 +192,34 @@ namespace SlidingPanels.Lib.Layouts.FollowMe
 
 				RectangleF leftPanelRect = LeftContainer.Content.View.Frame;
 				RectangleF rightPanelRect = RightContainer.Content.View.Frame;
-				RectangleF masterPanelRect = ParentView.Bounds;
+				RectangleF masterPanelRect = MasterContainer.Content.View.Frame;
+
+				masterPanelRect = ParentView.Bounds;
+				PointF center = MasterContainer.Content.View.Center;
 
 				bool stretchingLeft = MasterContainer.Content.View.Frame.Location.X > 0;
 				if (stretchingLeft) {
 					leftPanelRect.Location = new PointF (0 - LeftContainer.Constraints.Size.Width, leftPanelRect.Location.Y);
+					MasterContainer.Content.View.ContentMode = UIViewContentMode.Redraw;
+					center = new PointF (ParentView.Bounds.Width, ParentView.Bounds.Height / 2);
 				} else {
 					rightPanelRect.Location = new PointF (ParentView.Bounds.Width, ParentView.Frame.Y);
+					MasterContainer.Content.View.ContentMode = UIViewContentMode.Redraw;
+					center = new PointF (0, ParentView.Bounds.Height / 2);
 				}
 
-				UIView.Animate(0.25, 0, UIViewAnimationOptions.CurveEaseInOut,
-				               delegate {
+//				MasterContainer.Content.View.Superview.AutosizesSubviews = true;
+//				Console.WriteLine ("delta x {0}, delta width {0}", MasterOriginalSize.Width - masterPanelRect.Width, MasterOriginalPosition.X - masterPanelRect.X);
+//				UIView.Animate(2.55, 0, UIViewAnimationOptions.CurveEaseInOut,
+//				               delegate {
 					MasterContainer.Content.View.Frame = masterPanelRect;
 					LeftContainer.Content.View.Frame = leftPanelRect;
 					RightContainer.Content.View.Frame = rightPanelRect;
-				},
-				delegate {
-				});
+//				},
+//				delegate {
+//					center = MasterContainer.Content.View.Center;
+//					masterPanelRect = MasterContainer.Content.View.Bounds;
+//				});
 
 				ZoomedOut = false;
 
@@ -234,14 +246,14 @@ namespace SlidingPanels.Lib.Layouts.FollowMe
 				}
 
 				masterPanelRect.Size = MasterOriginalSize;
-				UIView.Animate(0.05, 0, UIViewAnimationOptions.CurveEaseInOut,
-				               delegate {
+//				UIView.Animate(0.05, 0, UIViewAnimationOptions.CurveEaseInOut,
+//				               delegate {
 					MasterContainer.Content.View.Frame = masterPanelRect;
 					LeftContainer.Content.View.Frame = leftPanelRect;
 					RightContainer.Content.View.Frame = rightPanelRect;
-				},
-				delegate {
-				});
+//				},
+//				delegate {
+//				});
 
 				ZoomedOut = true;
 
