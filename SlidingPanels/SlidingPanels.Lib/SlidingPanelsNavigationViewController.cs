@@ -1,27 +1,28 @@
-/// Copyright (C) 2013 Pat Laplante & Frank Caico
-///
-///	Permission is hereby granted, free of charge, to  any person obtaining a copy 
-/// of this software and associated documentation files (the "Software"), to deal 
-/// in the Software without  restriction, including without limitation the rights 
-/// to use, copy,  modify,  merge, publish,  distribute,  sublicense, and/or sell 
-/// copies of the  Software,  and  to  permit  persons  to   whom the Software is 
-/// furnished to do so, subject to the following conditions:
-///
-///		The above  copyright notice  and this permission notice shall be included 
-///     in all copies or substantial portions of the Software.
-///
-///		THE  SOFTWARE  IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
-///     OR   IMPLIED,   INCLUDING  BUT   NOT  LIMITED   TO   THE   WARRANTIES  OF 
-///     MERCHANTABILITY,  FITNESS  FOR  A PARTICULAR PURPOSE AND NONINFRINGEMENT. 
-///     IN NO EVENT SHALL  THE AUTHORS  OR COPYRIGHT  HOLDERS  BE  LIABLE FOR ANY 
-///     CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT 
-///     OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION  WITH THE SOFTWARE OR 
-///     THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-/// -----------------------------------------------------------------------------
+// Copyright (C) 2013 Pat Laplante & Frank Caico
+//
+//	Permission is hereby granted, free of charge, to  any person obtaining a copy 
+// of this software and associated documentation files (the "Software"), to deal 
+// in the Software without  restriction, including without limitation the rights 
+// to use, copy,  modify,  merge, publish,  distribute,  sublicense, and/or sell 
+// copies of the  Software,  and  to  permit  persons  to   whom the Software is 
+// furnished to do so, subject to the following conditions:
+//
+//		The above  copyright notice  and this permission notice shall be included 
+//     in all copies or substantial portions of the Software.
+//
+//		THE  SOFTWARE  IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+//     OR   IMPLIED,   INCLUDING  BUT   NOT  LIMITED   TO   THE   WARRANTIES  OF 
+//     MERCHANTABILITY,  FITNESS  FOR  A PARTICULAR PURPOSE AND NONINFRINGEMENT. 
+//     IN NO EVENT SHALL  THE AUTHORS  OR COPYRIGHT  HOLDERS  BE  LIABLE FOR ANY 
+//     CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT 
+//     OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION  WITH THE SOFTWARE OR 
+//     THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+// -----------------------------------------------------------------------------
 
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using MonoTouch.CoreGraphics;
 using MonoTouch.UIKit;
 using SlidingPanels.Lib.PanelContainers;
 
@@ -80,6 +81,16 @@ namespace SlidingPanels.Lib
         /// </summary>
         public Predicate<UITouch> CanSwipeToShowPanel;
 
+        public float ShadowRadius
+        {
+            get { return View.Layer.ShadowRadius; }
+            set { View.Layer.ShadowRadius = value; }
+        }
+
+        public CGColor ShadowColor { get { return View.Layer.ShadowColor; } set { View.Layer.ShadowColor = value; } }
+
+        public float ShadowOpacity { get { return View.Layer.ShadowOpacity; } set { View.Layer.ShadowOpacity = value; } }
+
         /// <summary>
         ///     This is a handy Accessor to get the currently active panel, if any.
         /// </summary>
@@ -99,6 +110,9 @@ namespace SlidingPanels.Lib
         /// <param name="controller">First controller to put on the stack.</param>
         public SlidingPanelsNavigationViewController(UIViewController controller) : base(controller)
         {
+            ShadowRadius = 5;
+            ShadowColor = UIColor.Black.CGColor;
+            ShadowOpacity = .75f;
         }
 
         #endregion
@@ -114,11 +128,6 @@ namespace SlidingPanels.Lib
 
             _panelContainers = new List<PanelContainer>();
 
-            //TODO: We should expose these as properties of the sliding panel controller
-            View.Layer.ShadowRadius = 5;
-            View.Layer.ShadowColor = UIColor.Black.CGColor;
-            View.Layer.ShadowOpacity = .75f;
-
             _tapToClose = new UITapGestureRecognizer();
             _tapToClose.AddTarget(() => HidePanel(CurrentActivePanelContainer));
 
@@ -126,7 +135,7 @@ namespace SlidingPanels.Lib
 
             _slidingGesture.ShowPanel += (sender, e) => ShowPanel(((SlidingGestureEventArgs) e).PanelContainer);
 
-            _slidingGesture.HidePanel += (object sender, EventArgs e) => HidePanel(((SlidingGestureEventArgs) e).PanelContainer);
+            _slidingGesture.HidePanel += (sender, e) => HidePanel(((SlidingGestureEventArgs) e).PanelContainer);
         }
 
         /// <summary>
@@ -210,8 +219,7 @@ namespace SlidingPanels.Lib
         /// <param name="type">Type.</param>
         private PanelContainer ExistingContainerForType(PanelType type)
         {
-            PanelContainer container = null;
-            container = _panelContainers.FirstOrDefault(p => p.PanelType == type);
+            PanelContainer container = _panelContainers.FirstOrDefault(p => p.PanelType == type);
             if (container == null)
             {
                 throw new ArgumentException("Unknown panel type", "type");
@@ -251,6 +259,11 @@ namespace SlidingPanels.Lib
 
                 ShowPanel(container);
             }
+        }
+
+        public bool IsPanelVisible(PanelType type)
+        {
+            return CurrentActivePanelContainer != null && CurrentActivePanelContainer == ExistingContainerForType(type);
         }
 
         /// <summary>
