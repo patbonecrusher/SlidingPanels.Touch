@@ -110,6 +110,11 @@ namespace SlidingPanels.Lib
         /// <param name="controller">First controller to put on the stack.</param>
         public SlidingPanelsNavigationViewController(UIViewController controller) : base(controller)
         {
+			if (UIDevice.CurrentDevice.CheckSystemVersion (6, 0)) 
+			{
+				InteractivePopGestureRecognizer.Enabled = false;
+			}
+
             ShadowRadius = 5;
             ShadowColor = UIColor.Black.CGColor;
             ShadowOpacity = .75f;
