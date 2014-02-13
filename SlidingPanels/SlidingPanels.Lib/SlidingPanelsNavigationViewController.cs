@@ -1,326 +1,340 @@
-/// Copyright (C) 2013 Pat Laplante & Frank Caico
-///
-///	Permission is hereby granted, free of charge, to  any person obtaining a copy 
-/// of this software and associated documentation files (the "Software"), to deal 
-/// in the Software without  restriction, including without limitation the rights 
-/// to use, copy,  modify,  merge, publish,  distribute,  sublicense, and/or sell 
-/// copies of the  Software,  and  to  permit  persons  to   whom the Software is 
-/// furnished to do so, subject to the following conditions:
-///
-///		The above  copyright notice  and this permission notice shall be included 
-///     in all copies or substantial portions of the Software.
-///
-///		THE  SOFTWARE  IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
-///     OR   IMPLIED,   INCLUDING  BUT   NOT  LIMITED   TO   THE   WARRANTIES  OF 
-///     MERCHANTABILITY,  FITNESS  FOR  A PARTICULAR PURPOSE AND NONINFRINGEMENT. 
-///     IN NO EVENT SHALL  THE AUTHORS  OR COPYRIGHT  HOLDERS  BE  LIABLE FOR ANY 
-///     CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT 
-///     OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION  WITH THE SOFTWARE OR 
-///     THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-/// -----------------------------------------------------------------------------
+// Copyright (C) 2013 Pat Laplante & Frank Caico
+//
+//	Permission is hereby granted, free of charge, to  any person obtaining a copy 
+// of this software and associated documentation files (the "Software"), to deal 
+// in the Software without  restriction, including without limitation the rights 
+// to use, copy,  modify,  merge, publish,  distribute,  sublicense, and/or sell 
+// copies of the  Software,  and  to  permit  persons  to   whom the Software is 
+// furnished to do so, subject to the following conditions:
+//
+//		The above  copyright notice  and this permission notice shall be included 
+//     in all copies or substantial portions of the Software.
+//
+//		THE  SOFTWARE  IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+//     OR   IMPLIED,   INCLUDING  BUT   NOT  LIMITED   TO   THE   WARRANTIES  OF 
+//     MERCHANTABILITY,  FITNESS  FOR  A PARTICULAR PURPOSE AND NONINFRINGEMENT. 
+//     IN NO EVENT SHALL  THE AUTHORS  OR COPYRIGHT  HOLDERS  BE  LIABLE FOR ANY 
+//     CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT 
+//     OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION  WITH THE SOFTWARE OR 
+//     THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+// -----------------------------------------------------------------------------
 
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using MonoTouch.CoreGraphics;
 using MonoTouch.UIKit;
 using SlidingPanels.Lib.PanelContainers;
 
 namespace SlidingPanels.Lib
 {
-	/// <summary>
-	/// Sliding Panels Main View Controller
-	/// </summary>
-	public partial class SlidingPanelsNavigationViewController : UINavigationController
-	{
-		#region Constants
+    /// <summary>
+    ///     Sliding Panels Main View Controller
+    /// </summary>
+    public class SlidingPanelsNavigationViewController : UINavigationController
+    {
+        #region Constants
 
-		/// <summary>
-		/// How fast do we show/hide panels.
-		/// </summary>
-		const float AnimationSpeed = 0.25f;
+        /// <summary>
+        ///     How fast do we show/hide panels.
+        /// </summary>
+        private const float AnimationSpeed = 0.25f;
 
-		#endregion
+        #endregion
 
-		#region Data Members
+        #region Data Members
 
-		/// <summary>
-		/// This is to work around an issue.  Since the panels are added to the 
-		/// parent of this navigation controller (becoming sibling of this), we
-	 	/// need to wait until View.SuperView is not null to start adding them.  
-		/// We do that in the first time ViewWillAppear gets called.
-		/// </summary>
-		private bool _firstTime = true;
+        /// <summary>
+        ///     This is to work around an issue.  Since the panels are added to the
+        ///     parent of this navigation controller (becoming sibling of this), we
+        ///     need to wait until View.SuperView is not null to start adding them.
+        ///     We do that in the first time ViewWillAppear gets called.
+        /// </summary>
+        private bool _firstTime = true;
 
-		/// <summary>
-		/// The tap gesture is only enabled when  a panel is open.  Tapping the 
-		/// visible (slided out) view will trigger the panel to close.
-		/// </summary>
-		private UITapGestureRecognizer _tapToClose;
+        /// <summary>
+        ///     The list of panels.
+        /// </summary>
+        private List<PanelContainer> _panelContainers;
 
-		/// <summary>
-		/// The sliding gesture  is  always enabled.  By default it will ignore
-		/// the gesture if started over a button.  One can extend that logic to
-		/// prevent a gesture by providing an Action method.
-		/// <see cref="CanSwipeToShowPanel"/> 
-		/// </summary>
-		private SlidingGestureRecogniser _slidingGesture;
+        /// <summary>
+        ///     The sliding gesture  is  always enabled.  By default it will ignore
+        ///     the gesture if started over a button.  One can extend that logic to
+        ///     prevent a gesture by providing an Action method.
+        ///     <see cref="CanSwipeToShowPanel" />
+        /// </summary>
+        private SlidingGestureRecogniser _slidingGesture;
 
-		/// <summary>
-		/// The list of panels.
-		/// </summary>
-		private List<PanelContainer> _panelContainers;
+        /// <summary>
+        ///     The tap gesture is only enabled when  a panel is open.  Tapping the
+        ///     visible (slided out) view will trigger the panel to close.
+        /// </summary>
+        private UITapGestureRecognizer _tapToClose;
 
-		#endregion
+        #endregion
 
-		#region Properties
+        #region Properties
 
-		/// <summary>
-		/// Provides a hook for application to override the decision to allow
-		/// a panel to be swiped in or not.
-		/// </summary>
-		public Predicate<UITouch> CanSwipeToShowPanel;
+        /// <summary>
+        ///     Provides a hook for application to override the decision to allow
+        ///     a panel to be swiped in or not.
+        /// </summary>
+        public Predicate<UITouch> CanSwipeToShowPanel;
 
-		/// <summary>
-		/// This is a handy Accessor to get the currently active panel, if any.
-		/// </summary>
-		/// <value>The current active panel container.</value>
-		protected PanelContainer CurrentActivePanelContainer
-		{
-			get
-			{
-				return _panelContainers.FirstOrDefault (p => p.IsVisible);
-			}
-		}
+        public float ShadowRadius
+        {
+            get { return View.Layer.ShadowRadius; }
+            set { View.Layer.ShadowRadius = value; }
+        }
 
-		#endregion
+        public CGColor ShadowColor { get { return View.Layer.ShadowColor; } set { View.Layer.ShadowColor = value; } }
 
-		#region Construction/Destruction
+        public float ShadowOpacity { get { return View.Layer.ShadowOpacity; } set { View.Layer.ShadowOpacity = value; } }
 
-		/// <summary>
-		/// Initializes a new instance of the <see cref="SlidingPanels.Lib.SlidingPanelsNavigationViewController"/> class.
-		/// </summary>
-		/// <param name="controller">First controller to put on the stack.</param>
-		public SlidingPanelsNavigationViewController(UIViewController controller) : base(controller)
-		{
-		}
+        /// <summary>
+        ///     This is a handy Accessor to get the currently active panel, if any.
+        /// </summary>
+        /// <value>The current active panel container.</value>
+        protected PanelContainer CurrentActivePanelContainer
+        {
+            get { return _panelContainers.FirstOrDefault(p => p.IsVisible); }
+        }
 
-		#endregion
+        #endregion
 
-		#region ViewLifecycle
+        #region Construction/Destruction
 
-		/// <summary>
-		/// Called when the view is first loaded
-		/// </summary>
-		public override void ViewDidLoad ()
-		{
-			base.ViewDidLoad ();
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="SlidingPanels.Lib.SlidingPanelsNavigationViewController" /> class.
+        /// </summary>
+        /// <param name="controller">First controller to put on the stack.</param>
+        public SlidingPanelsNavigationViewController(UIViewController controller) : base(controller)
+        {
+            ShadowRadius = 5;
+            ShadowColor = UIColor.Black.CGColor;
+            ShadowOpacity = .75f;
+        }
 
-			_panelContainers = new List<PanelContainer> ();
+        #endregion
 
-			//TODO: We should expose these as properties of the sliding panel controller
-			View.Layer.ShadowRadius = 5;
-			View.Layer.ShadowColor = UIColor.Black.CGColor;
-			View.Layer.ShadowOpacity = .75f;
-		
-			_tapToClose = new UITapGestureRecognizer();
-			_tapToClose.AddTarget(() => { 
-				HidePanel (CurrentActivePanelContainer); }
-			);
+        #region ViewLifecycle
 
-			_slidingGesture = new SlidingGestureRecogniser (_panelContainers, ShouldReceiveTouch, this);
+        /// <summary>
+        ///     Called when the view is first loaded
+        /// </summary>
+        public override void ViewDidLoad()
+        {
+            base.ViewDidLoad();
 
-			_slidingGesture.ShowPanel += (object sender, EventArgs e) => {
-				ShowPanel(((SlidingGestureEventArgs)e).PanelContainer);
-			};
+            _panelContainers = new List<PanelContainer>();
 
-			_slidingGesture.HidePanel += (object sender, EventArgs e) => {
-				HidePanel(((SlidingGestureEventArgs)e).PanelContainer);
-			};
-		}
+            _tapToClose = new UITapGestureRecognizer();
+            _tapToClose.AddTarget(() => HidePanel(CurrentActivePanelContainer));
 
-		/// <summary>
-		/// Called by the SlidingGestureRecogniser everytime a gesture is about
-		/// to be started.  By default, we allow all.  One can override that by
-		/// providing a delegate to the Action CanSwipeToShowPanel.
-		/// </summary>
-		/// <returns><c>true</c>, if receive touch was shoulded, <c>false</c> otherwise.</returns>
-		/// <param name="sender">Sender.</param>
-		/// <param name="touch">Touch.</param>
-		bool ShouldReceiveTouch(UIGestureRecognizer sender, UITouch touch)
-		{
-			if (CanSwipeToShowPanel != null)
-			{
-				return CanSwipeToShowPanel (touch);
-			}
-			else
-			{
-				return true;
-			}
-		}
+            _slidingGesture = new SlidingGestureRecogniser(_panelContainers, ShouldReceiveTouch, this);
 
-		/// <summary>
-		/// At this point, it is safe to assume that the Superview is available
-		/// for us to insert any panel that may have been added already.
-		/// <see cref="_firstTime"/> 
-		/// </summary>
-		/// <param name="animated">If set to <c>true</c> animated.</param>
-		public override void ViewDidAppear (bool animated)
-		{
-			base.ViewDidAppear(animated);
+            _slidingGesture.ShowPanel += (sender, e) => ShowPanel(((SlidingGestureEventArgs) e).PanelContainer);
 
-			if (_firstTime)
-			{
-				foreach(PanelContainer container in _panelContainers)
-				{
-					View.Superview.AddSubview (container.View);
-					View.Superview.AddGestureRecognizer (_slidingGesture);
-				}
+            _slidingGesture.HidePanel += (sender, e) => HidePanel(((SlidingGestureEventArgs) e).PanelContainer);
+        }
 
-				UIView parent = View.Superview;
-				View.RemoveFromSuperview ();
-				parent.AddSubview (View);
+        /// <summary>
+        ///     Called by the SlidingGestureRecogniser everytime a gesture is about
+        ///     to be started.  By default, we allow all.  One can override that by
+        ///     providing a delegate to the Action CanSwipeToShowPanel.
+        /// </summary>
+        /// <returns><c>true</c>, if receive touch was shoulded, <c>false</c> otherwise.</returns>
+        /// <param name="sender">Sender.</param>
+        /// <param name="touch">Touch.</param>
+        private bool ShouldReceiveTouch(UIGestureRecognizer sender, UITouch touch)
+        {
+            if (CanSwipeToShowPanel != null)
+            {
+                return CanSwipeToShowPanel(touch);
+            }
+            return true;
+        }
 
-				_firstTime = false;
-			}
-		}
+        /// <summary>
+        ///     At this point, it is safe to assume that the Superview is available
+        ///     for us to insert any panel that may have been added already.
+        ///     <see cref="_firstTime" />
+        /// </summary>
+        /// <param name="animated">If set to <c>true</c> animated.</param>
+        public override void ViewDidAppear(bool animated)
+        {
+            base.ViewDidAppear(animated);
 
-		#region overrides to pass to container
+            if (_firstTime)
+            {
+                foreach (PanelContainer container in _panelContainers)
+                {
+                    View.Superview.AddSubview(container.View);
+                    View.Superview.AddGestureRecognizer(_slidingGesture);
+                }
 
-		/// <summary>
-		/// Called when the view will rotate.
-		/// This override forwards the WillRotate callback on to each of the panel containers
-		/// </summary>
-		/// <param name="toInterfaceOrientation">To interface orientation.</param>
-		/// <param name="duration">Duration.</param>
-		public override void WillRotate (UIInterfaceOrientation toInterfaceOrientation, double duration)
-		{
-			base.WillRotate (toInterfaceOrientation, duration);
-			_panelContainers.ForEach (c => c.WillRotate (toInterfaceOrientation, duration));
-		}
+                UIView parent = View.Superview;
+                View.RemoveFromSuperview();
+                parent.AddSubview(View);
 
-		/// <summary>
-		/// Called after the view rotated
-		/// This override forwards the DidRotate callback on to each of the panel containers
-		/// </summary>
-		/// <param name="fromInterfaceOrientation">From interface orientation.</param>
-		public override void DidRotate (UIInterfaceOrientation fromInterfaceOrientation)
-		{
-			base.DidRotate (fromInterfaceOrientation);
-			_panelContainers.ForEach (c => c.DidRotate (fromInterfaceOrientation));
-		}
+                _firstTime = false;
+            }
+        }
 
-		#endregion
-		#endregion
+        #region overrides to pass to container
 
-		#region Panel stuff
+        /// <summary>
+        ///     Called when the view will rotate.
+        ///     This override forwards the WillRotate callback on to each of the panel containers
+        /// </summary>
+        /// <param name="toInterfaceOrientation">To interface orientation.</param>
+        /// <param name="duration">Duration.</param>
+        public override void WillRotate(UIInterfaceOrientation toInterfaceOrientation, double duration)
+        {
+            base.WillRotate(toInterfaceOrientation, duration);
+            _panelContainers.ForEach(c => c.WillRotate(toInterfaceOrientation, duration));
+        }
 
-		/// <summary>
-		/// Return the container associated with the specified panel type.
-		/// </summary>
-		/// <returns>The container for type.</returns>
-		/// <param name="type">Type.</param>
-		private PanelContainer ExistingContainerForType(PanelType type)
-		{
-			PanelContainer container = null;
-			container = _panelContainers.FirstOrDefault (p => p.PanelType == type);
-			if (container == null) 
-			{
-				throw new ArgumentException("Unknown panel type", "type");
-			}
-			return container;
-		}
+        /// <summary>
+        ///     Called after the view rotated
+        ///     This override forwards the DidRotate callback on to each of the panel containers
+        /// </summary>
+        /// <param name="fromInterfaceOrientation">From interface orientation.</param>
+        public override void DidRotate(UIInterfaceOrientation fromInterfaceOrientation)
+        {
+            base.DidRotate(fromInterfaceOrientation);
+            _panelContainers.ForEach(c => c.DidRotate(fromInterfaceOrientation));
+        }
 
-		/// <summary>
-		/// Removes the panel.
-		/// </summary>
-		/// <param name="container">Container.</param>
-		public void RemovePanel(PanelContainer container)
-		{
-			container.View.RemoveFromSuperview ();
-			container.RemoveFromParentViewController ();
-			_panelContainers.Remove (container);
-		}
+        #endregion
 
-		/// <summary>
-		/// Toggles the panel.
-		/// </summary>
-		/// <param name="type">Type.</param>
-		public void TogglePanel(PanelType type)
-		{
-			PanelContainer container = ExistingContainerForType(type);
-			if (container.IsVisible) 
-			{
-				HidePanel (container);
-			}
-			else
-			{
-				// Any other panel already up? If so close them.
-				if (CurrentActivePanelContainer != null && CurrentActivePanelContainer != container)
-				{
-					HidePanel (CurrentActivePanelContainer);
-				}
+        #endregion
 
-				ShowPanel (container);
-			}
-		}
+        #region Panel stuff
 
-		/// <summary>
-		/// Insert a panel in the view hierarchy.  If this is done early in
-		/// the creation process,  we postponed adding  until later, at one
-		/// point we are guarantee that Superview is not null.
-		/// </summary>
-		/// <param name="container">Container.</param>
-		public void InsertPanel(PanelContainer container)
-		{
-			_panelContainers.Add (container);
+        /// <summary>
+        ///     Return the container associated with the specified panel type.
+        /// </summary>
+        /// <returns>The container for type.</returns>
+        /// <param name="type">Type.</param>
+        private PanelContainer ExistingContainerForType(PanelType type)
+        {
+            PanelContainer container = _panelContainers.FirstOrDefault(p => p.PanelType == type);
+            if (container == null)
+            {
+                throw new ArgumentException("Unknown panel type", "type");
+            }
+            return container;
+        }
 
-			if (!_firstTime)
-			{
-				UIView parent = View.Superview;
-				View.Superview.AddSubview (container.View);
-				View.Superview.AddGestureRecognizer (_slidingGesture);
-				View.RemoveFromSuperview ();
-				parent.AddSubview (View);
-			}
-		}
+        /// <summary>
+        ///     Removes the panel.
+        /// </summary>
+        /// <param name="container">Container.</param>
+        public void RemovePanel(PanelContainer container)
+        {
+            container.View.RemoveFromSuperview();
+            container.RemoveFromParentViewController();
+            _panelContainers.Remove(container);
+        }
 
-		/// <summary>
-		/// Shows the panel.
-		/// </summary>
-		/// <param name="container">Container.</param>
-		public void ShowPanel(PanelContainer container)
-		{
-			container.ViewWillAppear (true);
-			container.Show ();
+        /// <summary>
+        ///     Toggles the panel.
+        /// </summary>
+        /// <param name="type">Type.</param>
+        public void TogglePanel(PanelType type)
+        {
+            PanelContainer container = ExistingContainerForType(type);
+            if (container.IsVisible)
+            {
+                HidePanel(container);
+            }
+            else
+            {
+                // Any other panel already up? If so close them.
+                if (CurrentActivePanelContainer != null && CurrentActivePanelContainer != container)
+                {
+                    HidePanel(CurrentActivePanelContainer);
+                }
 
-			UIView.Animate(AnimationSpeed, 0, UIViewAnimationOptions.CurveEaseInOut,
-			    delegate {
-					View.Frame = container.GetTopViewPositionWhenSliderIsVisible(View.Frame);
-				},
-				delegate {
-					View.AddGestureRecognizer(_tapToClose);
-					container.ViewDidAppear (true);
-				});
-		}
+                ShowPanel(container);
+            }
+        }
 
-		/// <summary>
-		/// Hides the panel.
-		/// </summary>
-		/// <param name="container">Container.</param>
-		public void HidePanel(PanelContainer container)
-		{
-			container.ViewWillDisappear (true);
+        public bool IsPanelVisible(PanelType type)
+        {
+            return CurrentActivePanelContainer != null && CurrentActivePanelContainer == ExistingContainerForType(type);
+        }
 
-			UIView.Animate(AnimationSpeed, 0, UIViewAnimationOptions.CurveEaseInOut,
-			    delegate {
-					View.Frame = container.GetTopViewPositionWhenSliderIsHidden(View.Frame);
-				},
-				delegate {
-					View.RemoveGestureRecognizer(_tapToClose);
-					container.Hide ();
-					container.ViewDidDisappear (true);
-				});
-		}
-		#endregion	
-	}
+        /// <summary>
+        ///     Insert a panel in the view hierarchy.  If this is done early in
+        ///     the creation process,  we postponed adding  until later, at one
+        ///     point we are guarantee that Superview is not null.
+        /// </summary>
+        /// <param name="container">Container.</param>
+        public void InsertPanel(PanelContainer container)
+        {
+            _panelContainers.Add(container);
+
+            if (!_firstTime)
+            {
+                UIView parent = View.Superview;
+                View.Superview.AddSubview(container.View);
+                View.Superview.AddGestureRecognizer(_slidingGesture);
+                View.RemoveFromSuperview();
+                parent.AddSubview(View);
+            }
+        }
+
+        /// <summary>
+        ///     Shows the panel.
+        /// </summary>
+        /// <param name="container">Container.</param>
+        public void ShowPanel(PanelContainer container)
+        {
+            container.ViewWillAppear(true);
+            container.Show();
+
+            UIView.Animate(AnimationSpeed, 0, UIViewAnimationOptions.CurveEaseInOut,
+                delegate { View.Frame = container.GetTopViewPositionWhenSliderIsVisible(View.Frame); },
+                delegate
+                {
+                    View.AddGestureRecognizer(_tapToClose);
+                    container.ViewDidAppear(true);
+                });
+        }
+
+        /// <summary>
+        ///     Hides the panel.
+        /// </summary>
+        /// <param name="container">Container.</param>
+        public void HidePanel(PanelContainer container)
+        {
+            container.ViewWillDisappear(true);
+
+            UIView.Animate(AnimationSpeed, 0, UIViewAnimationOptions.CurveEaseInOut,
+                delegate { View.Frame = container.GetTopViewPositionWhenSliderIsHidden(View.Frame); },
+                delegate
+                {
+                    View.RemoveGestureRecognizer(_tapToClose);
+                    container.Hide();
+                    container.ViewDidDisappear(true);
+                });
+        }
+
+        /// <summary>
+        ///     Hides the panel.
+        /// </summary>
+        /// <param name="panelType">Type of the panel to hide.</param>
+        public void HidePanel(PanelType panelType)
+        {
+            PanelContainer container = ExistingContainerForType(panelType);
+            if (container != null && container.IsVisible)
+            {
+                HidePanel(container);
+            }
+        }
+
+        #endregion
+    }
 }
