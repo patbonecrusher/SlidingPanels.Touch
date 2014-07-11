@@ -182,9 +182,7 @@ namespace SlidingPanels.Lib
                     View.Superview.AddGestureRecognizer(_slidingGesture);
                 }
 
-                UIView parent = View.Superview;
-                View.RemoveFromSuperview();
-                parent.AddSubview(View);
+				View.Superview.BringSubviewToFront (View);
 
                 _firstTime = false;
             }
