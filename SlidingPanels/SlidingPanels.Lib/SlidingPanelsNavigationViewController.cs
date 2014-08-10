@@ -183,8 +183,7 @@ namespace SlidingPanels.Lib
                 }
 
                 UIView parent = View.Superview;
-                View.RemoveFromSuperview();
-                parent.AddSubview(View);
+                parent.BringSubviewToFront(View);
 
                 _firstTime = false;
             }
@@ -290,8 +289,7 @@ namespace SlidingPanels.Lib
                 UIView parent = View.Superview;
                 View.Superview.AddSubview(container.View);
                 View.Superview.AddGestureRecognizer(_slidingGesture);
-                View.RemoveFromSuperview();
-                parent.AddSubview(View);
+                parent.BringSubviewToFront(View);
             }
         }
 
