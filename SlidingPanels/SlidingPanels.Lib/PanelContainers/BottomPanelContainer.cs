@@ -20,8 +20,8 @@
 /// -----------------------------------------------------------------------------
 
 using System;
-using MonoTouch.UIKit;
-using System.Drawing;
+using UIKit;
+using CoreGraphics;
 
 namespace SlidingPanels.Lib.PanelContainers
 {
@@ -35,12 +35,12 @@ namespace SlidingPanels.Lib.PanelContainers
 		/// <summary>
 		/// starting Y Coordinate of the top view
 		/// </summary>
-		private float _topViewStartYPosition = 0.0f;
+		private nfloat _topViewStartYPosition = 0.0f;
 
 		/// <summary>
 		/// Y coordinate where the user touched when starting a slide operation
 		/// </summary>
-		private float _touchPositionStartYPosition = 0.0f;
+		private nfloat _touchPositionStartYPosition = 0.0f;
 
 		#endregion
 
@@ -50,11 +50,11 @@ namespace SlidingPanels.Lib.PanelContainers
 		/// Gets the panel position.
 		/// </summary>
 		/// <value>The panel position.</value>
-		public RectangleF PanelPosition
+		public CGRect PanelPosition
 		{
 			get
 			{
-				return new RectangleF 
+				return new CGRect 
 				{
 					X = 0,
 					Y = View.Frame.Height - View.Frame.Y - Size.Height,
@@ -109,7 +109,7 @@ namespace SlidingPanels.Lib.PanelContainers
 		/// </summary>
 		/// <returns>The top view position when slider is visible.</returns>
 		/// <param name="topViewCurrentFrame">Top view current frame.</param>
-		public override RectangleF GetTopViewPositionWhenSliderIsVisible(RectangleF topViewCurrentFrame)
+		public override CGRect GetTopViewPositionWhenSliderIsVisible(CGRect topViewCurrentFrame)
 		{
 			topViewCurrentFrame.Y = View.Frame.Height - topViewCurrentFrame.Height - Size.Height;
 			return topViewCurrentFrame;
@@ -121,7 +121,7 @@ namespace SlidingPanels.Lib.PanelContainers
 		/// </summary>
 		/// <returns>The top view position when slider is visible.</returns>
 		/// <param name="topViewCurrentFrame">Top view current frame.</param>
-		public override RectangleF GetTopViewPositionWhenSliderIsHidden(RectangleF topViewCurrentFrame)
+		public override CGRect GetTopViewPositionWhenSliderIsHidden(CGRect topViewCurrentFrame)
 		{
 			topViewCurrentFrame.Y = 0;
 			return topViewCurrentFrame;
@@ -140,7 +140,7 @@ namespace SlidingPanels.Lib.PanelContainers
 		/// <c>false</c>
 		/// <param name="touchPosition">Touch position.</param>
 		/// <param name="topViewCurrentFrame">Top view's current frame.</param>
-		public override bool CanStartSliding(PointF touchPosition, RectangleF topViewCurrentFrame)
+		public override bool CanStartSliding(CGPoint touchPosition, CGRect topViewCurrentFrame)
 		{
 			// touchPosition is in Screen coordinate.
 
@@ -162,7 +162,7 @@ namespace SlidingPanels.Lib.PanelContainers
 		/// </summary>
 		/// <param name="touchPosition">Touch position.</param>
 		/// <param name="topViewCurrentFrame">Top view current frame.</param>
-		public override void SlidingStarted (PointF touchPosition, RectangleF topViewCurrentFrame)
+		public override void SlidingStarted (CGPoint touchPosition, CGRect topViewCurrentFrame)
 		{
 			_touchPositionStartYPosition = touchPosition.Y;
 			_topViewStartYPosition = topViewCurrentFrame.Y;
@@ -173,11 +173,11 @@ namespace SlidingPanels.Lib.PanelContainers
 		/// </summary>
 		/// <param name="touchPosition">Touch position.</param>
 		/// <param name="topViewCurrentFrame">Top view current frame.</param>
-		public override RectangleF Sliding (PointF touchPosition, RectangleF topViewCurrentFrame)
+		public override CGRect Sliding (CGPoint touchPosition, CGRect topViewCurrentFrame)
 		{
-			float translation = touchPosition.Y - _touchPositionStartYPosition;
+	        nfloat translation = touchPosition.Y - _touchPositionStartYPosition;
 
-			RectangleF frame = topViewCurrentFrame;
+			CGRect frame = topViewCurrentFrame;
 			frame.Y = _topViewStartYPosition + translation;
 
 			if (frame.Y >= 0) 
@@ -198,15 +198,15 @@ namespace SlidingPanels.Lib.PanelContainers
 		/// <c>false</c>
 		/// <param name="touchPosition">Touch position.</param>
 		/// <param name="topViewCurrentFrame">Top view current frame.</param>
-		public override bool SlidingEnded (PointF touchPosition, RectangleF topViewCurrentFrame)
+		public override bool SlidingEnded (CGPoint touchPosition, CGRect topViewCurrentFrame)
 		{
 			// touchPosition will be in View coordinate, and will be adjusted to account
 			// for the nav bar if visible.
 
-			float screenHeight = topViewCurrentFrame.Height;
-			float panelHeight = Size.Height;
+			nfloat screenHeight = topViewCurrentFrame.Height;
+			nfloat panelHeight = Size.Height;
 
-			float y = topViewCurrentFrame.Y + topViewCurrentFrame.Height;
+			nfloat y = topViewCurrentFrame.Y + topViewCurrentFrame.Height;
 			return (y < (screenHeight - (panelHeight / 2)));
 		}
 
