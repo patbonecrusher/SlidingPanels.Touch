@@ -20,11 +20,11 @@
 // -----------------------------------------------------------------------------
 
 using System;
-using MonoTouch.UIKit;
+using UIKit;
 using System.Collections.Generic;
 using SlidingPanels.Lib.PanelContainers;
 using System.Linq;
-using System.Drawing;
+using CoreGraphics;
 
 namespace SlidingPanels.Lib
 {
@@ -138,11 +138,11 @@ namespace SlidingPanels.Lib
 		/// </summary>
 		/// <param name="touches">Touches.</param>
 		/// <param name="evt">Evt.</param>
-		public override void TouchesBegan (MonoTouch.Foundation.NSSet touches, UIEvent evt)
+		public override void TouchesBegan (Foundation.NSSet touches, UIEvent evt)
 		{
 			base.TouchesBegan (touches, evt);
 
-			PointF touchPt;
+			CGPoint touchPt;
 			UITouch touch = touches.AnyObject as UITouch;
 			if (touch != null) 
 			{
@@ -179,7 +179,7 @@ namespace SlidingPanels.Lib
 		/// </summary>
 		/// <param name="touches">Touches.</param>
 		/// <param name="evt">Evt.</param>
-		public override void TouchesMoved (MonoTouch.Foundation.NSSet touches, UIEvent evt)
+		public override void TouchesMoved (Foundation.NSSet touches, UIEvent evt)
 		{
 			base.TouchesMoved (touches, evt);
 
@@ -188,7 +188,7 @@ namespace SlidingPanels.Lib
 				return;
 			}
 
-			PointF touchPt;
+			CGPoint touchPt;
 			UITouch touch = touches.AnyObject as UITouch;
 			if (touch != null) 
 			{
@@ -199,7 +199,7 @@ namespace SlidingPanels.Lib
 				return;
 			}
 
-			RectangleF newFrame = CurrentActivePanelContainer.Sliding (touchPt, SlidingController.View.Frame);
+			CGRect newFrame = CurrentActivePanelContainer.Sliding (touchPt, SlidingController.View.Frame);
 			SlidingController.View.Frame = newFrame;
 		}
 
@@ -208,7 +208,7 @@ namespace SlidingPanels.Lib
 		/// </summary>
 		/// <param name="touches">Touches.</param>
 		/// <param name="evt">Evt.</param>
-		public override void TouchesEnded (MonoTouch.Foundation.NSSet touches, UIEvent evt)
+		public override void TouchesEnded (Foundation.NSSet touches, UIEvent evt)
 		{
 			base.TouchesEnded (touches, evt);
 
@@ -217,7 +217,7 @@ namespace SlidingPanels.Lib
 				return;
 			}
 
-			PointF touchPt;
+			CGPoint touchPt;
 			UITouch touch = touches.AnyObject as UITouch;
 			if (touch != null) 
 			{
@@ -249,7 +249,7 @@ namespace SlidingPanels.Lib
 		/// </summary>
 		/// <param name="touches">Touches.</param>
 		/// <param name="evt">Evt.</param>
-		public override void TouchesCancelled (MonoTouch.Foundation.NSSet touches, UIEvent evt)
+		public override void TouchesCancelled (Foundation.NSSet touches, UIEvent evt)
 		{
 			base.TouchesCancelled (touches, evt);
 		}

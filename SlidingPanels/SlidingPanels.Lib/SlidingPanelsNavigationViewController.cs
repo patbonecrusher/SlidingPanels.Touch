@@ -22,10 +22,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using MonoTouch.CoreGraphics;
-using MonoTouch.UIKit;
+using CoreGraphics;
+using UIKit;
 using SlidingPanels.Lib.PanelContainers;
-using System.Drawing;
 
 namespace SlidingPanels.Lib
 {
@@ -142,8 +141,8 @@ namespace SlidingPanels.Lib
 			View.Layer.MasksToBounds = false;
 			View.Layer.ShadowOpacity = ShadowOpacity;
 
-			RectangleF shadow = View.Bounds;
-			shadow.Inflate(new SizeF(3,3));
+			CGRect shadow = View.Bounds;
+			shadow.Inflate(new CGSize(3,3));
 			View.Layer.ShadowPath = UIBezierPath.FromRoundedRect(shadow, 0).CGPath;
 		}
 
@@ -182,9 +181,7 @@ namespace SlidingPanels.Lib
                     View.Superview.AddGestureRecognizer(_slidingGesture);
                 }
 
-                UIView parent = View.Superview;
-                View.RemoveFromSuperview();
-                parent.AddSubview(View);
+				View.Superview.BringSubviewToFront (View);
 
                 _firstTime = false;
             }
@@ -290,8 +287,9 @@ namespace SlidingPanels.Lib
                 UIView parent = View.Superview;
                 View.Superview.AddSubview(container.View);
                 View.Superview.AddGestureRecognizer(_slidingGesture);
-                View.RemoveFromSuperview();
-                parent.AddSubview(View);
+                //View.RemoveFromSuperview();
+                //parent.AddSubview(View);
+				View.Superview.BringSubviewToFront (View);
             }
         }
 
@@ -301,16 +299,16 @@ namespace SlidingPanels.Lib
         /// <param name="container">Container.</param>
         public void ShowPanel(PanelContainer container)
         {
-            container.ViewWillAppear(true);
-            container.Show();
+			container.ViewWillAppear (true);
+			container.Show ();
 
-            UIView.Animate(AnimationSpeed, 0, UIViewAnimationOptions.CurveEaseInOut,
-                delegate { View.Frame = container.GetTopViewPositionWhenSliderIsVisible(View.Frame); },
-                delegate
-                {
-                    View.AddGestureRecognizer(_tapToClose);
-                    container.ViewDidAppear(true);
-                });
+        	UIView.Animate(AnimationSpeed, 0, UIViewAnimationOptions.CurveEaseInOut,
+            delegate { View.Frame = container.GetTopViewPositionWhenSliderIsVisible(View.Frame); },
+            delegate
+            {
+                View.AddGestureRecognizer(_tapToClose);
+                container.ViewDidAppear(true);
+            });
         }
 
         /// <summary>

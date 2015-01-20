@@ -6,11 +6,13 @@
     <ProductVersion>10.0.0</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{2FD1999D-45B1-4485-BF96-EAB061481945}</ProjectGuid>
-    <ProjectTypeGuids>{6BC8ED88-2882-458C-8E55-DFD12B67127B};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <ProjectTypeGuids>{FEACFBD2-3405-455C-9665-78FE426C6842};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <RootNamespace>SlidingPanels.Lib</RootNamespace>
     <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
     <AssemblyName>SlidingPanels.Lib</AssemblyName>
+    <TargetFrameworkIdentifier>Xamarin.iOS</TargetFrameworkIdentifier>
+    <TargetFrameworkVersion>v1.0</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -32,14 +34,13 @@
     <Reference Include="System" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
-    <Reference Include="monotouch" />
     <Reference Include="MonoTouch.Dialog-1" />
+    <Reference Include="Xamarin.iOS" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\" />
     <Folder Include="PanelContainers\" />
   </ItemGroup>
-  <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />
   <ItemGroup>
     <Compile Include="PanelContainers\PanelContainer.cs" />
     <Compile Include="PanelContainers\LeftPanelContainer.cs" />
@@ -50,4 +51,5 @@
     <Compile Include="PanelContainers\PanelType.cs" />
     <Compile Include="SlidingGestureEventArgs.cs" />
   </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
 </Project>

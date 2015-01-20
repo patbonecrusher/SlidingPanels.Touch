@@ -20,9 +20,9 @@
 /// -----------------------------------------------------------------------------
 
 using System;
-using System.Drawing;
-using MonoTouch.Foundation;
-using MonoTouch.UIKit;
+using CoreGraphics;
+using Foundation;
+using UIKit;
 using SlidingPanels.Lib;
 using SlidingPanels.Lib.PanelContainers;
 using SlidingPanels.Panels;
@@ -44,7 +44,7 @@ namespace SlidingPanels
 
 		private UIBarButtonItem CreateSliderButton(string imageName, PanelType panelType)
 		{
-			UIButton button = new UIButton(new RectangleF(0, 0, 40f, 40f));
+			UIButton button = new UIButton(new CGRect(0, 0, 40f, 40f));
 			button.SetBackgroundImage(UIImage.FromBundle(imageName), UIControlState.Normal);
 			button.TouchUpInside += delegate
 			{
@@ -68,8 +68,6 @@ namespace SlidingPanels
 		{
 			base.ViewDidLoad ();
 
-			SlidingPanelsNavigationViewController navController = NavigationController as SlidingPanelsNavigationViewController;
-
 			// Perform any additional setup after loading the view, typically from a nib.
 			LeftArrowImage.Image = UIImage.FromBundle("Images/LeftArrow.png");
 			UpArrowImage.Image = UIImage.FromBundle("Images/UpArrow.png");
@@ -78,7 +76,7 @@ namespace SlidingPanels
 			NavigationController.NavigationBar.TintColor = UIColor.Black;
 		}
 
-		partial void DoIt (MonoTouch.Foundation.NSObject sender)
+		partial void DoIt (Foundation.NSObject sender)
 		{
 			NavigationController.PushViewController(new ExampleContentB(), true);
 		}
