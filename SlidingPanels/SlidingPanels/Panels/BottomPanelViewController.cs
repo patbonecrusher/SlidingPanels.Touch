@@ -20,9 +20,9 @@
 /// -----------------------------------------------------------------------------
 
 using System;
-using MonoTouch.UIKit;
+using UIKit;
 using SlidingPanels.Lib;
-using System.Drawing;
+using CoreGraphics;
 
 namespace SlidingPanels.Panels
 {

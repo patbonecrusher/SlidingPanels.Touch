@@ -1,7 +1,7 @@
 /// Copyright (C) 2013 Pat Laplante & Franc Caico
 ///
 ///	Permission is hereby granted, free of charge, to  any person obtaining a copy 
-/// of this software and associated documentation files (the "Software"), to deal 
+///o of this software and associated documentation files (the "Software"), to deal 
 /// in the Software without  restriction, including without limitation the rights 
 /// to use, copy,  modify,  merge, publish,  distribute,  sublicense, and/or sell 
 /// copies of the  Software,  and  to  permit  persons  to   whom the Software is 
@@ -20,9 +20,9 @@
 /// -----------------------------------------------------------------------------
 
 using System;
-using System.Drawing;
-using MonoTouch.Foundation;
-using MonoTouch.UIKit;
+using CoreGraphics;
+using Foundation;
+using UIKit;
 using SlidingPanels.Lib;
 
 namespace SlidingPanels.Panels
@@ -58,13 +58,13 @@ namespace SlidingPanels.Panels
 		{
 			base.ViewWillAppear (animated);
 		}
-		partial void ShowScreenA (MonoTouch.Foundation.NSObject sender)
+		partial void ShowScreenA (Foundation.NSObject sender)
 		{
 			PanelsNavController.PopToRootViewController(false);
 			PanelsNavController.TogglePanel(SlidingPanels.Lib.PanelContainers.PanelType.LeftPanel);
 		}
 
-		partial void ShowScreenB (MonoTouch.Foundation.NSObject sender)
+		partial void ShowScreenB (Foundation.NSObject sender)
 		{
 			PanelsNavController.PushViewController(new ExampleContentB(), true);
 			PanelsNavController.TogglePanel(SlidingPanels.Lib.PanelContainers.PanelType.LeftPanel);

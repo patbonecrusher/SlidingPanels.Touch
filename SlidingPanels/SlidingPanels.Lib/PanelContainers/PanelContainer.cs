@@ -20,8 +20,8 @@
 /// -----------------------------------------------------------------------------
 
 using System;
-using MonoTouch.UIKit;
-using System.Drawing;
+using UIKit;
+using CoreGraphics;
 
 namespace SlidingPanels.Lib.PanelContainers
 {
@@ -33,6 +33,8 @@ namespace SlidingPanels.Lib.PanelContainers
     {
 
         #region Constants
+
+		private bool _firstTime = true;
 
         /// <summary>
         /// Designates the edge tolerance in pts.  This defaults to 40 pts.
@@ -75,7 +77,7 @@ namespace SlidingPanels.Lib.PanelContainers
         /// Gets the size of the panel
         /// </summary>
         /// <value>The size.</value>
-        public virtual SizeF Size { 
+        public virtual CGSize Size { 
             get; 
             private set; 
         }
@@ -136,7 +138,7 @@ namespace SlidingPanels.Lib.PanelContainers
         /// <param name="animated">If set to <c>true</c> animated.</param>
         public override void ViewWillAppear (bool animated)
         {
-            RectangleF frame = UIScreen.MainScreen.Bounds;
+            CGRect frame = UIScreen.MainScreen.Bounds;
 
             if (InterfaceOrientation != UIInterfaceOrientation.Portrait) {
                 frame.Width = UIScreen.MainScreen.Bounds.Height;
@@ -152,8 +154,16 @@ namespace SlidingPanels.Lib.PanelContainers
             }
 
             View.Frame = frame;
-            PanelVC.ViewWillAppear (animated);
-            base.ViewWillAppear (animated);
+
+			if (!_firstTime)
+			{
+				PanelVC.ViewWillAppear (animated);
+				base.ViewWillAppear (animated);
+			} 
+			else
+			{
+				_firstTime = false;
+			}
         }
 
         /// <summary>
@@ -229,7 +239,7 @@ namespace SlidingPanels.Lib.PanelContainers
         /// </summary>
         /// <returns>The top view position when slider is visible.</returns>
         /// <param name="topViewCurrentFrame">Top view current frame.</param>
-        public abstract RectangleF GetTopViewPositionWhenSliderIsVisible (RectangleF topViewCurrentFrame);
+        public abstract CGRect GetTopViewPositionWhenSliderIsVisible (CGRect topViewCurrentFrame);
 
         /// <summary>
         /// Returns a rectangle representing the location and size of the top view 
@@ -237,7 +247,7 @@ namespace SlidingPanels.Lib.PanelContainers
         /// </summary>
         /// <returns>The top view position when slider is visible.</returns>
         /// <param name="topViewCurrentFrame">Top view current frame.</param>
-        public abstract RectangleF GetTopViewPositionWhenSliderIsHidden (RectangleF topViewCurrentFrame);
+        public abstract CGRect GetTopViewPositionWhenSliderIsHidden (CGRect topViewCurrentFrame);
 
         /// <summary>
         /// Determines whether this instance can start sliding given the touch position and the 
@@ -247,21 +257,21 @@ namespace SlidingPanels.Lib.PanelContainers
         /// <returns><c>true</c> if this instance can start sliding otherwise, <c>false</c>.</returns>
         /// <param name="touchPosition">Touch position.</param>
         /// <param name="topViewCurrentFrame">Top view's current frame.</param>
-        public abstract bool CanStartSliding (PointF touchPosition, RectangleF topViewCurrentFrame);
+        public abstract bool CanStartSliding (CGPoint touchPosition, CGRect topViewCurrentFrame);
 
         /// <summary>
         /// Called when sliding has started on this Panel
         /// </summary>
         /// <param name="touchPosition">Touch position.</param>
         /// <param name="topViewCurrentFrame">Top view current frame.</param>
-        public abstract void SlidingStarted (PointF touchPosition, RectangleF topViewCurrentFrame);
+        public abstract void SlidingStarted (CGPoint touchPosition, CGRect topViewCurrentFrame);
 
         /// <summary>
         /// Called while the user is sliding this Panel
         /// </summary>
         /// <param name="touchPosition">Touch position.</param>
         /// <param name="topViewCurrentFrame">Top view current frame.</param>
-        public abstract RectangleF Sliding (PointF touchPosition, RectangleF topViewCurrentFrame);
+        public abstract CGRect Sliding (CGPoint touchPosition, CGRect topViewCurrentFrame);
 
         /// <summary>
         /// Determines if a slide is complete
@@ -269,7 +279,7 @@ namespace SlidingPanels.Lib.PanelContainers
         /// <returns><c>true</c>, if sliding has ended, <c>false</c> otherwise.</returns>
         /// <param name="touchPosition">Touch position.</param>
         /// <param name="topViewCurrentFrame">Top view current frame.</param>
-        public abstract bool SlidingEnded (PointF touchPosition, RectangleF topViewCurrentFrame);
+        public abstract bool SlidingEnded (CGPoint touchPosition, CGRect topViewCurrentFrame);
 
         #endregion
 
