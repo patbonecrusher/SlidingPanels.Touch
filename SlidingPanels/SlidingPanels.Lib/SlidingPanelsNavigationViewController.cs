@@ -103,21 +103,55 @@ namespace SlidingPanels.Lib
         ///     Initializes a new instance of the <see cref="SlidingPanels.Lib.SlidingPanelsNavigationViewController" /> class.
         /// </summary>
         /// <param name="controller">First controller to put on the stack.</param>
-        public SlidingPanelsNavigationViewController(UIViewController controller) : base(controller)
+        public SlidingPanelsNavigationViewController(UIViewController controller)
+            : base(controller)
         {
-			if (UIDevice.CurrentDevice.CheckSystemVersion (6, 0)) 
-			{
-				InteractivePopGestureRecognizer.Enabled = false;
-			}
+            if (UIDevice.CurrentDevice.CheckSystemVersion(6, 0))
+            {
+                InteractivePopGestureRecognizer.Enabled = false;
+            }
 
-			ShadowColor = UIColor.Black.CGColor;
-			ShadowOpacity = .75f;
+            ShadowColor = UIColor.Black.CGColor;
+            ShadowOpacity = .75f;
 
         }
 
         #endregion
 
         #region ViewLifecycle
+
+
+        public override UIInterfaceOrientationMask GetSupportedInterfaceOrientations()
+        {
+            if (TopViewController != null)
+                return TopViewController.GetSupportedInterfaceOrientations();
+            else
+                return UIInterfaceOrientationMask.Portrait;
+        }
+
+        public override bool ShouldAutorotate()
+        {
+            if (TopViewController != null)
+            {
+                var rotateOK = TopViewController.ShouldAutorotate();
+                if (rotateOK) // Hack - panels don't rotate correctly right now :(
+                {
+                    HidePanel(PanelType.RightPanel);
+                    HidePanel(PanelType.LeftPanel);
+                }
+                return rotateOK;
+            }
+            else
+                return false;
+        }
+
+        public override UIInterfaceOrientation PreferredInterfaceOrientationForPresentation()
+        {
+            if (TopViewController != null)
+                return TopViewController.PreferredInterfaceOrientationForPresentation();
+            else
+                return UIInterfaceOrientation.Portrait;
+        }
 
         /// <summary>
         ///     Called when the view is first loaded
@@ -131,21 +165,21 @@ namespace SlidingPanels.Lib
             _tapToClose = new UITapGestureRecognizer();
             _tapToClose.AddTarget(() => HidePanel(CurrentActivePanelContainer));
 
-			_slidingGesture = new SlidingGestureRecogniser(_panelContainers, ShouldReceiveTouch, this, View);
+            _slidingGesture = new SlidingGestureRecogniser(_panelContainers, ShouldReceiveTouch, this, View);
 
-            _slidingGesture.ShowPanel += (sender, e) => ShowPanel(((SlidingGestureEventArgs) e).PanelContainer);
+            _slidingGesture.ShowPanel += (sender, e) => ShowPanel(((SlidingGestureEventArgs)e).PanelContainer);
 
-            _slidingGesture.HidePanel += (sender, e) => HidePanel(((SlidingGestureEventArgs) e).PanelContainer);
+            _slidingGesture.HidePanel += (sender, e) => HidePanel(((SlidingGestureEventArgs)e).PanelContainer);
 
-			View.ClipsToBounds = true;
-			View.Layer.ShadowColor = ShadowColor;
-			View.Layer.MasksToBounds = false;
-			View.Layer.ShadowOpacity = ShadowOpacity;
+            View.ClipsToBounds = true;
+            View.Layer.ShadowColor = ShadowColor;
+            View.Layer.MasksToBounds = false;
+            View.Layer.ShadowOpacity = ShadowOpacity;
 
-			RectangleF shadow = View.Bounds;
-			shadow.Inflate(new SizeF(3,3));
-			View.Layer.ShadowPath = UIBezierPath.FromRoundedRect(shadow, 0).CGPath;
-		}
+            RectangleF shadow = View.Bounds;
+            shadow.Inflate(new SizeF(3, 3));
+            View.Layer.ShadowPath = UIBezierPath.FromRoundedRect(shadow, 0).CGPath;
+        }
 
         /// <summary>
         ///     Called by the SlidingGestureRecogniser everytime a gesture is about
