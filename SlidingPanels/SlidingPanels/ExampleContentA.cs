@@ -21,8 +21,8 @@
 
 using System;
 using System.Drawing;
-using MonoTouch.Foundation;
-using MonoTouch.UIKit;
+using Foundation;
+using UIKit;
 using SlidingPanels.Lib;
 using SlidingPanels.Lib.PanelContainers;
 using SlidingPanels.Panels;
@@ -78,7 +78,7 @@ namespace SlidingPanels
 			NavigationController.NavigationBar.TintColor = UIColor.Black;
 		}
 
-		partial void DoIt (MonoTouch.Foundation.NSObject sender)
+		partial void DoIt (Foundation.NSObject sender)
 		{
 			NavigationController.PushViewController(new ExampleContentB(), true);
 		}

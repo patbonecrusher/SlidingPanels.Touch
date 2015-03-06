@@ -4,7 +4,7 @@
 // actions made in the Xcode designer. If it is removed, they will be lost.
 // Manual changes to this file may not be handled correctly.
 //
-using MonoTouch.Foundation;
+using Foundation;
 
 namespace SlidingPanels.Panels
 {
@@ -12,10 +12,10 @@ namespace SlidingPanels.Panels
 	partial class LeftPanelViewController
 	{
 		[Action ("ShowScreenA:")]
-		partial void ShowScreenA (MonoTouch.Foundation.NSObject sender);
+		partial void ShowScreenA (Foundation.NSObject sender);
 
 		[Action ("ShowScreenB:")]
-		partial void ShowScreenB (MonoTouch.Foundation.NSObject sender);
+		partial void ShowScreenB (Foundation.NSObject sender);
 		
 		void ReleaseDesignerOutlets ()
 		{

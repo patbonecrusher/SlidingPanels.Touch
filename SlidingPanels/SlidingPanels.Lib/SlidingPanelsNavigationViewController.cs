@@ -22,8 +22,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using MonoTouch.CoreGraphics;
-using MonoTouch.UIKit;
+using CoreGraphics;
+using UIKit;
 using SlidingPanels.Lib.PanelContainers;
 using System.Drawing;
 
@@ -176,7 +176,7 @@ namespace SlidingPanels.Lib
             View.Layer.MasksToBounds = false;
             View.Layer.ShadowOpacity = ShadowOpacity;
 
-            RectangleF shadow = View.Bounds;
+            var shadow = View.Bounds;
             shadow.Inflate(new SizeF(3, 3));
             View.Layer.ShadowPath = UIBezierPath.FromRoundedRect(shadow, 0).CGPath;
         }
