@@ -136,8 +136,15 @@ namespace SlidingPanels.Lib
                 var rotateOK = TopViewController.ShouldAutorotate();
                 if (rotateOK) // Hack - panels don't rotate correctly right now :(
                 {
-                    HidePanel(PanelType.RightPanel);
-                    HidePanel(PanelType.LeftPanel);
+                    try
+                    {
+                        HidePanel(PanelType.RightPanel);
+                        HidePanel(PanelType.LeftPanel);
+                    }
+                    catch (Exception )
+                    {
+                        // don't care.
+                    }
                 }
                 return rotateOK;
             }
