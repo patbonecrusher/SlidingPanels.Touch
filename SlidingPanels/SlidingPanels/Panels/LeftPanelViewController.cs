@@ -21,8 +21,8 @@
 
 using System;
 using System.Drawing;
-using MonoTouch.Foundation;
-using MonoTouch.UIKit;
+using Foundation;
+using UIKit;
 using SlidingPanels.Lib;
 
 namespace SlidingPanels.Panels
@@ -58,13 +58,13 @@ namespace SlidingPanels.Panels
 		{
 			base.ViewWillAppear (animated);
 		}
-		partial void ShowScreenA (MonoTouch.Foundation.NSObject sender)
+		partial void ShowScreenA (Foundation.NSObject sender)
 		{
 			PanelsNavController.PopToRootViewController(false);
 			PanelsNavController.TogglePanel(SlidingPanels.Lib.PanelContainers.PanelType.LeftPanel);
 		}
 
-		partial void ShowScreenB (MonoTouch.Foundation.NSObject sender)
+		partial void ShowScreenB (Foundation.NSObject sender)
 		{
 			PanelsNavController.PushViewController(new ExampleContentB(), true);
 			PanelsNavController.TogglePanel(SlidingPanels.Lib.PanelContainers.PanelType.LeftPanel);

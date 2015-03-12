@@ -20,8 +20,9 @@
 /// -----------------------------------------------------------------------------
 
 using System;
-using MonoTouch.UIKit;
+using UIKit;
 using System.Drawing;
+using CoreGraphics;
 
 namespace SlidingPanels.Lib.PanelContainers
 {
@@ -35,22 +36,22 @@ namespace SlidingPanels.Lib.PanelContainers
 		/// <summary>
 		/// starting X Coordinate of the top view
 		/// </summary>
-		private float _topViewStartXPosition = 0.0f;
+		private nfloat _topViewStartXPosition = 0.0f;
 
 		/// <summary>
 		/// X coordinate where the user touched when starting a slide operation
 		/// </summary>
-		private float _touchPositionStartXPosition = 0.0f;
+		private nfloat _touchPositionStartXPosition = 0.0f;
 
 		/// <summary>
 		/// Gets the panel position.
 		/// </summary>
 		/// <value>The panel position.</value>
-		public RectangleF PanelPosition
+		public CGRect PanelPosition
 		{
 			get
 			{
-				return new RectangleF 
+				return new CGRect 
 				{
 					X = View.Frame.X,
 					Y = -View.Frame.Y,
@@ -105,7 +106,7 @@ namespace SlidingPanels.Lib.PanelContainers
 		/// </summary>
 		/// <returns>The top view position when slider is visible.</returns>
 		/// <param name="topViewCurrentFrame">Top view current frame.</param>
-		public override RectangleF GetTopViewPositionWhenSliderIsVisible(RectangleF topViewCurrentFrame)
+		public override CGRect GetTopViewPositionWhenSliderIsVisible(CGRect topViewCurrentFrame)
 		{
 			topViewCurrentFrame.X = Size.Width;
 			return topViewCurrentFrame;
@@ -117,7 +118,7 @@ namespace SlidingPanels.Lib.PanelContainers
 		/// </summary>
 		/// <returns>The top view position when slider is visible.</returns>
 		/// <param name="topViewCurrentFrame">Top view current frame.</param>
-		public override RectangleF GetTopViewPositionWhenSliderIsHidden(RectangleF topViewCurrentFrame)
+		public override CGRect GetTopViewPositionWhenSliderIsHidden(CGRect topViewCurrentFrame)
 		{
 			topViewCurrentFrame.X = 0;
 			return topViewCurrentFrame;
@@ -136,7 +137,7 @@ namespace SlidingPanels.Lib.PanelContainers
 		/// <c>false</c>
 		/// <param name="touchPosition">Touch position.</param>
 		/// <param name="topViewCurrentFrame">Top view's current frame.</param>
-		public override bool CanStartSliding(PointF touchPosition, RectangleF topViewCurrentFrame)
+		public override bool CanStartSliding(CGPoint touchPosition, CGRect topViewCurrentFrame)
 		{
 			if (!IsVisible)
 			{
@@ -153,7 +154,7 @@ namespace SlidingPanels.Lib.PanelContainers
 		/// </summary>
 		/// <param name="touchPosition">Touch position.</param>
 		/// <param name="topViewCurrentFrame">Top view current frame.</param>
-		public override void SlidingStarted (PointF touchPosition, RectangleF topViewCurrentFrame)
+		public override void SlidingStarted (CGPoint touchPosition, CGRect topViewCurrentFrame)
 		{
 			_touchPositionStartXPosition = touchPosition.X;
 			_topViewStartXPosition = topViewCurrentFrame.X;
@@ -164,12 +165,12 @@ namespace SlidingPanels.Lib.PanelContainers
 		/// </summary>
 		/// <param name="touchPosition">Touch position.</param>
 		/// <param name="topViewCurrentFrame">Top view current frame.</param>
-		public override RectangleF Sliding (PointF touchPosition, RectangleF topViewCurrentFrame)
+		public override CGRect Sliding (CGPoint touchPosition, CGRect topViewCurrentFrame)
 		{
-			float panelWidth = Size.Width;
-			float translation = touchPosition.X - _touchPositionStartXPosition;
+			var panelWidth = Size.Width;
+			var translation = touchPosition.X - _touchPositionStartXPosition;
 
-			RectangleF frame = topViewCurrentFrame;
+			CGRect frame = topViewCurrentFrame;
 
 			frame.X = _topViewStartXPosition + translation;
 			if (frame.X <= 0) 
@@ -192,7 +193,7 @@ namespace SlidingPanels.Lib.PanelContainers
 		/// <c>false</c>
 		/// <param name="touchPosition">Touch position.</param>
 		/// <param name="topViewCurrentFrame">Top view current frame.</param>
-		public override bool SlidingEnded (PointF touchPosition, RectangleF topViewCurrentFrame)
+		public override bool SlidingEnded (CGPoint touchPosition, CGRect topViewCurrentFrame)
 		{
 			return (topViewCurrentFrame.X > (Size.Width / 2));
 		}
