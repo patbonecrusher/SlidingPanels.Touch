@@ -1,4 +1,4 @@
-[![Gittip      ](http://img.shields.io/gittip/haf.svg?style=flat)](http://gittip.com/haf)
+[![Gittip      ](http://img.shields.io/gittip/patbonecrusher.svg?style=flat)](http://gittip.com/patbonecrusher)
 
 This is a library providing sliding panels (often called Hamburger menus or Flyout menus) to a monotouch app, much like the Facebook iOS left and right panels.
 
