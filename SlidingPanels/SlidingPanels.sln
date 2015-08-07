@@ -1,11 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sliding Panels", "SlidingPanels\Sliding Panels.csproj", "{EB99DC4A-6C39-4A37-8F85-452C2AC8F9BF}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SlidingPanels.Touch", "SlidingPanels.Lib\SlidingPanels.Touch.csproj", "{2FD1999D-45B1-4485-BF96-EAB061481945}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SlidingPanels.Touch.Pcl", "SlidingPanels.Touch.Pcl\SlidingPanels.Touch.Pcl.csproj", "{8381086F-F1B5-4D86-BED7-B417AA3ABF1D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SlidingPanels64", "SlidingPanels64\SlidingPanels64.csproj", "{65EAE27A-72C1-4204-92BA-C9A728C46474}"
 EndProject
@@ -43,30 +39,6 @@ Global
 		{65EAE27A-72C1-4204-92BA-C9A728C46474}.Release|iPhone.Build.0 = Release|iPhone
 		{65EAE27A-72C1-4204-92BA-C9A728C46474}.Release|iPhoneSimulator.ActiveCfg = Release|iPhoneSimulator
 		{65EAE27A-72C1-4204-92BA-C9A728C46474}.Release|iPhoneSimulator.Build.0 = Release|iPhoneSimulator
-		{8381086F-F1B5-4D86-BED7-B417AA3ABF1D}.Ad-Hoc|iPhone.ActiveCfg = Release|Any CPU
-		{8381086F-F1B5-4D86-BED7-B417AA3ABF1D}.Ad-Hoc|iPhone.Build.0 = Release|Any CPU
-		{8381086F-F1B5-4D86-BED7-B417AA3ABF1D}.AppStore|iPhone.ActiveCfg = Release|Any CPU
-		{8381086F-F1B5-4D86-BED7-B417AA3ABF1D}.AppStore|iPhone.Build.0 = Release|Any CPU
-		{8381086F-F1B5-4D86-BED7-B417AA3ABF1D}.Debug|iPhone.ActiveCfg = Debug|Any CPU
-		{8381086F-F1B5-4D86-BED7-B417AA3ABF1D}.Debug|iPhone.Build.0 = Debug|Any CPU
-		{8381086F-F1B5-4D86-BED7-B417AA3ABF1D}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
-		{8381086F-F1B5-4D86-BED7-B417AA3ABF1D}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
-		{8381086F-F1B5-4D86-BED7-B417AA3ABF1D}.Release|iPhone.ActiveCfg = Release|Any CPU
-		{8381086F-F1B5-4D86-BED7-B417AA3ABF1D}.Release|iPhone.Build.0 = Release|Any CPU
-		{8381086F-F1B5-4D86-BED7-B417AA3ABF1D}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
-		{8381086F-F1B5-4D86-BED7-B417AA3ABF1D}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
-		{EB99DC4A-6C39-4A37-8F85-452C2AC8F9BF}.Ad-Hoc|iPhone.ActiveCfg = Ad-Hoc|iPhone
-		{EB99DC4A-6C39-4A37-8F85-452C2AC8F9BF}.Ad-Hoc|iPhone.Build.0 = Ad-Hoc|iPhone
-		{EB99DC4A-6C39-4A37-8F85-452C2AC8F9BF}.AppStore|iPhone.ActiveCfg = AppStore|iPhone
-		{EB99DC4A-6C39-4A37-8F85-452C2AC8F9BF}.AppStore|iPhone.Build.0 = AppStore|iPhone
-		{EB99DC4A-6C39-4A37-8F85-452C2AC8F9BF}.Debug|iPhone.ActiveCfg = Debug|iPhone
-		{EB99DC4A-6C39-4A37-8F85-452C2AC8F9BF}.Debug|iPhone.Build.0 = Debug|iPhone
-		{EB99DC4A-6C39-4A37-8F85-452C2AC8F9BF}.Debug|iPhoneSimulator.ActiveCfg = Debug|iPhoneSimulator
-		{EB99DC4A-6C39-4A37-8F85-452C2AC8F9BF}.Debug|iPhoneSimulator.Build.0 = Debug|iPhoneSimulator
-		{EB99DC4A-6C39-4A37-8F85-452C2AC8F9BF}.Release|iPhone.ActiveCfg = Release|iPhone
-		{EB99DC4A-6C39-4A37-8F85-452C2AC8F9BF}.Release|iPhone.Build.0 = Release|iPhone
-		{EB99DC4A-6C39-4A37-8F85-452C2AC8F9BF}.Release|iPhoneSimulator.ActiveCfg = Release|iPhoneSimulator
-		{EB99DC4A-6C39-4A37-8F85-452C2AC8F9BF}.Release|iPhoneSimulator.Build.0 = Release|iPhoneSimulator
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
 		Policies = $0
