@@ -19,55 +19,26 @@
 ///     THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 /// -----------------------------------------------------------------------------
 
-using System;
-using System.Drawing;
-using MonoTouch.Foundation;
-using MonoTouch.UIKit;
+using UIKit;
 using SlidingPanels.Lib;
 
 namespace SlidingPanels.Panels
 {
-	public partial class LeftPanelViewController : UIViewController
+	public partial class BottomPanelViewController : UIViewController
 	{
 		public SlidingPanelsNavigationViewController PanelsNavController {
 			get;
 			private set;
 		}
 
-		public LeftPanelViewController (SlidingPanelsNavigationViewController controller) : base ("LeftPanelViewController", null)
+		public BottomPanelViewController (SlidingPanelsNavigationViewController controller) : base ("BottomPanelViewController", null)
 		{
 			PanelsNavController = controller;
-		}
-
-		public override void DidReceiveMemoryWarning ()
-		{
-			// Releases the view if it doesn't have a superview.
-			base.DidReceiveMemoryWarning ();
-			
-			// Release any cached data, images, etc that aren't in use.
 		}
 
 		public override void ViewDidLoad ()
 		{
 			base.ViewDidLoad ();
-			
-			// Perform any additional setup after loading the view, typically from a nib.
-		}
-
-		public override void ViewWillAppear (bool animated)
-		{
-			base.ViewWillAppear (animated);
-		}
-		partial void ShowScreenA (MonoTouch.Foundation.NSObject sender)
-		{
-			PanelsNavController.PopToRootViewController(false);
-			PanelsNavController.TogglePanel(SlidingPanels.Lib.PanelContainers.PanelType.LeftPanel);
-		}
-
-		partial void ShowScreenB (MonoTouch.Foundation.NSObject sender)
-		{
-			PanelsNavController.PushViewController(new ExampleContentB(), true);
-			PanelsNavController.TogglePanel(SlidingPanels.Lib.PanelContainers.PanelType.LeftPanel);
 		}
 	}
 }

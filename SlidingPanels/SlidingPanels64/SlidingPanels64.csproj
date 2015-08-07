@@ -3,90 +3,85 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">iPhoneSimulator</Platform>
-    <ProductVersion>10.0.0</ProductVersion>
+    <ProjectTypeGuids>{FEACFBD2-3405-455C-9665-78FE426C6842};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{EB99DC4A-6C39-4A37-8F85-452C2AC8F9BF}</ProjectGuid>
-    <ProjectTypeGuids>{6BC8ED88-2882-458C-8E55-DFD12B67127B};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <ProjectGuid>{65EAE27A-72C1-4204-92BA-C9A728C46474}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>SlidingPanels</RootNamespace>
+    <RootNamespace>SlidingPanels64</RootNamespace>
     <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
-    <AssemblyName>SlidingPanels</AssemblyName>
+    <AssemblyName>SlidingPanels64</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhoneSimulator' ">
     <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\iPhoneSimulator\Debug</OutputPath>
     <DefineConstants>DEBUG;</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
+    <MtouchArch>i386</MtouchArch>
     <MtouchLink>None</MtouchLink>
     <MtouchDebug>true</MtouchDebug>
   </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhone' ">
+    <DebugType>full</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\iPhone\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
+    <MtouchArch>ARMv7, ARM64</MtouchArch>
+    <ConsolePause>false</ConsolePause>
+    <CodesignKey>iPhone Developer</CodesignKey>
+  </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhoneSimulator' ">
+    <DebugType>full</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\iPhoneSimulator\Release</OutputPath>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <MtouchArch>i386</MtouchArch>
     <ConsolePause>false</ConsolePause>
     <MtouchLink>None</MtouchLink>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhone' ">
     <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\iPhone\Debug</OutputPath>
     <DefineConstants>DEBUG;</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
-    <MtouchDebug>true</MtouchDebug>
-    <CodesignKey>iPhone Developer: Pat Laplante (DKQ6G4NDKY)</CodesignKey>
-    <IpaPackageName />
-    <MtouchI18n />
-    <MtouchArch>ARMv7</MtouchArch>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhone' ">
-    <Optimize>true</Optimize>
-    <OutputPath>bin\iPhone\Release</OutputPath>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <ConsolePause>false</ConsolePause>
+    <MtouchArch>ARMv7, ARM64</MtouchArch>
+    <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
     <CodesignKey>iPhone Developer</CodesignKey>
-    <MtouchI18n />
-    <MtouchArch>ARMv7</MtouchArch>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Ad-Hoc|iPhone' ">
-    <Optimize>true</Optimize>
-    <OutputPath>bin\iPhone\Ad-Hoc</OutputPath>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <BuildIpa>true</BuildIpa>
-    <CodesignKey>iPhone Distribution</CodesignKey>
-    <ConsolePause>false</ConsolePause>
-    <CodesignProvision>Automatic:AdHoc</CodesignProvision>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'AppStore|iPhone' ">
-    <Optimize>true</Optimize>
-    <OutputPath>bin\iPhone\AppStore</OutputPath>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <ConsolePause>false</ConsolePause>
-    <CodesignKey>iPhone Distribution</CodesignKey>
-    <CodesignProvision>Automatic:AppStore</CodesignProvision>
+    <MtouchDebug>true</MtouchDebug>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
-    <Reference Include="monotouch" />
+    <Reference Include="Xamarin.iOS" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Resources\" />
-    <Folder Include="Panels\" />
-    <Folder Include="Images\" />
+    <ImageAsset Include="Resources\Images.xcassets\AppIcons.appiconset\Contents.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <InterfaceDefinition Include="Resources\LaunchScreen.xib" />
+    <InterfaceDefinition Include="ExampleContentA_iPad.xib" />
+    <InterfaceDefinition Include="ExampleContentA_iPhone.xib" />
+    <InterfaceDefinition Include="ExampleContentB_iPad.xib" />
+    <InterfaceDefinition Include="ExampleContentB_iPhone.xib" />
+    <InterfaceDefinition Include="Panels\BottomPanelViewController.xib" />
+    <InterfaceDefinition Include="Panels\LeftPanelViewController.xib" />
+    <InterfaceDefinition Include="Panels\RightPanelViewController.xib" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />
+    <None Include="Entitlements.plist" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Main.cs" />
@@ -99,20 +94,20 @@
     <Compile Include="ExampleContentB.designer.cs">
       <DependentUpon>ExampleContentB.cs</DependentUpon>
     </Compile>
-    <Compile Include="Panels\LeftPanelViewController.cs" />
-    <Compile Include="Panels\LeftPanelViewController.designer.cs">
-      <DependentUpon>LeftPanelViewController.cs</DependentUpon>
-    </Compile>
     <Compile Include="Panels\BottomPanelViewController.cs" />
     <Compile Include="Panels\BottomPanelViewController.designer.cs">
-      <DependentUpon>BottomPanelViewController.cs</DependentUpon>
+      <DependentUpon>..\..\SlidingPanels\Panels\BottomPanelViewController.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Panels\LeftPanelViewController.cs" />
+    <Compile Include="Panels\LeftPanelViewController.designer.cs">
+      <DependentUpon>..\..\SlidingPanels\Panels\LeftPanelViewController.cs</DependentUpon>
     </Compile>
     <Compile Include="Panels\RightPanelViewController.cs" />
     <Compile Include="Panels\RightPanelViewController.designer.cs">
-      <DependentUpon>RightPanelViewController.cs</DependentUpon>
+      <DependentUpon>..\..\SlidingPanels\Panels\RightPanelViewController.cs</DependentUpon>
     </Compile>
   </ItemGroup>
-  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>
     <ProjectReference Include="..\SlidingPanels.Lib\SlidingPanels.Touch.csproj">
       <Project>{2FD1999D-45B1-4485-BF96-EAB061481945}</Project>
@@ -120,16 +115,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <InterfaceDefinition Include="ExampleContentA_iPhone.xib" />
-    <InterfaceDefinition Include="ExampleContentA_iPad.xib" />
-    <InterfaceDefinition Include="ExampleContentB_iPhone.xib" />
-    <InterfaceDefinition Include="ExampleContentB_iPad.xib" />
-    <InterfaceDefinition Include="Panels\LeftPanelViewController.xib" />
-    <InterfaceDefinition Include="Panels\BottomPanelViewController.xib" />
-    <InterfaceDefinition Include="Panels\RightPanelViewController.xib" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Default-568h%402x.png" />
     <BundleResource Include="Images\LeftArrow.png" />
     <BundleResource Include="Images\RightArrow.png" />
     <BundleResource Include="Images\SlideLeft20.png" />
@@ -137,9 +122,5 @@
     <BundleResource Include="Images\SlideRight20.png" />
     <BundleResource Include="Images\SlideRight40.png" />
     <BundleResource Include="Images\UpArrow.png" />
-    <BundleResource Include="Resources\Icon-72.png" />
-    <BundleResource Include="Resources\Icon-72%402x.png" />
-    <BundleResource Include="Resources\Icon.png" />
-    <BundleResource Include="Resources\Icon%402x.png" />
   </ItemGroup>
 </Project>

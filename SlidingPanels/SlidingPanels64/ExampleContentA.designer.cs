@@ -4,7 +4,7 @@
 // actions made in the Xcode designer. If it is removed, they will be lost.
 // Manual changes to this file may not be handled correctly.
 //
-using MonoTouch.Foundation;
+using Foundation;
 
 namespace SlidingPanels
 {
@@ -12,25 +12,25 @@ namespace SlidingPanels
 	partial class ExampleContentA
 	{
 		[Outlet]
-		MonoTouch.UIKit.UITextView CenterText { get; set; }
+		UIKit.UITextView CenterText { get; set; }
 
 		[Outlet]
-		MonoTouch.UIKit.UIImageView RightArrowImage { get; set; }
+		UIKit.UIImageView RightArrowImage { get; set; }
 
 		[Outlet]
-		MonoTouch.UIKit.UIImageView LeftArrowImage { get; set; }
+		UIKit.UIImageView LeftArrowImage { get; set; }
 
 		[Outlet]
-		MonoTouch.UIKit.UIImageView UpArrowImage { get; set; }
+		UIKit.UIImageView UpArrowImage { get; set; }
 
 		[Outlet]
-		MonoTouch.UIKit.UITextView NavigateText { get; set; }
+		UIKit.UITextView NavigateText { get; set; }
 
 		[Outlet]
-		MonoTouch.UIKit.UIButton NavigateButton { get; set; }
+		UIKit.UIButton NavigateButton { get; set; }
 
 		[Action ("DoIt:")]
-		partial void DoIt (MonoTouch.Foundation.NSObject sender);
+		partial void DoIt (Foundation.NSObject sender);
 		
 		void ReleaseDesignerOutlets ()
 		{

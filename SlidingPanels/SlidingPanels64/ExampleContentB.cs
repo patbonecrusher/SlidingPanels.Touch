@@ -20,27 +20,38 @@
 /// -----------------------------------------------------------------------------
 
 using System;
-using MonoTouch.UIKit;
-using SlidingPanels.Lib;
 using System.Drawing;
+using Foundation;
+using UIKit;
+using SlidingPanels.Lib;
+using SlidingPanels.Lib.PanelContainers;
 
-namespace SlidingPanels.Panels
+namespace SlidingPanels
 {
-	public partial class BottomPanelViewController : UIViewController
+	public partial class ExampleContentB : UIViewController
 	{
-		public SlidingPanelsNavigationViewController PanelsNavController {
-			get;
-			private set;
+		static bool UserInterfaceIdiomIsPhone {
+			get { return UIDevice.CurrentDevice.UserInterfaceIdiom == UIUserInterfaceIdiom.Phone; }
 		}
 
-		public BottomPanelViewController (SlidingPanelsNavigationViewController controller) : base ("BottomPanelViewController", null)
+		public ExampleContentB ()
+			: base (UserInterfaceIdiomIsPhone ? "ExampleContentB_iPhone" : "ExampleContentB_iPad", null)
 		{
-			PanelsNavController = controller;
+		}
+
+		public override void DidReceiveMemoryWarning ()
+		{
+			// Releases the view if it doesn't have a superview.
+			base.DidReceiveMemoryWarning ();
+
+			// Release any cached data, images, etc that aren't in use.
 		}
 
 		public override void ViewDidLoad ()
 		{
 			base.ViewDidLoad ();
+
+			// Perform any additional setup after loading the view, typically from a nib.
 		}
 	}
 }
